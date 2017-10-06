@@ -2,6 +2,7 @@ from requests.exceptions import ConnectionError
 from requests.exceptions import ReadTimeout
 import time
 import threading
+import sys
 import logging
 import re
 
@@ -59,19 +60,144 @@ bot = telebot.TeleBot(API_TOKEN1, threaded=False)
 # ---- DUEL ----
 
 
+class Duel:
+    def __init__(self):
+        self.users = []
+        self.status = [0, 0]
+        self.active = False
+        self.symbol = None
+
+    def init_with_msg(self, msg):
+        if hasattr(msg.from_user, 'username') and msg.from_user.username is not None:
+            self.users.append(msg.from_user.username)
+        else:
+            usr = msg.from_user
+            self.users.append(usr)
+            print('\n\n\n'+str(usr)+'\n\n\n')
+
+        if not hasattr(msg, 'entities'):
+            return
+
+        for ent in msg.entities:
+            if ent.type == 'mention':
+                self.users.append(msg.text[ent.offset+1:ent.offset+ent.length])
+                break
+            if ent.type == 'text_mention':
+                self.users.append(ent.user)
+                break
+
+    def is_second_usr(self, usr):
+        second_usr = self.users[1]
+        if hasattr(usr, 'username') and usr.username is not None:
+            return usr.username == second_usr
+        else:
+            return usr.id == second_usr.id
+
+    def name(self, usr_num):
+        usr = self.users[usr_num] # self.first_usr if usr_num == 1 else self.second_usr
+        if hasattr(usr, 'first_name'):
+            return '<a href="tg://user?id={}">{}</a>'.format(usr.id, usr.first_name)
+        else:
+            return '@'+usr
+
+    def usr_num(self, user):
+        try:
+            num = self.users.index(user.username)
+            return num
+        except Exception:
+            pass
+
+        for i in range(len(self.users)):
+            usr = self.users[i]
+            if hasattr(usr, 'id') and usr.id == user.id:
+                return i
+
+        return -1
+
+DUELS = {}
+
+
+# Handle shoots of players
+@bot.message_handler(func=lambda m: m.chat.id in DUELS and
+                                    DUELS[m.chat.id].symbol and
+                                    DUELS[m.chat.id].usr_num(m.from_user) != -1,
+                     content_types=['text'])
+def duel_shoots(message):
+    duel = DUELS[message.chat.id]
+
+    num = duel.usr_num(message.from_user)
+    if message.text[0] == duel.symbol:
+        if duel.status[num] == 0:
+            duel.status[num] = 1
+            duel.symbol = None
+            bot.reply_to(message,
+                         '{} выхватывает свой пистолет ' \
+                         'и точным выстрелом убивает противника!'.format(duel.name(num)),
+                         parse_mode='HTML')
+            DUELS.pop(message.chat.id)
+        else:
+            bot.reply_to(message, 'Пистолет разряжен!!!')
+    else:
+        if duel.status[num] == 0:
+            duel.status[num] = -1
+            bot.reply_to(message, 'Осечка!')
+            if not 0 in duel.status:
+                bot.send_message(message.chat.id, 'Оба стрелка промахнулись. Дуэль окончена без жертв.')
+                DUELS.pop(message.chat.id)
+        else:
+            bot.reply_to(message, 'Патроны кончились!')
+
+
+# Handle all messages during duel
+@bot.message_handler(func=lambda m: m.chat.id in DUELS and
+                                    DUELS[m.chat.id].active and
+                                    DUELS[m.chat.id].usr_num(m.from_user) == -1,
+                     content_types=['text'])
+def duel_stub(message):
+    chat_id = message.chat.id
+    bot.send_message(chat_id, 'Дуэль в процессе, не мешай ей!')
+
+
 # Handle '/duel'
-@bot.message_handler(func=commands_handler(['/duel']))
+@bot.message_handler(func=commands_handler(['/duel'], inline=True))
 def duel_start(message):
-    t = threading.Thread(target=bomm, args=(message, ))
-    t.daemon = True
-    t.start()
+    # если чувака вызвали на дуэль и он вызвал команду, дуэль начинается
+    if message.chat.id in DUELS and DUELS[message.chat.id].is_second_usr(message.from_user):
+        DUELS[message.chat.id].active = True
+        t = threading.Thread(target=bomm, args=(message,))
+        t.daemon = True
+        t.start()
+        return
+
+    # иначе, создаем новую дуэль
+    duel = Duel()
+    duel.init_with_msg(message)
+    if len(duel.users) == 2:
+        DUELS[message.chat.id] = duel
+        bot.send_message(message.chat.id, 'Вызов брошен! Последует ли на него ответ?')
+    else:
+        bot.reply_to(message, 'Надо упомянуть противника, которому кидаешь вызов!')
+
 
 def bomm(message):
-    for i in range(6):
-        bot.reply_to(message, 'Booooom')
-        time.sleep(5)
+    duel = DUELS[message.chat.id]
+    num_of_bom = 5 + random.randint(0, 4)
+    text = 'На главной площади города сошлись заклятые враги {} и {}.\n' \
+           'Часы бьют {} часов.' \
+           'Когда прозвучит последний удар, оба стреляют.\n' \
+           'С последним ударом вы увидите символ, которым надо выстрелить.\n' \
+           'У кого рука окажется быстрее, тот выиграет дуэль.'.format(duel.name(0), duel.name(1), num_of_bom)
+    bot.send_message(message.chat.id, text, parse_mode='HTML')
 
-# ---- INFO ----
+    for i in range(num_of_bom):
+        time.sleep(random.randint(2, 10))
+        bot.send_message(message.chat.id, 'Б{}М'.format('О' * random.randint(1, 10)))
+
+    duel_symbols = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', ',', '№', '§', '~', 'ё', 'й', 'z', 'G', 'F', '😀', '🤣', '😱']
+    duel.symbol = random.choice(duel_symbols)
+    bot.send_message(message.chat.id, 'Стреляйтесь: ' + duel.symbol)
+
+    # ---- INFO ----
 
 
 # Handle '/start'
@@ -117,7 +243,7 @@ def add_fatal_dsc_to(msg, dsc):
         else:
             at_symb = text.find('@', 1)
             dl_symb = text.find('$', 1)
-            if at_symb > dl_symb:
+            if at_symb < dl_symb:
                 text = '@' + text[1:].split('@', maxsplit=1)[1]
             else:
                 text = '$' + text[1:].split('$', maxsplit=1)[1]
@@ -145,9 +271,9 @@ def fatal_file(message):
 
         file_info = bot.get_file(message.document.file_id)
         file = bot.download_file(file_info.file_path)
-        with open('bots/rollbot/locations.xml', 'wb') as new_file:
+        with open('locations.xml', 'wb') as new_file:
             new_file.write(file)
-        with open('bots/rollbot/locations.xml', 'r') as read_file:
+        with open('locations.xml', 'r') as read_file:
             fatal.Editor.import_from_file(read_file)
         '''
         bot.reply_to(message, 'Добавлено!')
@@ -214,7 +340,7 @@ def rollGURPS(message):
 # Handle '/gurps'
 @bot.message_handler(func=commands_handler(['/gurps', '/GURPS']))
 def gurps(message):
-    with open('bots/rollbot/gurps.xml', 'r') as gurps_file:
+    with open('gurps.xml', 'r') as gurps_file:
         soup = BeautifulSoup(gurps_file, 'lxml')
         abilities = soup.find_all('gurps')
         ab = random.choice(abilities)
@@ -232,7 +358,7 @@ def gurps_file(message):
     if message.document:
         file_info = bot.get_file(message.document.file_id)
         file = bot.download_file(file_info.file_path)
-        with open('bots/rollbot/gurps.xml', 'wb') as new_file:
+        with open('gurps.xml', 'wb') as new_file:
             new_file.write(file)
         bot.reply_to(message, 'Добавлено!')
 
@@ -270,8 +396,8 @@ while __name__ == '__main__':
     # завершение работы из консоли стандартным Ctrl-C
     except KeyboardInterrupt as e:
         print("\n{0}: Keyboard Interrupt. Good bye.\n".format(time.time()))
-        # sys.exit()
+        sys.exit()
 
     # если что-то неизвестное — от греха вырубаем с корнем. Создаём алёрт файл для .sh скрипта
     except Exception as e:
-        print("{0}: Unknown Exception:\n{1}\n{2}\n\n Shutting down.".format(time.time(), e.message, e.args))
+        print("{0}: Unknown Exception:\n{1}\n{2}\n\n Shutting down.".format(time.time(), str(e), e.args))
