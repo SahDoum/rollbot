@@ -53,7 +53,7 @@ text_messages = {
 }
 
 logger = telebot.logger
-telebot.logger.setLevel(logging.DEBUG)
+telebot.logger.setLevel(logging.INFO)
 
 bot = telebot.TeleBot(API_TOKEN1, threaded=False)
 
@@ -80,11 +80,14 @@ class Duel:
 
         for ent in msg.entities:
             if ent.type == 'mention':
-                self.users.append(msg.text[ent.offset+1:ent.offset+ent.length])
-                break
+                usr = msg.text[ent.offset+1:ent.offset+ent.length]
+                if usr != self.users[0]:
+                    self.users.append(usr)
+                    break
             if ent.type == 'text_mention':
-                self.users.append(ent.user)
-                break
+                if ent.user != self.users[0]:
+                    self.users.append(ent.user)
+                    break
 
     def is_second_usr(self, usr):
         second_usr = self.users[1]
@@ -183,7 +186,7 @@ def bomm(message):
     duel = DUELS[message.chat.id]
     num_of_bom = 5 + random.randint(0, 4)
     text = 'На главной площади города сошлись заклятые враги {} и {}.\n' \
-           'Часы бьют {} часов.' \
+           'Часы бьют <b>{} часов</b>.' \
            'Когда прозвучит последний удар, оба стреляют.\n' \
            'С последним ударом вы увидите символ, которым надо выстрелить.\n' \
            'У кого рука окажется быстрее, тот выиграет дуэль.'.format(duel.name(0), duel.name(1), num_of_bom)
@@ -243,7 +246,7 @@ def add_fatal_dsc_to(msg, dsc):
         else:
             at_symb = text.find('@', 1)
             dl_symb = text.find('$', 1)
-            if at_symb < dl_symb:
+            if at_symb < dl_symb or dl_symb == -1:
                 text = '@' + text[1:].split('@', maxsplit=1)[1]
             else:
                 text = '$' + text[1:].split('$', maxsplit=1)[1]

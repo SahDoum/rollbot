@@ -2,10 +2,9 @@ from models import RCLocation as Location, RCButton as Button
 
 from telebot import types
 import random
-
 from bs4 import BeautifulSoup
 
-#from telegram.utils.helpers import escape_markdown
+# from telegram.utils.helpers import escape_markdown
 
 
 def create_description(callback=None):
