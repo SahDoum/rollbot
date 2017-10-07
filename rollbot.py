@@ -68,33 +68,42 @@ class Duel:
         self.symbol = None
 
     def init_with_msg(self, msg):
-        if hasattr(msg.from_user, 'username') and msg.from_user.username is not None:
-            self.users.append(msg.from_user.username)
-        else:
-            usr = msg.from_user
-            self.users.append(usr)
-            print('\n\n\n'+str(usr)+'\n\n\n')
+        first_user = self.handle_user(msg.from_user)
+        self.users.append(first_user)
+        print('Init with message: first usr: ' + str(first_user))
 
         if not hasattr(msg, 'entities'):
             return
 
         for ent in msg.entities:
             if ent.type == 'mention':
-                usr = msg.text[ent.offset+1:ent.offset+ent.length]
-                if usr != self.users[0]:
-                    self.users.append(usr)
-                    break
+                second_user = msg.text[ent.offset+1:ent.offset+ent.length]
+                break
             if ent.type == 'text_mention':
-                if ent.user != self.users[0]:
-                    self.users.append(ent.user)
-                    break
+                second_user = ent.user
+                break
 
-    def is_second_usr(self, usr):
-        second_usr = self.users[1]
-        if hasattr(usr, 'username') and usr.username is not None:
-            return usr.username == second_usr
+        if not self.compare_users(first_user, second_user):
+            self.users.append(second_user)
+            print('Second usr: ' + str(second_user))
+
+    @staticmethod
+    def handle_user(usr):
+        if hasattr(usr, 'username') and \
+           usr.username is not None:
+            return usr.username
         else:
-            return usr.id == second_usr.id
+            return usr
+
+    @staticmethod
+    def compare_users(usr1, usr2):
+        if hasattr(usr1, 'id') and hasattr(usr2, 'id') :
+            return usr1.id == usr2.id
+        if hasattr(usr1, 'username'):
+            return usr1.username == usr2
+        if hasattr(usr2, 'username'):
+            return usr2.username == usr1
+        return usr1 == usr2
 
     def name(self, usr_num):
         usr = self.users[usr_num] # self.first_usr if usr_num == 1 else self.second_usr
@@ -116,6 +125,7 @@ class Duel:
                 return i
 
         return -1
+
 
 DUELS = {}
 
@@ -164,9 +174,14 @@ def duel_stub(message):
 # Handle '/duel'
 @bot.message_handler(func=commands_handler(['/duel'], inline=True))
 def duel_start(message):
+    chat_id = message.chat.id
+    duel = DUELS[chat_id] if chat_id in DUELS else None
+
     # если чувака вызвали на дуэль и он вызвал команду, дуэль начинается
-    if message.chat.id in DUELS and DUELS[message.chat.id].is_second_usr(message.from_user):
-        DUELS[message.chat.id].active = True
+    if duel and \
+       duel.compare_users(message.from_user, duel.users[1]) and \
+       not duel.active:
+        duel.active = True
         t = threading.Thread(target=bomm, args=(message,))
         t.daemon = True
         t.start()
@@ -176,29 +191,30 @@ def duel_start(message):
     duel = Duel()
     duel.init_with_msg(message)
     if len(duel.users) == 2:
-        DUELS[message.chat.id] = duel
-        bot.send_message(message.chat.id, 'Вызов брошен! Последует ли на него ответ?')
+        DUELS[chat_id] = duel
+        bot.send_message(chat_id, 'Вызов брошен! Последует ли на него ответ?')
     else:
         bot.reply_to(message, 'Надо упомянуть противника, которому кидаешь вызов!')
 
 
 def bomm(message):
-    duel = DUELS[message.chat.id]
+    chat_id = message.chat.id
+    duel = DUELS[chat_id]
     num_of_bom = 5 + random.randint(0, 4)
     text = 'На главной площади города сошлись заклятые враги {} и {}.\n' \
-           'Часы бьют <b>{} часов</b>.' \
+           'Часы бьют <b>{} часов</b>. ' \
            'Когда прозвучит последний удар, оба стреляют.\n' \
            'С последним ударом вы увидите символ, которым надо выстрелить.\n' \
            'У кого рука окажется быстрее, тот выиграет дуэль.'.format(duel.name(0), duel.name(1), num_of_bom)
-    bot.send_message(message.chat.id, text, parse_mode='HTML')
+    bot.send_message(chat_id, text, parse_mode='HTML')
 
     for i in range(num_of_bom):
         time.sleep(random.randint(2, 10))
-        bot.send_message(message.chat.id, 'Б{}М'.format('О' * random.randint(1, 10)))
+        bot.send_message(chat_id, 'Б{}М'.format('О' * random.randint(1, 10)))
 
     duel_symbols = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', ',', '№', '§', '~', 'ё', 'й', 'z', 'G', 'F', '😀', '🤣', '😱']
     duel.symbol = random.choice(duel_symbols)
-    bot.send_message(message.chat.id, 'Стреляйтесь: ' + duel.symbol)
+    bot.send_message(chat_id, 'Стреляйтесь: ' + duel.symbol)
 
     # ---- INFO ----
 
@@ -383,24 +399,29 @@ while __name__ == '__main__':
 
     # из-за Telegram API иногда какой-нибудь пакет не доходит
     except ReadTimeout as e:
-        print("{0}: Read Timeout. Because of Telegram API.\nWe are offline. Reconnecting in 5 seconds.\n".format(time.time()))
+        print('{0}: Read Timeout. Because of Telegram API.\n '
+              'We are offline. Reconnecting in 5 seconds.\n'.format(time.time()))
         time.sleep(5)
 
     # если пропало соединение, то пытаемся снова через минуту
     except ConnectionError as e:
-        print("{0}: Connection Error.\nWe are offline. Reconnecting in 60 seconds.\n".format(time.time()))
+        print('{0}: Connection Error.\n'
+              'We are offline. Reconnecting in 60 seconds.\n'.format(time.time()))
         time.sleep(60)
 
     # если Python сдурит и пойдёт в бесконечную рекурсию (не особо спасает)
     except RuntimeError as e:
-        print("{0}: Runtime Error.\nRetrying in 3 seconds.\n".format(time.time()))
+        print('{0}: Runtime Error.\n'
+              'Retrying in 3 seconds.\n'.format(time.time()))
         time.sleep(3)
 
     # завершение работы из консоли стандартным Ctrl-C
     except KeyboardInterrupt as e:
-        print("\n{0}: Keyboard Interrupt. Good bye.\n".format(time.time()))
+        print('\n{0}: Keyboard Interrupt. Good bye.\n'.format(time.time()))
         sys.exit()
 
     # если что-то неизвестное — от греха вырубаем с корнем. Создаём алёрт файл для .sh скрипта
     except Exception as e:
-        print("{0}: Unknown Exception:\n{1}\n{2}\n\n Shutting down.".format(time.time(), str(e), e.args))
+        print('{0}: Unknown Exception:\n'
+              '{1}: {2}\n\n'
+              'Shutting down.'.format(time.time(), str(e), e.args))
