@@ -1,4 +1,4 @@
-from models import RCLocation as Location, RCButton as Button
+from models import Location, Button
 
 from telebot import types
 import random
@@ -67,16 +67,15 @@ def user_to_author(usr):
 def escape_markdown(str):
     return str.replace('_', '\_')
 
-'''
+
 class Editor:
 
     @staticmethod
     def delete_all():
-        if not Location.query.first():
+        if not Location.select().first():
             return
-        Location.query.delete()
-        Button.query.delete()
-        db.session.commit()
+        Location.delete()
+        Button.delete()
 
     @staticmethod
     def import_from_file(file):
@@ -85,24 +84,17 @@ class Editor:
 
         for loc in locations:
             Editor.add_location(loc)
-        db.session.commit()
 
     @staticmethod
     def add_location(loc):
         dsc = str(loc.find(text=True, recursive=False)).strip()
         key = str(loc['key'])
-        location = Location(key, dsc)
-        db.session.add(location)
-        db.session.commit()
-        db.session.refresh(location)
+        location = Location.create(key=key, dsc=dsc)
         loc_id = location.id
         buttons = loc.find_all('btn')
         print(location)
         for btn in buttons:
             btn_dsc = btn.text
             btn_act = btn['key']
-            button = Button(loc_id, btn_act, btn_dsc)
-            db.session.add(button)
-            db.session.commit()
+            button = Button.create(loc=loc_id, act_key=btn_act, dsc=btn_dsc)
             print(button)
-'''

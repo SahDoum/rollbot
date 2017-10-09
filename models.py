@@ -10,7 +10,7 @@ class BaseModel(Model):
         database = database
 
 
-class RCButton(BaseModel):
+class Button(BaseModel):
     act_key = CharField(null=True)
     dsc = TextField(null=True)
     loc = IntegerField(db_column='loc_id', null=True)
@@ -18,7 +18,8 @@ class RCButton(BaseModel):
     class Meta:
         db_table = 'rollclub_buttons'
 
-class RCLocation(BaseModel):
+
+class Location(BaseModel):
     dsc = TextField(null=True)
     key = CharField(null=True)
 
@@ -33,3 +34,11 @@ class SqliteSequence(BaseModel):
         db_table = 'sqlite_sequence'
         primary_key = False
 
+
+class DuelUser(BaseModel):
+    user_id = IntegerField()
+    chat_id = IntegerField()
+
+    wins = IntegerField()
+    losses = IntegerField()
+    ties = IntegerField()

@@ -1,13 +1,9 @@
 from requests.exceptions import ConnectionError
 from requests.exceptions import ReadTimeout
 import time
-import threading
 import sys
-import logging
-import re
 
-from settings import API_TOKEN1
-import telebot
+from __init__ import bot, commands_handler
 
 import fatal
 import dice
@@ -16,21 +12,7 @@ import random
 from bs4 import BeautifulSoup
 
 
-# Command list handler function
-def commands_handler(cmnds, inline=False):
-    BOT_NAME = '@rollclub_bot'
 
-    def wrapped(msg):
-        if not msg.text:
-            return False
-        split_message = re.split(r'[^\w@\/]', msg.text)
-        if not inline:
-            s = split_message[0]
-            return (s in cmnds) or (s.endswith(BOT_NAME) and s.split('@')[0] in cmnds)
-        else:
-            return any(cmnd in split_message or cmnd + BOT_NAME in split_message for cmnd in cmnds)
-
-    return wrapped
 
 text_messages = {
     'help':
@@ -52,171 +34,13 @@ text_messages = {
         u'For more information use command /help\n'
 }
 
-logger = telebot.logger
-telebot.logger.setLevel(logging.INFO)
-
-bot = telebot.TeleBot(API_TOKEN1, threaded=False)
-
 # ---- DUEL ----
 
 
-class Duel:
-    def __init__(self):
-        self.users = []
-        self.status = [0, 0]
-        self.active = False
-        self.symbol = None
-
-    def init_with_msg(self, msg):
-        first_user = self.handle_user(msg.from_user)
-        self.users.append(first_user)
-        print('Init with message: first usr: ' + str(first_user))
-
-        if not hasattr(msg, 'entities'):
-            return
-
-        for ent in msg.entities:
-            if ent.type == 'mention':
-                second_user = msg.text[ent.offset+1:ent.offset+ent.length]
-                break
-            if ent.type == 'text_mention':
-                second_user = ent.user
-                break
-
-        if not self.compare_users(first_user, second_user):
-            self.users.append(second_user)
-            print('Second usr: ' + str(second_user))
-
-    @staticmethod
-    def handle_user(usr):
-        if hasattr(usr, 'username') and \
-           usr.username is not None:
-            return usr.username
-        else:
-            return usr
-
-    @staticmethod
-    def compare_users(usr1, usr2):
-        if hasattr(usr1, 'id') and hasattr(usr2, 'id') :
-            return usr1.id == usr2.id
-        if hasattr(usr1, 'username'):
-            return usr1.username == usr2
-        if hasattr(usr2, 'username'):
-            return usr2.username == usr1
-        return usr1 == usr2
-
-    def name(self, usr_num):
-        usr = self.users[usr_num] # self.first_usr if usr_num == 1 else self.second_usr
-        if hasattr(usr, 'first_name'):
-            return '<a href="tg://user?id={}">{}</a>'.format(usr.id, usr.first_name)
-        else:
-            return '@'+usr
-
-    def usr_num(self, user):
-        try:
-            num = self.users.index(user.username)
-            return num
-        except Exception:
-            pass
-
-        for i in range(len(self.users)):
-            usr = self.users[i]
-            if hasattr(usr, 'id') and usr.id == user.id:
-                return i
-
-        return -1
+import duel
 
 
-DUELS = {}
-
-
-# Handle shoots of players
-@bot.message_handler(func=lambda m: m.chat.id in DUELS and
-                                    DUELS[m.chat.id].symbol and
-                                    DUELS[m.chat.id].usr_num(m.from_user) != -1,
-                     content_types=['text'])
-def duel_shoots(message):
-    duel = DUELS[message.chat.id]
-
-    num = duel.usr_num(message.from_user)
-    if message.text[0] == duel.symbol:
-        if duel.status[num] == 0:
-            duel.status[num] = 1
-            duel.symbol = None
-            bot.reply_to(message,
-                         '{} выхватывает свой пистолет ' \
-                         'и точным выстрелом убивает противника!'.format(duel.name(num)),
-                         parse_mode='HTML')
-            DUELS.pop(message.chat.id)
-        else:
-            bot.reply_to(message, 'Пистолет разряжен!!!')
-    else:
-        if duel.status[num] == 0:
-            duel.status[num] = -1
-            bot.reply_to(message, 'Осечка!')
-            if not 0 in duel.status:
-                bot.send_message(message.chat.id, 'Оба стрелка промахнулись. Дуэль окончена без жертв.')
-                DUELS.pop(message.chat.id)
-        else:
-            bot.reply_to(message, 'Патроны кончились!')
-
-
-# Handle all messages during duel
-@bot.message_handler(func=lambda m: m.chat.id in DUELS and
-                                    DUELS[m.chat.id].active and
-                                    DUELS[m.chat.id].usr_num(m.from_user) == -1,
-                     content_types=['text'])
-def duel_stub(message):
-    chat_id = message.chat.id
-    bot.send_message(chat_id, 'Дуэль в процессе, не мешай ей!')
-
-
-# Handle '/duel'
-@bot.message_handler(func=commands_handler(['/duel'], inline=True))
-def duel_start(message):
-    chat_id = message.chat.id
-    duel = DUELS[chat_id] if chat_id in DUELS else None
-
-    # если чувака вызвали на дуэль и он вызвал команду, дуэль начинается
-    if duel and \
-       duel.compare_users(message.from_user, duel.users[1]) and \
-       not duel.active:
-        duel.active = True
-        t = threading.Thread(target=bomm, args=(message,))
-        t.daemon = True
-        t.start()
-        return
-
-    # иначе, создаем новую дуэль
-    duel = Duel()
-    duel.init_with_msg(message)
-    if len(duel.users) == 2:
-        DUELS[chat_id] = duel
-        bot.send_message(chat_id, 'Вызов брошен! Последует ли на него ответ?')
-    else:
-        bot.reply_to(message, 'Надо упомянуть противника, которому кидаешь вызов!')
-
-
-def bomm(message):
-    chat_id = message.chat.id
-    duel = DUELS[chat_id]
-    num_of_bom = 5 + random.randint(0, 4)
-    text = 'На главной площади города сошлись заклятые враги {} и {}.\n' \
-           'Часы бьют <b>{} часов</b>. ' \
-           'Когда прозвучит последний удар, оба стреляют.\n' \
-           'С последним ударом вы увидите символ, которым надо выстрелить.\n' \
-           'У кого рука окажется быстрее, тот выиграет дуэль.'.format(duel.name(0), duel.name(1), num_of_bom)
-    bot.send_message(chat_id, text, parse_mode='HTML')
-
-    for i in range(num_of_bom):
-        time.sleep(random.randint(2, 10))
-        bot.send_message(chat_id, 'Б{}М'.format('О' * random.randint(1, 10)))
-
-    duel_symbols = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', ',', '№', '§', '~', 'ё', 'й', 'z', 'G', 'F', '😀', '🤣', '😱']
-    duel.symbol = random.choice(duel_symbols)
-    bot.send_message(chat_id, 'Стреляйтесь: ' + duel.symbol)
-
-    # ---- INFO ----
+# ---- INFO ----
 
 
 # Handle '/start'
@@ -285,7 +109,7 @@ def editfatal(message):
 
 def fatal_file(message):
     if message.document:
-        ''' 
+
         fatal.Editor.delete_all()
 
         file_info = bot.get_file(message.document.file_id)
@@ -294,7 +118,7 @@ def fatal_file(message):
             new_file.write(file)
         with open('locations.xml', 'r') as read_file:
             fatal.Editor.import_from_file(read_file)
-        '''
+
         bot.reply_to(message, 'Добавлено!')
 
 # ---- ----
