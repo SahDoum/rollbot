@@ -3,15 +3,14 @@ from requests.exceptions import ReadTimeout
 import time
 import sys
 
-from __init__ import bot, commands_handler
+from __init__ import bot, commands_handler, OFF_CHATS
 
+from models import DuelUser
+from duel import duel_chat_handler, duel_players_handler, duel_start, duel_stub, duel_shoots
 import fatal
 import dice
-
 import random
 from bs4 import BeautifulSoup
-
-
 
 
 text_messages = {
@@ -34,11 +33,98 @@ text_messages = {
         u'For more information use command /help\n'
 }
 
+# ---- MESSAGES FORMAT ----
+
+
+# Handle '/me'
+@bot.message_handler(func=commands_handler(['/me']))
+def me(message):
+    chat_id = message.chat.id
+    message_id = message.message_id
+
+    try:
+        bot.delete_message(chat_id, message_id)
+    except Exception:
+        pass
+
+    if len(message.text.split()) < 2:
+        return
+
+    if message.from_user.username is not None:
+        usr_name = '@' + message.from_user.username.replace('_', '\_')
+    else:
+        usr_name = '[{}](tg://user?id={})'.format(message.from_user.first_name,
+                                                  message.from_user.id)
+
+    your_message = message.text.split(maxsplit=1)[1]
+    your_me = "{} {}".format(usr_name, your_message)
+
+    if getattr(message, 'reply_to_message') is not None:
+        bot.reply_to(message.reply_to_message, your_me, parse_mode="Markdown")
+    else:
+        bot.send_message(chat_id, your_me, parse_mode="Markdown")
+
+
+# ---- ADMIN ----
+
+
+@bot.message_handler(func=commands_handler(['/on']))
+def chat_on(message):
+    if message.from_user.id != 155493213:
+        return
+
+    chat_id = message.chat.id
+    if chat_id in OFF_CHATS:
+        OFF_CHATS.remove(chat_id)
+
+
+@bot.message_handler(func=commands_handler(['/off']))
+def chat_off(message):
+    if message.from_user.id != 155493213:
+        return
+
+    chat_id = message.chat.id
+    if chat_id not in OFF_CHATS:
+        OFF_CHATS.append(chat_id)
+
+
 # ---- DUEL ----
 
 
-import duel
+# handler for duelists
+bot.message_handler(func=duel_players_handler,
+                    content_types=['text'])\
+                    (duel_shoots)
+# stub during duel
+bot.message_handler(func=duel_chat_handler,
+                    content_types=['text'])\
+                    (duel_stub)
+# handler for /duel
+bot.message_handler(func=commands_handler(['/duel'],
+                    inline=True,
+                    switchable=True))\
+                    (duel_start)
 
+
+# Handle '/duelstats'
+@bot.message_handler(func=commands_handler(['/duelstats'], switchable=True))
+def duel_stats(message):
+    chat_id = message.chat.id
+    users = DuelUser.select()\
+                    .where(DuelUser.chat_id == chat_id)\
+                    .order_by(-1*DuelUser.wins/5, -100*DuelUser.wins/(DuelUser.wins+DuelUser.losses+DuelUser.ties))\
+                    .limit(10)
+    text = "*Лучшие стрелки чата:*\n\n"
+    i = 0
+    for usr in users:
+        i += 1
+        pobeda_ending = ''
+        if usr.wins % 10 == 1:
+            pobeda_ending = 'а'
+        elif 2 <= usr.wins % 10 <= 4:
+            pobeda_ending = 'ы'
+        text += '{}. {}: {} побед{} — {}% \n'.format(i, usr.name, usr.wins, pobeda_ending, int(100*usr.wins/(usr.wins+usr.losses+usr.ties)))
+    bot.reply_to(message, text, parse_mode='Markdown', disable_notification=True)
 
 # ---- INFO ----
 
@@ -54,17 +140,13 @@ def send_welcome(message):
 def help(message):
     bot.reply_to(message, text_messages['help'])
 
+
 # ---- FATAL ----
 
 
 # Handle '/fatal'
-@bot.message_handler(func=commands_handler(['/fatal']))
+@bot.message_handler(func=commands_handler(['/fatal'], switchable=True))
 def fatal_message(message):
-    # title = ''
-    # if message.chat.type != 'private':
-    #         title = fatal.user_to_author(message.from_user)
-    # title += '*>> /fatal*\n\n'
-
     dsc = fatal.create_description()
     bot.send_message(message.chat.id,
                      dsc['text'],
@@ -114,15 +196,44 @@ def fatal_file(message):
 
         file_info = bot.get_file(message.document.file_id)
         file = bot.download_file(file_info.file_path)
-        with open('locations.xml', 'wb') as new_file:
+        with open('data/locations.xml', 'wb') as new_file:
             new_file.write(file)
-        with open('locations.xml', 'r') as read_file:
+        with open('data/locations.xml', 'r') as read_file:
             fatal.Editor.import_from_file(read_file)
 
         bot.reply_to(message, 'Добавлено!')
 
-# ---- ----
-# ---- Different rolls ----
+
+# ---- GURPS ----
+
+
+# Handle '/gurps'
+@bot.message_handler(func=commands_handler(['/gurps', '/GURPS'], switchable=True))
+def gurps(message):
+    with open('data/gurps.xml', 'r') as gurps_file:
+        soup = BeautifulSoup(gurps_file, 'lxml')
+        abilities = soup.find_all('gurps')
+        ab = random.choice(abilities)
+        bot.reply_to(message, ab.text, parse_mode='Markdown')
+
+
+# Handle '/editgurpsl'
+@bot.message_handler(func=commands_handler(['/editgurps']))
+def editgurps(message):
+    bot.reply_to(message, 'Вкидывай файл:')
+    bot.register_next_step_handler(message, gurps_file)
+
+
+def gurps_file(message):
+    if message.document:
+        file_info = bot.get_file(message.document.file_id)
+        file = bot.download_file(file_info.file_path)
+        with open('data/gurps.xml', 'wb') as new_file:
+            new_file.write(file)
+        bot.reply_to(message, 'Добавлено!')
+
+
+# ---- ROLLS ----
 
 
 # Handle '/roll' 'r'
@@ -136,12 +247,19 @@ def roll(message):
         except:
             bot.reply_to(message, "Неправильное выражение.")
     else:
-        bot.reply_to(message, u'Вжух:\n'+str(dice.roll('4d6')))
+        text = '*Дайсовая нотация*\n' \
+                'Бот обрабатывает любое сообщение с дайсовой записью.\n\n' \
+                '• Просто *напишите выражение*, используя +, -, \*, /, Xdn.\n' \
+                '• *Запись Xdn* эквивалентна X броскам кубов с n гранями.\n' \
+                'Например 4d6 может вернуть [4, 3, 5, 1], а 3d1+3 вернет 6.\n' \
+                '• Используйте *оператор ^ и v*, чтобы выбрать наибольшие и наименьшие кубы соответсвенно:\n' \
+                '6d6^3 выберет 3 наибольших куба, а 6d6v3 — 3 наименьших.'
+        bot.reply_to(message, text, parse_mode='Markdown')
 
 
 # Handle '/rf'
 @bot.message_handler(func=commands_handler(['/rf']))
-def rollFate(message):
+def roll_fate(message):
     roll = dice.roll('4d3')
     result = 0
     text = u"Вы выкинули:\n"
@@ -177,36 +295,18 @@ def rollGURPS(message):
     bot.reply_to(message, text)
 
 
-# ---- GURPS ----
+@bot.message_handler(content_types=["text"])
+def try_roll(message):
+    if 'd' not in message.text:
+        return
+    try:
+        result = dice.roll(message.text)
+        bot.reply_to(message, "Вы выкинули:\n" + str(result))
+    except:
+        pass
 
 
-# Handle '/gurps'
-@bot.message_handler(func=commands_handler(['/gurps', '/GURPS']))
-def gurps(message):
-    with open('gurps.xml', 'r') as gurps_file:
-        soup = BeautifulSoup(gurps_file, 'lxml')
-        abilities = soup.find_all('gurps')
-        ab = random.choice(abilities)
-        bot.reply_to(message, ab.text, parse_mode='Markdown')
-
-
-# Handle '/editgurpsl'
-@bot.message_handler(func=commands_handler(['/editgurps']))
-def editgurps(message):
-    bot.reply_to(message, 'Вкидывай файл:')
-    bot.register_next_step_handler(message, gurps_file)
-
-
-def gurps_file(message):
-    if message.document:
-        file_info = bot.get_file(message.document.file_id)
-        file = bot.download_file(file_info.file_path)
-        with open('gurps.xml', 'wb') as new_file:
-            new_file.write(file)
-        bot.reply_to(message, 'Добавлено!')
-
-# ---- NOT-COMAND HANDLERS ---- #
-
+# ---- GREETINGS ----
 
 @bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
 def new_chat_participant(message):

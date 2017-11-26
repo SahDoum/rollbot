@@ -1,6 +1,6 @@
 from peewee import *
 
-database = SqliteDatabase('database.db', **{})
+database = SqliteDatabase('data/database.db', **{})
 
 class UnknownField(object):
     def __init__(self, *_, **__): pass
@@ -26,6 +26,7 @@ class Location(BaseModel):
     class Meta:
         db_table = 'rollclub_locations'
 
+
 class SqliteSequence(BaseModel):
     name = UnknownField(null=True)  # 
     seq = UnknownField(null=True)  # 
@@ -38,7 +39,28 @@ class SqliteSequence(BaseModel):
 class DuelUser(BaseModel):
     user_id = IntegerField()
     chat_id = IntegerField()
+    name = TextField()
 
     wins = IntegerField()
     losses = IntegerField()
     ties = IntegerField()
+
+    class Meta:
+        db_table = 'duel_users'
+
+    @staticmethod
+    def login(chat_id, user_id):
+        try:
+            usr = DuelUser.select().where((DuelUser.chat_id == chat_id) & (DuelUser.user_id == user_id)).get()
+            return usr
+        except:
+            return DuelUser.create(user_id=user_id,
+                                   chat_id=chat_id,
+                                   name='',
+                                   wins=0,
+                                   ties=0,
+                                   losses=0)
+"""
+DuelUser.drop_table()
+database.create_tables([DuelUser])
+"""

@@ -64,6 +64,7 @@ def user_to_author(usr):
         author = '$ ' + usr.first_name + ' '
     return escape_markdown(author)
 
+
 def escape_markdown(str):
     return str.replace('_', '\_')
 
@@ -74,8 +75,8 @@ class Editor:
     def delete_all():
         if not Location.select().first():
             return
-        Location.delete()
-        Button.delete()
+        Location.delete().execute()
+        Button.delete().execute()
 
     @staticmethod
     def import_from_file(file):
