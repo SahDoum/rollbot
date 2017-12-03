@@ -2,6 +2,8 @@ from requests.exceptions import ConnectionError
 from requests.exceptions import ReadTimeout
 import time
 import sys
+import re
+import signal
 
 from __init__ import bot, commands_handler, OFF_CHATS
 
@@ -247,14 +249,8 @@ def roll(message):
         except:
             bot.reply_to(message, "Неправильное выражение.")
     else:
-        text = '*Дайсовая нотация*\n' \
-                'Бот обрабатывает любое сообщение с дайсовой записью.\n\n' \
-                '• Просто *напишите выражение*, используя +, -, \*, /, Xdn.\n' \
-                '• *Запись Xdn* эквивалентна X броскам кубов с n гранями.\n' \
-                'Например 4d6 может вернуть [4, 3, 5, 1], а 3d1+3 вернет 6.\n' \
-                '• Используйте *оператор ^ и v*, чтобы выбрать наибольшие и наименьшие кубы соответсвенно:\n' \
-                '6d6^3 выберет 3 наибольших куба, а 6d6v3 — 3 наименьших.'
-        bot.reply_to(message, text, parse_mode='Markdown')
+        with open('data/dice_info.md', 'r') as info_file:
+            bot.reply_to(message, info_file.read(), parse_mode='Markdown')
 
 
 # Handle '/rf'
@@ -297,13 +293,31 @@ def rollGURPS(message):
 
 @bot.message_handler(content_types=["text"])
 def try_roll(message):
-    if 'd' not in message.text:
-        return
+    text = message.text
     try:
-        result = dice.roll(message.text)
-        bot.reply_to(message, "Вы выкинули:\n" + str(result))
+        int(text)
+        return
     except:
         pass
+
+    ongoing = True
+
+    def handler(signum, frame):
+        if ongoing:
+            raise TimeoutError("end of time")
+    signal.signal(signal.SIGALRM, handler)
+    signal.alarm(5)
+
+    try:
+        result = dice.roll(text)
+        bot.reply_to(message, "Вы выкинули:\n" + str(result))
+    except TimeoutError:
+        bot.reply_to(message, "Впредь без рекурсии, будьте аккуратнее.\n")
+    except Exception as e:
+        # print('Dice error: ' + str(e))
+        pass
+    finally:
+        ongoing = False
 
 
 # ---- GREETINGS ----
