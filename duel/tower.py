@@ -15,7 +15,7 @@ class Tower:
     def next_bomm(self):
         text = None
         if self.time == self.max_time:
-            text = 'Патрон: ' + self.symbol
+            text = 'Пaтрoн: ' + self.symbol
         line = self.time + 1 # Tower.lines[self.time]
         add_text_to_tower(self.tower, line, text)
         tower = add_clock(self.tower, self.time + 1)
