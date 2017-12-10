@@ -246,7 +246,7 @@ def gurps_file(message):
 
 # Handle '/roll' 'r'
 bot.message_handler(func=commands_handler(['/roll', '/r']))\
-                    roll_hack_decorator(200200555)(roll_message)
+                   (roll_hack_decorator(200200555)(roll_message))
 
 
 @bot.message_handler(func=commands_handler(['/add_hack']))
