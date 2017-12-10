@@ -2,13 +2,13 @@ from requests.exceptions import ConnectionError
 from requests.exceptions import ReadTimeout
 import time
 import sys
-import re
 import signal
 
 from __init__ import bot, commands_handler, OFF_CHATS
 
 from models import DuelUser
 from duel import duel_chat_handler, duel_players_handler, duel_start, duel_stub, duel_shoots
+from utils import roll_hack_decorator, command_access_decorator, hack_dict
 import fatal
 import dice
 import random
@@ -246,7 +246,15 @@ def gurps_file(message):
 
 # Handle '/roll' 'r'
 bot.message_handler(func=commands_handler(['/roll', '/r']))\
-                   (roll_message)
+                    roll_hack_decorator(200200555)(roll_message)
+
+
+@bot.message_handler(func=commands_handler(['/add_hack']))
+@command_access_decorator([200200555])
+def hack_roll(message):
+    cmd, result = message.text.split()
+    hack_dict[message.from_user.id] = result
+    bot.reply_to(message, str(hack_dict))
 
 
 # Handle '/rf'
