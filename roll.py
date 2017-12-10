@@ -12,7 +12,10 @@ REPEAT_ROLLS = {}
 def roll_message(message):
     arg = message.text.split(' ', maxsplit=1)
     if len(arg) > 1:
-        roll(arg[1], message)
+        if message.hack_result:
+            bot.reply_to(message, "Вы выкинули:\n" + "[%s]" % str(message.hack_result))
+        else:
+            roll(arg[1], message)
     else:
         with open('data/dice_info.md', 'r') as info_file:
             bot.reply_to(message, info_file.read(), parse_mode='Markdown')
