@@ -3,22 +3,24 @@ import time
 import random
 import threading
 from .tower import Tower
-from  .duel import Duel
+from .duel import Duel
 
 
 DUELS = {}
 
 
 # handler for players shoots
-def duel_players_handler(m): m.chat.id in DUELS and \
-                             DUELS[m.chat.id].active and \
-                             DUELS[m.chat.id].duel_user(m.from_user)
+def duel_players_handler(m):
+    return m.chat.id in DUELS and \
+           DUELS[m.chat.id].active and \
+           DUELS[m.chat.id].duel_user(m.from_user)
 
 
 # handler for other user messages
-def duel_chat_handler(m): m.chat.id in DUELS and \
-                          DUELS[m.chat.id].active and \
-                          DUELS[m.chat.id].duel_user(m.from_user)
+def duel_chat_handler(m):
+    return m.chat.id in DUELS and \
+           DUELS[m.chat.id].active and \
+           DUELS[m.chat.id].duel_user(m.from_user)
 
 
 def duel_stub(message):
@@ -26,6 +28,7 @@ def duel_stub(message):
 
 
 def duel_shoots(message):
+    print('SHOOT')
     chat_duel = DUELS[message.chat.id]
     chat_duel.shoot(message)
     if not chat_duel.active:
@@ -44,8 +47,21 @@ def duel_start(message):
         t = threading.Thread(target=bomm, args=(message,))
         t.daemon = True
         t.start()
+        print(str(DUELS))
+        print(str(chat_duel.active))
+        print(str(message.chat.id in DUELS))
         return
 
+'''
+# handler for duelists
+bot.message_handler(func=duel_players_handler,
+                    content_types=['text'])\
+                    (duel_shoots)
+# stub during duel
+bot.message_handler(func=duel_chat_handler,
+                    content_types=['text'])\
+                    (duel_stub)
+'''
 
 def bomm(message):
     chat_id = message.chat.id
@@ -66,7 +82,7 @@ def bomm(message):
         bot.edit_message_text(chat_id=chat_id, message_id=m.message_id, text=text, parse_mode='Markdown')
         time.sleep(random.randint(2, 10))
 
-    duel_symbols = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', ',', '№', '§', '~', 'ё', 'й', 'z', 'G', 'F', '😀', '🤣', '😱']
+    duel_symbols = ['!', '$', '%', '^', '&', '*', '(', ')', ',', '§', '~', 'z', 'G', 'F', '-', '=', 'Z', 'l', '😀']
     duel.symbol = random.choice(duel_symbols)
     twr.symbol = duel.symbol
     text = twr.next_bomm()

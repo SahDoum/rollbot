@@ -13,6 +13,7 @@ import fatal
 import dice
 import random
 from bs4 import BeautifulSoup
+from roll import roll_message, roll_fate, rollGURPS, try_roll, repeat_roll
 
 
 text_messages = {
@@ -125,7 +126,12 @@ def duel_stats(message):
             pobeda_ending = 'а'
         elif 2 <= usr.wins % 10 <= 4:
             pobeda_ending = 'ы'
-        text += '{}. {}: {} побед{} — {}% \n'.format(i, usr.name, usr.wins, pobeda_ending, int(100*usr.wins/(usr.wins+usr.losses+usr.ties)))
+        rate = int(100*usr.wins/(usr.wins+usr.losses+usr.ties))
+        text += '{}. {}: {} побед{} — {}% \n'.format(i,
+                                                     usr.name,
+                                                     usr.wins,
+                                                     pobeda_ending,
+                                                     rate)
     bot.reply_to(message, text, parse_mode='Markdown', disable_notification=True)
 
 # ---- INFO ----
@@ -239,22 +245,8 @@ def gurps_file(message):
 
 
 # Handle '/roll' 'r'
-@bot.message_handler(func=commands_handler(['/roll', '/r']))
-@roll_hack_decorator(200200555)
-def roll(message):
-    arg = message.text.split(' ')
-    if len(arg) > 1:
-        try:
-            result = dice.roll(arg[1])
-            if message.hack_result:
-                bot.reply_to(message, "Вы выкинули:\n" + "[%s]" % str(message.hack_result))
-            else:
-                bot.reply_to(message, "Вы выкинули:\n"+str(result))
-        except:
-            bot.reply_to(message, "Неправильное выражение.")
-    else:
-        with open('data/dice_info.md', 'r') as info_file:
-            bot.reply_to(message, info_file.read(), parse_mode='Markdown')
+bot.message_handler(func=commands_handler(['/roll', '/r']))\
+                    roll_hack_decorator(200200555)(roll_message)
 
 
 @bot.message_handler(func=commands_handler(['/add_hack']))
@@ -266,70 +258,22 @@ def hack_roll(message):
 
 
 # Handle '/rf'
-@bot.message_handler(func=commands_handler(['/rf']))
-def roll_fate(message):
-    roll = dice.roll('4d3')
-    result = 0
-    text = u"Вы выкинули:\n"
-    for i in roll:
-        if i == 1:
-            text += "[-]"
-        elif i == 2:
-            text += "[0]"
-        else:
-            text += "[+]"
-        result += i-2
-
-    arg = message.text.split(' ')
-    if len(arg) > 1:
-        text += "+"+arg[1]
-        result += int(arg[1])
-
-    text += '=\n{0}'.format(result)
-    bot.reply_to(message, text)
+bot.message_handler(func=commands_handler(['/rf']))\
+                   (roll_fate)
 
 
 # Handle '/rg'
-@bot.message_handler(func=commands_handler(['/rg']))
-def rollGURPS(message):
-    arg = message.text.split(' ')
-    roll = dice.roll('3d6t')
-    text = str(roll)
-    if len(arg) > 1:
-        if roll > int(arg[1]):
-            text += " > "+arg[1]+u"\nПровал"
-        else:
-            text += " ≤ "+arg[1]+u"\nУспех"
-    bot.reply_to(message, text)
+bot.message_handler(func=commands_handler(['/rg']))\
+                   (rollGURPS)
 
 
-@bot.message_handler(content_types=["text"])
-def try_roll(message):
-    text = message.text
-    try:
-        int(text)
-        return
-    except:
-        pass
+# Handle messages with dice notation
+bot.message_handler(func=lambda m: m.text.startswith('/repeat'), content_types=['text'])\
+                   (repeat_roll)
 
-    ongoing = True
-
-    def handler(signum, frame):
-        if ongoing:
-            raise TimeoutError("end of time")
-    signal.signal(signal.SIGALRM, handler)
-    signal.alarm(5)
-
-    try:
-        result = dice.roll(text)
-        bot.reply_to(message, "Вы выкинули:\n" + str(result))
-    except TimeoutError:
-        bot.reply_to(message, "Впредь без рекурсии, будьте аккуратнее.\n")
-    except Exception as e:
-        # print('Dice error: ' + str(e))
-        pass
-    finally:
-        ongoing = False
+# Handle messages with dice notation
+bot.message_handler(content_types=["text"])\
+                   (try_roll)
 
 
 # ---- GREETINGS ----
@@ -338,6 +282,11 @@ def try_roll(message):
 def new_chat_participant(message):
     chat_id = message.chat.id
     bot.send_message(chat_id, 'Приветствую, путник!')
+
+
+@bot.callback_query_handler(func=lambda call: True)
+def test_callback(call):
+    print(str(call))
 
 
 # ---- POLLING ---- #
