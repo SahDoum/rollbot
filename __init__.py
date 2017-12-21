@@ -2,12 +2,16 @@ import logging
 import re
 
 import telebot
-import botan
+
+import sys
+sys.path.append("../statistics display")
+import bot_statistics as statistics
 
 from data.settings import API_TOKEN1, BOTAN_KEY
 
 OFF_CHATS = [-1001119348462]
-
+BOT_NAME = '@rollclub_bot'
+statistics.init_track(BOT_NAME)
 
 def is_command_on(msg):
     return msg.chat.id in OFF_CHATS
@@ -15,7 +19,6 @@ def is_command_on(msg):
 
 # Command list handler function
 def commands_handler(cmnds, inline=False, switchable=False):
-    BOT_NAME = '@rollclub_bot'
 
     def wrapped(msg):
         if not msg.text:
@@ -30,8 +33,8 @@ def commands_handler(cmnds, inline=False, switchable=False):
         else:
             result = any(cmnd in split_message or cmnd + BOT_NAME in split_message for cmnd in cmnds)
 
-        # if result:
-        #     botan.track(BOTAN_KEY, msg.chat.id, msg, cmnds[0])
+        if result:
+            statistics.track_by_message(BOT_NAME, 'Command: ' + cmnds[0], msg)
         return result
 
     return wrapped

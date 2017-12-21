@@ -268,7 +268,7 @@ bot.message_handler(func=commands_handler(['/rg']))\
 
 
 # Handle messages with dice notation
-bot.message_handler(func=lambda m: m.text.startswith('/repeat'), content_types=['text'])\
+bot.message_handler(func=lambda m: hasattr(m, 'text') and m.text is not None and m.text.startswith('/repeat'), content_types=['text'])\
                    (repeat_roll)
 
 # Handle messages with dice notation
@@ -296,12 +296,17 @@ while __name__ == '__main__':
         bot.polling(none_stop=True, interval=1)
         time.sleep(1)
 
+    # завершение работы из консоли стандартным Ctrl-C
+    except KeyboardInterrupt as e:
+        print('\n{0}: Keyboard Interrupt. Good bye.\n'.format(time.time()))
+        sys.exit()
+
     # из-за Telegram API иногда какой-нибудь пакет не доходит
     except ReadTimeout as e:
         print('{0}: Read Timeout. Because of Telegram API.\n '
               'We are offline. Reconnecting in 5 seconds.\n'.format(time.time()))
         time.sleep(5)
-
+        
     # если пропало соединение, то пытаемся снова через минуту
     except ConnectionError as e:
         print('{0}: Connection Error.\n'
@@ -313,11 +318,6 @@ while __name__ == '__main__':
         print('{0}: Runtime Error.\n'
               'Retrying in 3 seconds.\n'.format(time.time()))
         time.sleep(3)
-
-    # завершение работы из консоли стандартным Ctrl-C
-    except KeyboardInterrupt as e:
-        print('\n{0}: Keyboard Interrupt. Good bye.\n'.format(time.time()))
-        sys.exit()
 
     # если что-то неизвестное — от греха вырубаем с корнем. Создаём алёрт файл для .sh скрипта
     except Exception as e:

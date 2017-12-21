@@ -15,13 +15,13 @@ class Duel:
         self.symbol = None
         self.time = time.time()
 
-    # главный метод настройки дуэли
+    # вызов на дуэль
     def update_with_duel_msg(self, msg):
-        print('{} - {}'.format(time.time(), self.time))
-        if time.time() - self.time > self.delay:
-            self.users = []
-            self.enemies = []
-            print("Сброс настроек по времени")
+        # print('{} - {}'.format(time.time(), self.time))
+        # if time.time() - self.time > self.delay:
+        #     self.users = []
+        #     self.enemies = []
+        #     print("Сброс настроек по времени")
 
         user = User(msg.from_user)
         new_enemies = []
@@ -34,6 +34,8 @@ class Duel:
                 enemy = User(ent.user)
                 new_enemies.append(enemy)
 
+        text = None
+
         # если кто-то новый вызывает дуэль
         if user not in self.users:
             # перезапись дуэли
@@ -44,17 +46,17 @@ class Duel:
                 print('New duel initiation by: ' + str(user))
 
             if len(self.users) > 0:
-                bot.send_message(msg.chat.id, user.accept_duel(), parse_mode='Markdown')
+                text = user.accept_duel_msg()
             elif len(new_enemies) > 0:
-                bot.send_message(msg.chat.id, user.new_challenge(), parse_mode='Markdown')
+                text = user.new_challenge()
             else:
-                bot.send_message(msg.chat.id, user.new_duel_msg(), parse_mode='Markdown')
+                text = user.new_duel_msg()
             self.users.append(user)
 
         elif len(new_enemies) == 0:
-            bot.send_message(msg.chat.id, user.wait_msg(), parse_mode='Markdown')
+            text = user.wait_msg()
         else:
-            bot.send_message(msg.chat.id, user.new_enemies_msg(), parse_mode='Markdown')
+            text = user.new_enemies_msg()
 
         self.enemies.extend(new_enemies)
         self.time = time.time()
@@ -65,17 +67,9 @@ class Duel:
             self.active = True
             print('Start duel: ' + str(user))
 
-    # дополнительные функции
-    def name(self, usr_num):
-        return self.users[usr_num].name()
+        return text
 
-    def duel_user(self, user):
-        search = User(user)
-        for i in self.users:
-            if search == i:
-                return i
-        return None
-
+    # выстрел
     def shoot(self, msg):
         if not self.symbol: return
 
@@ -95,6 +89,19 @@ class Duel:
             # self.update_score()
             print('Duel end')
 
+    # покинуть дуэль
+    def leave_duel(self):
+        if self.active: return None
+        if len(self.users) == 0: return None
+
+        text = self.users[0].leave_msg()
+
+        self.users = []
+        self.enemies = []
+
+        return text
+
+    # обновление счета
     def update_score(self, chat_id):
         if all(user.status != 1 for user in self.users):
             for usr in self.users:
@@ -112,6 +119,16 @@ class Duel:
                 duel_usr.losses = duel_usr.losses + 1
             duel_usr.save()
 
+    # дополнительные функции
+    def name(self, usr_num):
+        return self.users[usr_num].name()
+
+    def duel_user(self, user):
+        search = User(user)
+        for i in self.users:
+            if search == i:
+                return i
+        return None
 
 # ---- USER CLASS ----
 
@@ -164,7 +181,6 @@ class User:
             name += self.user.username + ' '
         return name
 
-
     def wait_msg(self):
         return '{} стоит на площади и бьет себя кулаком в грудь, ожидая боя!'.format(self.name())
 
@@ -177,5 +193,8 @@ class User:
     def new_enemies_msg(self):
         return 'Больше вызовов богу вызовов!'
 
-    def accept_duel(self):
+    def accept_duel_msg(self):
         return '{} принимает вызов!'.format(self.name())
+
+    def leave_msg(self):
+        return '{} не дожидается противника и уходит.'.format(self.name())
