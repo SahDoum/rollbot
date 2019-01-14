@@ -20,7 +20,7 @@ class Editor:
     def add_file(self, file, file_name='fatal.xml', rewrite=true):
         file_path = self.path + file_name
 
-        if !rewrite and os.path.isfile(fname):
+        if not rewrite and os.path.isfile(fname):
             return ''
 
         with open(file_path, 'wb') as new_file:
