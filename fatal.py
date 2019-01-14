@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 # from telegram.utils.helpers import escape_markdown
 
 
-def create_description(callback=None):
+def create_description(callback=None, param='q'):
     if callback:
         btn_id = int(callback.data.split(' ')[1])
         btn = Button.get(Button.id == btn_id)
@@ -26,19 +26,19 @@ def create_description(callback=None):
 
     dsc_title = callback_title(callback)
     text = dsc_title + loc.dsc
-    markup = create_keyboard(btn_list)
+    markup = create_keyboard(btn_list, param)
     dsc = {'text': text, 'buttons': markup}
     return dsc
 
 
-def create_keyboard(btn_list):
+def create_keyboard(btn_list, param='q'):
     markup = None
     if btn_list:
         markup = types.InlineKeyboardMarkup()
         for btn in btn_list:
             inline_button = types.InlineKeyboardButton(
                 text=btn.dsc,
-                callback_data="f "+ str(btn.id)
+                callback_data= param + " " + str(btn.id)
                 )
             markup.add(inline_button)
     return markup

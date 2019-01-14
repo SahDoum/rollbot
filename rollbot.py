@@ -6,10 +6,11 @@ import signal
 
 from __init__ import bot, commands_handler, OFF_CHATS
 
-from models import DuelUser
+from models import DuelUser, Fatal
 from duel import duel_chat_handler, duel_players_handler, duel_start, duel_stub, duel_shoots
 from utils import roll_hack_decorator, command_access_decorator, hack_dict
-import fatal
+import quest
+from editor import Editor as FatalEditor, QuestEditor
 import dice
 import random
 from bs4 import BeautifulSoup
@@ -25,7 +26,7 @@ text_messages = {
         u'/r - короткая команда для /roll\n'
         u'/rf - бросок в FATE\n'
         u'/rg - бросок в GURPS\n'
-        u'/fatal - используй команду эту с большой осторожностью\n'
+        u'/quest - используй команду эту с большой осторожностью\n'
         u'/gurps - накинь себе персонажа, ну что же ты, скорее!\n',
 
     'start':
@@ -72,20 +73,16 @@ def me(message):
 
 
 @bot.message_handler(func=commands_handler(['/on']))
+@command_access_decorator([155493213])
 def chat_on(message):
-    if message.from_user.id != 155493213:
-        return
-
     chat_id = message.chat.id
     if chat_id in OFF_CHATS:
         OFF_CHATS.remove(chat_id)
 
 
 @bot.message_handler(func=commands_handler(['/off']))
+@command_access_decorator([155493213])
 def chat_off(message):
-    if message.from_user.id != 155493213:
-        return
-
     chat_id = message.chat.id
     if chat_id not in OFF_CHATS:
         OFF_CHATS.append(chat_id)
@@ -155,21 +152,58 @@ def help(message):
 # Handle '/fatal'
 @bot.message_handler(func=commands_handler(['/fatal'], switchable=True))
 def fatal_message(message):
-    dsc = fatal.create_description()
+    fatal_message = Location.select().order_by(fn.Rand()).get()
+    bot.send_message(message.chat.id,
+                     fatal_message.dsc,
+                     parse_mode='Markdown')
+
+
+# Handle '/editfatal'
+@bot.message_handler(func=commands_handler(['/editfatal']))
+@command_access_decorator([155493213, 120046977])
+def editfatal(message):
+    bot.reply_to(message, 'Вкидывай файл:')
+    bot.register_next_step_handler(message, fatal_file)
+
+
+def fatal_file(message):
+    if !message.document:
+        return
+
+    file_info = bot.get_file(message.document.file_id)
+    file = bot.download_file(file_info.file_path)
+
+    editor = FatalEditor()
+    editor.delete_all()
+    file_name = editor.add_file(file)
+    editor.import_from_file(file_name)
+
+    bot.reply_to(message, 'Добавлено!')
+
+
+# ---- QUESTS ----
+
+QUEST_CALLBAK_PARAM = 'q';
+
+
+# Handle '/quest'
+@bot.message_handler(func=commands_handler(['/quest'], switchable=True))
+def quest_message(message):
+    dsc = quest.create_description(param=QUEST_CALLBAK_PARAM)
     bot.send_message(message.chat.id,
                      dsc['text'],
                      parse_mode='Markdown',
                      reply_markup=dsc['buttons'])
 
 
-@bot.callback_query_handler(func=lambda call: call.data.split(' ')[0] == 'f')
-def fatal_callback(call):
-    dsc = fatal.create_description(call)
-    add_fatal_dsc_to(call.message, dsc)
+@bot.callback_query_handler(func=lambda call: call.data.split(' ')[0] == QUEST_CALLBAK_PARAM)
+def quest_callback(call):
+    dsc = quest.create_description(call, param=QUEST_CALLBAK_PARAM)
+    add_quest_dsc_to(call.message, dsc)
 
 
-def add_fatal_dsc_to(msg, dsc):
-    text = fatal.escape_markdown(msg.text) + '\n\n' + dsc['text']
+def add_quest_dsc_to(msg, dsc):
+    text = quest.escape_markdown(msg.text) + '\n\n' + dsc['text']
     if text.count('>>') >= 3:
         if msg.chat.type == 'private':
             text = '>>' + text[2:].split('>>', maxsplit=1)[1]
@@ -190,30 +224,51 @@ def add_fatal_dsc_to(msg, dsc):
         )
 
 
-# Handle '/editfatal'
-@bot.message_handler(func=commands_handler(['/editfatal']))
-def editfatal(message):
+# Handle '/clearquest'
+@bot.message_handler(func=commands_handler(['/clearquests']))
+@command_access_decorator([155493213, 120046977])
+def clearquest(message):
+    editor = QuestEditor(path='data/quests')
+    editor.delete_all()
+    bot.reply_to(message, 'Удалено')
+
+
+# Handle '/rebuldquests'
+@bot.message_handler(func=commands_handler(['/rebuldquests']))
+@command_access_decorator([155493213, 120046977])
+def rebuldquests(message):
+    editor = QuestEditor(path='data/quests')
+    editor.delete_all()
+    editor.import_files_from_directory()
+
+    bot.reply_to(message, 'Пересобрано!')
+
+
+# Handle '/editquest'
+@bot.message_handler(func=commands_handler(['/addquest']))
+@command_access_decorator([155493213, 120046977])
+def editquest(message):
     bot.reply_to(message, 'Вкидывай файл:')
-    bot.register_next_step_handler(message, fatal_file)
+    bot.register_next_step_handler(message, quest_file)
 
 
-def fatal_file(message):
-    if message.document:
+def quest_file(message):
+    if !message.document:
+        return
 
-        fatal.Editor.delete_all()
+    file_info = bot.get_file(message.document.file_id)
+    file = bot.download_file(file_info.file_path)
 
-        file_info = bot.get_file(message.document.file_id)
-        file = bot.download_file(file_info.file_path)
-        with open('data/locations.xml', 'wb') as new_file:
-            new_file.write(file)
-        with open('data/locations.xml', 'r') as read_file:
-            fatal.Editor.import_from_file(read_file)
-
-        bot.reply_to(message, 'Добавлено!')
+    editor = QuestEditor(path='data/quests')
+    file_name = editor.add_file(file, file_name=message.document.file_name, rewrite=false)
+    if file_name == '':
+        bot.reply_to(message, 'Файл уже существует!')
+        return
+    editor.import_from_file(file_name)
+    bot.reply_to(message, 'Добавлено!')
 
 
 # ---- GURPS ----
-
 
 # Handle '/gurps'
 @bot.message_handler(func=commands_handler(['/gurps', '/GURPS'], switchable=True))
@@ -227,6 +282,7 @@ def gurps(message):
 
 # Handle '/editgurpsl'
 @bot.message_handler(func=commands_handler(['/editgurps']))
+@command_access_decorator([155493213, 120046977])
 def editgurps(message):
     bot.reply_to(message, 'Вкидывай файл:')
     bot.register_next_step_handler(message, gurps_file)
