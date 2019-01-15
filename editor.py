@@ -12,8 +12,9 @@ class Editor:
 
     @classmethod
     def delete_all(self):
-        if not Fatal.select().first():
-            Fatal.delete().execute()
+        if Fatal.select().first():
+            return
+        Fatal.delete().execute()
 
     @classmethod
     def add_file(self, file, file_name='fatal.xml', rewrite=True):
