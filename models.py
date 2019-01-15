@@ -60,7 +60,14 @@ class DuelUser(BaseModel):
                                    wins=0,
                                    ties=0,
                                    losses=0)
-"""
-DuelUser.drop_table()
-database.create_tables([DuelUser])
-"""
+
+
+class Fatal(BaseModel):
+    dsc = TextField(null=True)
+
+    class Meta:
+        db_table = 'fatal'
+
+if __name__ == '__main__':
+    # Fatal.drop_table()
+    database.create_tables([Fatal])

@@ -1,8 +1,6 @@
 from models import Location, Button
 
 from telebot import types
-import random
-from bs4 import BeautifulSoup
 
 # from telegram.utils.helpers import escape_markdown
 
@@ -20,8 +18,7 @@ def create_description(callback=None, param='q'):
     else:
         loc_key = 'default'
 
-    loc_list = Location.select().where(Location.key == loc_key)
-    loc = random.choice(loc_list)
+    loc = Location.select().where(Location.key == loc_key).order_by(fn.Rand()).get()
     btn_list = Button.select().where(Button.loc == loc.id)
 
     dsc_title = callback_title(callback)
@@ -67,35 +64,3 @@ def user_to_author(usr):
 
 def escape_markdown(str):
     return str.replace('_', '\_')
-
-
-class Editor:
-
-    @staticmethod
-    def delete_all():
-        if not Location.select().first():
-            return
-        Location.delete().execute()
-        Button.delete().execute()
-
-    @staticmethod
-    def import_from_file(file):
-        soup = BeautifulSoup(file, 'lxml')
-        locations = soup.find_all('loc')
-
-        for loc in locations:
-            Editor.add_location(loc)
-
-    @staticmethod
-    def add_location(loc):
-        dsc = str(loc.find(text=True, recursive=False)).strip()
-        key = str(loc['key'])
-        location = Location.create(key=key, dsc=dsc)
-        loc_id = location.id
-        buttons = loc.find_all('btn')
-        print(location)
-        for btn in buttons:
-            btn_dsc = btn.text
-            btn_act = btn['key']
-            button = Button.create(loc=loc_id, act_key=btn_act, dsc=btn_dsc)
-            print(button)
