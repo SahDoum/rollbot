@@ -53,14 +53,14 @@ class Editor:
 class QuestEditor(Editor):
 
     @classmethod
-    def delete_all():
+    def delete_all(self):
         if not Location.select().first():
             return
         Location.delete().execute()
         Button.delete().execute()
 
     @classmethod
-    def add_location(loc):
+    def add_location(self,loc):
         dsc = str(loc.find(text=True, recursive=False)).strip()
         key = str(loc['key'])
         location = Location.create(key=key, dsc=dsc)

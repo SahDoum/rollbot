@@ -3,7 +3,7 @@ from models import Location, Button
 from telebot import types
 
 # from telegram.utils.helpers import escape_markdown
-
+from peewee import fn
 
 def create_description(callback=None, param='q'):
     if callback:
@@ -18,7 +18,7 @@ def create_description(callback=None, param='q'):
     else:
         loc_key = 'default'
 
-    loc = Location.select().where(Location.key == loc_key).order_by(fn.Rand()).get()
+    loc = Location.select().where(Location.key == loc_key).order_by(fn.Random()).get()
     btn_list = Button.select().where(Button.loc == loc.id)
 
     dsc_title = callback_title(callback)

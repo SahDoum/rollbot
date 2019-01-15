@@ -15,7 +15,7 @@ import dice
 import random
 from bs4 import BeautifulSoup
 from roll import roll_message, roll_fate, rollGURPS, try_roll, repeat_roll
-
+from peewee import fn
 
 text_messages = {
     'help':
@@ -154,7 +154,7 @@ def help(message):
 # Handle '/fatal'
 @bot.message_handler(func=commands_handler(['/fatal'], switchable=True))
 def fatal_message(message):
-    fatal_message = Location.select().order_by(fn.Rand()).get()
+    fatal_message = Fatal.select().order_by(fn.Random()).get()
     bot.send_message(message.chat.id,
                      fatal_message.dsc,
                      parse_mode='Markdown')
@@ -226,7 +226,7 @@ def add_quest_dsc_to(msg, dsc):
         )
 
 
-# Handle '/clearquest'
+# Handle '/clearquests'
 @bot.message_handler(func=commands_handler(['/clearquests']))
 @command_access_decorator([155493213, 120046977])
 def clearquest(message):
