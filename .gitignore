@@ -2,3 +2,4 @@
 __pycache__
 data.settings.py
 .idea
+data/settings.py
