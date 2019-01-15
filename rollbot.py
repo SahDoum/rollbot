@@ -230,7 +230,7 @@ def add_quest_dsc_to(msg, dsc):
 @bot.message_handler(func=commands_handler(['/clearquests']))
 @command_access_decorator([155493213, 120046977])
 def clearquest(message):
-    editor = QuestEditor(path='data/quests')
+    editor = QuestEditor(path='data/quests/')
     editor.delete_all()
     bot.reply_to(message, 'Удалено')
 
@@ -239,7 +239,7 @@ def clearquest(message):
 @bot.message_handler(func=commands_handler(['/rebuldquests']))
 @command_access_decorator([155493213, 120046977])
 def rebuldquests(message):
-    editor = QuestEditor(path='data/quests')
+    editor = QuestEditor(path='data/quests/')
     editor.delete_all()
     editor.import_files_from_directory()
 
@@ -261,7 +261,7 @@ def quest_file(message):
     file_info = bot.get_file(message.document.file_id)
     file = bot.download_file(file_info.file_path)
 
-    editor = QuestEditor(path='data/quests')
+    editor = QuestEditor(path='data/quests/')
     file_name = editor.add_file(file, file_name=message.document.file_name, rewrite=false)
     if file_name == '':
         bot.reply_to(message, 'Файл уже существует!')
