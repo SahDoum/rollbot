@@ -25,8 +25,7 @@ def duel_players_handler(m):
 # handler for other user messages
 def duel_chat_handler(m):
     return m.chat.id in DUELS and \
-           DUELS[m.chat.id].duel.active and \
-           DUELS[m.chat.id].duel.duel_user(m.from_user)
+           DUELS[m.chat.id].duel.active
 
 
 def duel_stub(message):
