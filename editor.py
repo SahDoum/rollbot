@@ -1,6 +1,7 @@
 from models import Location, Button, Fatal
 from bs4 import BeautifulSoup
-import os.path
+from os import listdir
+from os.path import join, isfile
 
 
 class Editor:
@@ -8,7 +9,6 @@ class Editor:
     @classmethod
     def __init__(self, path='data/'):
         self.path = path
-        return self
 
     @classmethod
     def delete_all(self):
@@ -20,7 +20,7 @@ class Editor:
     def add_file(self, file, file_name='fatal.xml', rewrite=True):
         file_path = self.path + file_name
 
-        if not rewrite and os.path.isfile(fname):
+        if not rewrite and isfile(fname):
             return ''
 
         with open(file_path, 'wb') as new_file:
@@ -29,10 +29,11 @@ class Editor:
 
     @classmethod
     def import_files_from_directory(self):
-        files = [f for f in join(path, os.path.listdir(path)) if os.path.isfile(f)]
+        directory = [self.path + f for f in listdir(self.path) if not f.startswith('.')]
+        files = [f for f in directory if isfile(f)]
 
         for file in files:
-            QuestEditor().import_from_file(file)
+            self.import_from_file(file)
 
     @classmethod
     def import_from_file(self, file_path):
@@ -41,7 +42,7 @@ class Editor:
             locations = soup.find_all('loc')
 
             for loc in locations:
-                Editor.add_location(loc)
+                self.add_location(loc)
 
     @classmethod
     def add_location(self, loc):
@@ -65,10 +66,7 @@ class QuestEditor(Editor):
         location = Location.create(key=key, dsc=dsc)
         loc_id = location.id
         buttons = loc.find_all('btn')
-        print(location)
         for btn in buttons:
             btn_dsc = btn.text
             btn_act = btn['key']
             button = Button.create(loc=loc_id, act_key=btn_act, dsc=btn_dsc)
-            print(button)
-
