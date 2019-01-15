@@ -13,11 +13,10 @@ class Editor:
     @classmethod
     def delete_all(self):
         if not Fatal.select().first():
-            continue
-        Fatal.delete().execute()
+            Fatal.delete().execute()
 
     @classmethod
-    def add_file(self, file, file_name='fatal.xml', rewrite=true):
+    def add_file(self, file, file_name='fatal.xml', rewrite=True):
         file_path = self.path + file_name
 
         if not rewrite and os.path.isfile(fname):

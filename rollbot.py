@@ -169,7 +169,7 @@ def editfatal(message):
 
 
 def fatal_file(message):
-    if !message.document:
+    if not message.document:
         return
 
     file_info = bot.get_file(message.document.file_id)
@@ -255,7 +255,7 @@ def editquest(message):
 
 
 def quest_file(message):
-    if !message.document:
+    if not message.document:
         return
 
     file_info = bot.get_file(message.document.file_id)
