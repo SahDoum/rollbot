@@ -42,7 +42,7 @@ text_messages = {
         u'/on /off\n'
         u'/editfatal\n'
         u'/clearquests\n'
-        u'/rebuidquests\n'
+        u'/rebuildquests\n'
         u'/addquest\n'
         u'/rewritequest\n'
 }
@@ -251,7 +251,7 @@ def clearquest(message):
 
 
 # Handle '/rebuldquests'
-@bot.message_handler(func=commands_handler(['/rebuldquests']))
+@bot.message_handler(func=commands_handler(['/rebuildquests']))
 @command_access_decorator([155493213, 120046977])
 def rebuldquests(message):
     editor = QuestEditor(path='data/quests/')
