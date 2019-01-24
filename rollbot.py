@@ -36,7 +36,15 @@ text_messages = {
         u'Protocol alpha is running...\n'
         u'System has confirmed your access...\n'
         u'You are welcome to use!\n'
-        u'For more information use command /help\n'
+        u'For more information use command /help\n',
+
+    'admin':
+        u'/on /off\n'
+        u'/editfatal\n'
+        u'/clearquests\n'
+        u'/rebuidquests\n'
+        u'/addquest\n'
+        u'/rewritequest\n'
 }
 
 # ---- MESSAGES FORMAT ----
@@ -75,7 +83,7 @@ def me(message):
 
 
 @bot.message_handler(func=commands_handler(['/on']))
-@command_access_decorator([155493213])
+@command_access_decorator([155493213, 120046977])
 def chat_on(message):
     chat_id = message.chat.id
     if chat_id in OFF_CHATS:
@@ -83,7 +91,7 @@ def chat_on(message):
 
 
 @bot.message_handler(func=commands_handler(['/off']))
-@command_access_decorator([155493213])
+@command_access_decorator([155493213, 120046977])
 def chat_off(message):
     chat_id = message.chat.id
     if chat_id not in OFF_CHATS:
@@ -146,6 +154,13 @@ def send_welcome(message):
 @bot.message_handler(func=commands_handler(['/help']))
 def help(message):
     bot.reply_to(message, text_messages['help'])
+
+
+# Handle '/admin'
+@bot.message_handler(func=commands_handler(['/admin']))
+@command_access_decorator([155493213, 120046977])
+def send_welcome(message):
+    bot.reply_to(message, text_messages['admin'])
 
 
 # ---- FATAL ----
@@ -251,10 +266,18 @@ def rebuldquests(message):
 @command_access_decorator([155493213, 120046977])
 def editquest(message):
     bot.reply_to(message, 'Вкидывай файл:')
-    bot.register_next_step_handler(message, quest_file)
+    bot.register_next_step_handler(message, quest_file, False)
 
 
-def quest_file(message):
+# Handle '/rewritequest'
+@bot.message_handler(func=commands_handler(['/rewritequest']))
+@command_access_decorator([155493213, 120046977])
+def editquest(message):
+    bot.reply_to(message, 'Вкидывай файл:')
+    bot.register_next_step_handler(message, quest_file, True)
+
+
+def quest_file(message, rewrite):
     if not message.document:
         return
 
@@ -262,7 +285,7 @@ def quest_file(message):
     file = bot.download_file(file_info.file_path)
 
     editor = QuestEditor(path='data/quests/')
-    file_name = editor.add_file(file, file_name=message.document.file_name, rewrite=false)
+    file_name = editor.add_file(file, file_name=message.document.file_name, rewrite=rewrite)
     if file_name == '':
         bot.reply_to(message, 'Файл уже существует!')
         return
