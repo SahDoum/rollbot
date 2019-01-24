@@ -70,3 +70,21 @@ class QuestEditor(Editor):
             btn_dsc = btn.text
             btn_act = btn['key']
             button = Button.create(loc=loc_id, act_key=btn_act, dsc=btn_dsc)
+
+    @classmethod
+    def is_correct(self):
+        max_button_description = 100
+        errlog = ""
+        correct = True
+        for btn in Button.select():
+            ways_from_button = Location.select().where(Location.key == loc_key)
+            if not ways_from_button.exists():
+                correct = False
+                button_location = Location.get(Location.id == btn.loc)
+                error = "Error: No ways from button {}:{} at location {}:{}\n".format(btn.act_key, btn.dsc, loc.key, loc.dsc)
+                errlog += error
+            if len(btn.dsc) > max_button_description:
+                warning = "Warning: Button {}:{} description is too big\n".format(btn.act_key, btn.dsc)
+                errlog += warning
+                
+        return correct, errlog

@@ -42,16 +42,16 @@ def create_keyboard(btn_list, param='q'):
 
 
 def callback_title(callback):
-        if not callback:
-            return ''
+    if not callback:
+        return ''
 
-        author = ''
-        if callback.message.chat.type != 'private':
-            author = user_to_author(callback.from_user)
-        btn_id = int(callback.data.split(' ')[1])
-        btn = Button.get(Button.id == btn_id)
-        title = author + '*>> ' + btn.dsc + '*\n\n'
-        return title
+    author = ''
+    if callback.message.chat.type != 'private':
+        author = user_to_author(callback.from_user)
+    btn_id = int(callback.data.split(' ')[1])
+    btn = Button.get(Button.id == btn_id)
+    title = author + '*>> ' + btn.dsc + '*\n\n'
+    return title
 
 
 def user_to_author(usr):

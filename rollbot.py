@@ -250,7 +250,7 @@ def clearquest(message):
     bot.reply_to(message, 'Удалено')
 
 
-# Handle '/rebuldquests'
+# Handle '/rebuildquests'
 @bot.message_handler(func=commands_handler(['/rebuildquests']))
 @command_access_decorator([155493213, 120046977])
 def rebuldquests(message):
@@ -259,6 +259,16 @@ def rebuldquests(message):
     editor.import_files_from_directory()
 
     bot.reply_to(message, 'Пересобрано!')
+
+
+# Handle '/checkquests'
+@bot.message_handler(func=commands_handler(['/checkquests']))
+@command_access_decorator([155493213, 120046977])
+def rebuldquests(message):
+    editor = QuestEditor(path='data/quests/')
+    correct, errlog = editor.is_correct()
+
+    bot.reply_to(message, 'Корректно:{}\nЛог:{}'.format(correct, errlog))
 
 
 # Handle '/editquest'
