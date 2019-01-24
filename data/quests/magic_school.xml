@@ -131,7 +131,7 @@
 Теперь вы на втором этаже.
 Вокруг только лекционные аудитории, они закрыты, поскольку занятия уже кончились.
 Еще здесь есть выход на балкон, с которого виден весь город.
-<btn key="school-second-balcony">Зайти на балкон</btn>
+<btn key="school-second-balcony-magicmode3">Зайти на балкон</btn>
 <btn key="school">Вернуться в холл</btn>
 </loc>
 <loc key="school-second">
@@ -151,10 +151,10 @@
 
 Если посмотреть вниз, то можно увидеть и двор школы, в котором отдыхают юные маги. 
 <btn key="school-second">Вернуться</btn>
-<btn key="school_fall">Прыгнуть с балкона</btn>
+<btn key="school_fall-magicmode3">Прыгнуть с балкона</btn>
 </loc>
 
-<loc key="school-second-balcony-magicmode3">
+<loc key="school-second-balcony">
 Вид, действительно, потрясающий.
 
 Отсюда видна и река Каспе, пересекающая город. 
