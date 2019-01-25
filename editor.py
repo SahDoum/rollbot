@@ -12,7 +12,7 @@ class Editor:
 
     @classmethod
     def delete_all(self):
-        if Fatal.select().first():
+        if not Fatal.select().first():
             return
         Fatal.delete().execute()
 
@@ -86,5 +86,5 @@ class QuestEditor(Editor):
             if len(btn.dsc) > max_button_description:
                 warning = "Warning: Button {}:{} description is too big\n".format(btn.act_key, btn.dsc)
                 errlog += warning
-                
+
         return correct, errlog
