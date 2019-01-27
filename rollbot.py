@@ -42,8 +42,8 @@ text_messages = {
     'me_help':
         u'Вбейте сообщение после команды /me, и бот напишет ваше сообщение в третьем лице.\n'
         u'Например вы пишете: /me входит и кланяется.\n'
-        u'Бот удалит ваше сообещние и напишет: @username входит и кланяется.\n\n'
-        u'Используйте **звездочки** чтобы выделить текст жирным и __подчеркивания__ для курсива.\n',
+        u'Бот удалит ваше сообещние и напишет: @username входит и кланяется.\n\n',
+        #u'Используйте **звездочки** чтобы выделить текст жирным и __подчеркивания__ для курсива.\n',
 
     'admin':
         u'/on /off\n'
@@ -81,15 +81,18 @@ def me(message):
                                                   message.from_user.id)
 
     text = "{} {}".format(usr_name, your_message)
+
+    '''
     text.replace('_', '\_')
     text.replace('\_\_', '_')
     text.replace('*', '\*')
     text.replace('\*\*', '*')
+    '''
 
     if getattr(message, 'reply_to_message') is not None:
-        bot.reply_to(message.reply_to_message, text, parse_mode="Markdown")
+        bot.reply_to(message.reply_to_message, text) #, parse_mode="Markdown")
     else:
-        bot.send_message(chat_id, text, parse_mode="Markdown")
+        bot.send_message(chat_id, text) #, parse_mode="Markdown")
 
 
 # ---- ADMIN ----
