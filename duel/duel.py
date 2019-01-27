@@ -1,7 +1,7 @@
 from __init__ import bot
 import time
 from models import DuelUser
-from user import User
+from .user import User
 
 
 # ---- DUEL CLASS ----
