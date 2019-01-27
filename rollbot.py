@@ -2,6 +2,7 @@ from requests.exceptions import ConnectionError
 from requests.exceptions import ReadTimeout
 import time
 import sys
+import os
 import signal
 
 from __init__ import bot, commands_handler, OFF_CHATS
@@ -51,6 +52,7 @@ text_messages = {
         u'/rebuildquests\n'
         u'/addquest\n'
         u'/rewritequest\n'
+        u'/update\n'
 }
 
 # ---- MESSAGES FORMAT ----
@@ -109,6 +111,13 @@ def chat_off(message):
         OFF_CHATS.append(chat_id)
 
 
+@bot.message_handler(func=commands_handler(['/update']))
+@command_access_decorator([155493213, 120046977])
+def update_bot(message):
+    my_bot.reply_to(message, "Обновляюсь")
+    os.execl('/bin/bash', 'bash', 'bot_update.sh')
+
+
 # ---- DUEL ----
 
 
@@ -152,7 +161,7 @@ def duel_stats(message):
                                                         pobeda_ending,
                                                         rate
                                                         )
-        
+
     bot.reply_to(message, text, parse_mode='Markdown', disable_notification=True)
 
 # ---- INFO ----
