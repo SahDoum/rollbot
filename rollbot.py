@@ -38,6 +38,12 @@ text_messages = {
         u'You are welcome to use!\n'
         u'For more information use command /help\n',
 
+    'me_help':
+        u'Вбейте сообщение после команды /me, и бот напишет ваше сообщение в третьем лице.\n'
+        u'Например вы пишете: /me входит и кланяется.\n'
+        u'Бот удалит ваше сообещние и напишет: @username входит и кланяется.\n\n'
+        u'Используйте **звездочки** чтобы выделить текст жирным и __подчеркивания__ для курсива.\n'
+
     'admin':
         u'/on /off\n'
         u'/editfatal\n'
@@ -62,21 +68,26 @@ def me(message):
         pass
 
     if len(message.text.split()) < 2:
+        bot.reply_to(message, text_messages['me_help'])
         return
+    your_message = message.text.split(maxsplit=1)[1]
 
     if message.from_user.username is not None:
-        usr_name = '@' + message.from_user.username.replace('_', '\_')
+        usr_name = '@' + message.from_user.username
     else:
         usr_name = '[{}](tg://user?id={})'.format(message.from_user.first_name,
                                                   message.from_user.id)
 
-    your_message = message.text.split(maxsplit=1)[1]
-    your_me = "{} {}".format(usr_name, your_message)
+    text = "{} {}".format(usr_name, your_message)
+    text.replace('_', '\_')
+    text.replace('\_\_', '_')
+    text.replace('*', '\*')
+    text.replace('\*\*', '*')
 
     if getattr(message, 'reply_to_message') is not None:
-        bot.reply_to(message.reply_to_message, your_me, parse_mode="Markdown")
+        bot.reply_to(message.reply_to_message, text, parse_mode="Markdown")
     else:
-        bot.send_message(chat_id, your_me, parse_mode="Markdown")
+        bot.send_message(chat_id, text, parse_mode="Markdown")
 
 
 # ---- ADMIN ----
