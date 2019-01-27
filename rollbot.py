@@ -117,7 +117,7 @@ def chat_off(message):
 @bot.message_handler(func=commands_handler(['/update']))
 @command_access_decorator([155493213, 120046977])
 def update_bot(message):
-    my_bot.reply_to(message, "Обновляюсь")
+    bot.reply_to(message, "Обновляюсь")
     os.execl('/bin/bash', 'bash', 'bot_update.sh')
 
 
