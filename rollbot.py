@@ -64,22 +64,17 @@ def me(message):
     chat_id = message.chat.id
     message_id = message.message_id
 
-    try:
-        bot.delete_message(chat_id, message_id)
-    except Exception:
-        pass
 
     if len(message.text.split()) < 2:
         bot.reply_to(message, text_messages['me_help'])
         return
-    your_message = message.text.split(maxsplit=1)[1]
 
+    your_message = message.text.split(maxsplit=1)[1]
     if message.from_user.username is not None:
         usr_name = '@' + message.from_user.username
     else:
         usr_name = '[{}](tg://user?id={})'.format(message.from_user.first_name,
                                                   message.from_user.id)
-
     text = "{} {}".format(usr_name, your_message)
 
     '''
@@ -88,11 +83,17 @@ def me(message):
     text.replace('*', '\*')
     text.replace('\*\*', '*')
     '''
+    
+    try:
+        if getattr(message, 'reply_to_message') is not None:
+            bot.reply_to(message.reply_to_message, text) #, parse_mode="Markdown")
+        else:
+            bot.send_message(chat_id, text) #, parse_mode="Markdown")
 
-    if getattr(message, 'reply_to_message') is not None:
-        bot.reply_to(message.reply_to_message, text) #, parse_mode="Markdown")
-    else:
-        bot.send_message(chat_id, text) #, parse_mode="Markdown")
+        bot.delete_message(chat_id, message_id)
+    except Exception:
+        pass
+
 
 
 # ---- ADMIN ----
