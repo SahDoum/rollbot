@@ -161,7 +161,7 @@ def duel_stats(message):
         elif 2 <= usr.wins % 10 <= 4:
             pobeda_ending = 'ы'
         rate = int(100*usr.wins/(usr.wins+usr.losses+usr.ties))
-        text += "{}. ```{}```: {} побед{} — {}% \n".format(
+        text += "{}. {}: {} побед{} — {}% \n".format(
                                                         i,
                                                         usr.name,
                                                         usr.wins,
@@ -169,7 +169,12 @@ def duel_stats(message):
                                                         rate
                                                         )
 
-    bot.reply_to(message, text, parse_mode='Markdown', disable_notification=True)
+    bot.reply_to(
+        message, 
+        '```' + text + '```', 
+        parse_mode='Markdown', 
+        disable_notification=True
+        )
 
 # ---- INFO ----
 
