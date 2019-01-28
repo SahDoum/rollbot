@@ -151,7 +151,7 @@ def duel_stats(message):
                     .where(DuelUser.chat_id == chat_id)\
                     .order_by(-1*DuelUser.wins/5, -100*DuelUser.wins/(DuelUser.wins+DuelUser.losses+DuelUser.ties))\
                     .limit(10)
-    text = "*Лучшие стрелки чата:* ```\n\n"
+    text = "*Лучшие стрелки чата:*\n\n"
     i = 0
     for usr in users:
         i += 1
@@ -171,7 +171,7 @@ def duel_stats(message):
 
     bot.reply_to(
         message, 
-        text + '```', 
+        text, 
         parse_mode='Markdown', 
         disable_notification=True
         )
