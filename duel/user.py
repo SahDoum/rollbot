@@ -70,7 +70,7 @@ class User:
 
     def name(self):
         if hasattr(self, 'user'):
-            return '[{}](tg://user?id={})'.format(self.user.first_name, self.user.id)
+            return self.user.first_name#'[{}](tg://user?id={})'.format(, self.user.id)
         else:
             return '@' + self.username
 
