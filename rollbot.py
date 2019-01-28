@@ -83,7 +83,7 @@ def me(message):
     text.replace('*', '\*')
     text.replace('\*\*', '*')
     '''
-    
+
     try:
         if getattr(message, 'reply_to_message') is not None:
             bot.reply_to(message.reply_to_message, text) #, parse_mode="Markdown")
@@ -161,7 +161,7 @@ def duel_stats(message):
         elif 2 <= usr.wins % 10 <= 4:
             pobeda_ending = 'ы'
         rate = int(100*usr.wins/(usr.wins+usr.losses+usr.ties))
-        text += "{}. '''{}''': {} побед{} — {}% \n".format(
+        text += "{}. ```{}```: {} побед{} — {}% \n".format(
                                                         i,
                                                         usr.name,
                                                         usr.wins,
@@ -197,7 +197,7 @@ def send_welcome(message):
 
 
 # Handle '/fatal'
-@bot.message_handler(func=commands_handler(['/fatal'], switchable=True))
+@bot.message_handler(func=commands_handler(['/fatal'], inline=True, switchable=True))
 def fatal_message(message):
     fatal_message = Fatal.select().order_by(fn.Random()).get()
     bot.send_message(message.chat.id,
