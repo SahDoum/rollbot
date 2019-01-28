@@ -3,3 +3,5 @@ __pycache__
 data.settings.py
 .idea
 data/settings.py
+data/database.db
+data.database.db
