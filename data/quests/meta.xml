@@ -9,6 +9,7 @@
 
 <btn key="meta-left">Броситься налево</btn>
 <btn key="meta-right">Броситься направо</btn>
+<btn key="meta-random">Схватить первый попавшийся</btn>
 </loc>
 
 <loc key="meta-left">
@@ -194,3 +195,49 @@ _феникс прилетает только раз в жизни_
 <btn key="dragon-start">Поход на дракона</btn>
 <btn key="space_quest-start">Приключение в космосе</btn>
 </loc>
+
+<loc key="meta-random">
+Вы хватаете шар не глядя и всматриваетесь в его глубины
+<btn key="tavern-start">Продолжить смотреть</btn>
+</loc>
+
+<loc key="meta-random">
+Вы хватаете шар не глядя и всматриваетесь в его глубины
+<btn key="giant-start">Продолжить смотреть</btn>
+</loc>
+
+<loc key="meta-random">
+Вы хватаете шар не глядя и всматриваетесь в его глубины
+<btn key="magicschool-start">Продолжить смотреть</btn>
+</loc>
+
+<loc key="meta-random">
+Вы хватаете шар не глядя и всматриваетесь в его глубины
+<btn key="lake_nen-start">Продолжить смотреть</btn>
+</loc>
+
+<loc key="meta-random">
+Вы хватаете шар не глядя и всматриваетесь в его глубины
+<btn key="market-start">Продолжить смотреть</btn>
+</loc>
+
+<loc key="meta-random">
+Вы хватаете шар не глядя и всматриваетесь в его глубины
+<btn key="maze-start">Продолжить смотреть</btn>
+</loc>
+
+<loc key="meta-random">
+Вы хватаете шар не глядя и всматриваетесь в его глубины
+<btn key="diviner-start">Продолжить смотреть</btn>
+</loc>
+
+<loc key="meta-random">
+Вы хватаете шар не глядя и всматриваетесь в его глубины
+<btn key="dragon-start">Продолжить смотреть</btn>
+</loc>
+
+<loc key="meta-random">
+Вы хватаете шар не глядя и всматриваетесь в его глубины
+<btn key="space_quest-start">Продолжить смотреть</btn>
+</loc>
+
