@@ -17,7 +17,7 @@
 <btn key="school-dinner">В столовую</btn>
 <btn key="school-none">В библиотеку</btn>
 <btn key="school-dorm">В общежитие</btn>
-<btn key="magicschool-start">Уйти</btn>
+<btn key="default">Уйти</btn>
 </loc>
 
 <loc key="school">
@@ -29,7 +29,7 @@
 <btn key="school-dinner">В столовую</btn>
 <btn key="school-none">В библиотеку</btn>
 <btn key="school-dorm">В общежитие</btn>
-<btn key="magicschool-start">Уйти</btn>
+<btn key="default">Уйти</btn>
 </loc>
 
 <loc key="school-stairs">

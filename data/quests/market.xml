@@ -30,7 +30,7 @@
 <not-btn key="merc-3">Подойти к мясной лавке</btn>
 <btn key="merc-boy">Подойти поболтать к пареньку</btn>
 <btn key="mart1">Вернуться назад</btn>
-<btn key="market-start">Выйти с рынка</btn>
+<btn key="default">Выйти с рынка</btn>
 </loc>
 
 
