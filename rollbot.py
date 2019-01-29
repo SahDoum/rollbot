@@ -4,6 +4,7 @@ import time
 import sys
 import os
 import signal
+from telebot import types
 
 from __init__ import bot, commands_handler, OFF_CHATS
 
@@ -151,7 +152,7 @@ def duel_stats(message):
                     .where(DuelUser.chat_id == chat_id)\
                     .order_by(-1*DuelUser.wins/5, -100*DuelUser.wins/(DuelUser.wins+DuelUser.losses+DuelUser.ties))\
                     .limit(10)
-    text = "*Лучшие стрелки чата:*\n\n"
+    text = "*Лучшие стрелки чата:*\n ``` "
     i = 0
     for usr in users:
         i += 1
@@ -168,7 +169,7 @@ def duel_stats(message):
                                                         pobeda_ending,
                                                         rate
                                                         )
-
+    text += '```'
     bot.reply_to(
         message, 
         text, 
@@ -282,7 +283,7 @@ def create_keyboard(buttons):
     markup = None
     if len(buttons) > 0:
         markup = types.InlineKeyboardMarkup()
-        markup.add(buttons)
+        markup.add(*buttons)
     return markup
 
 
