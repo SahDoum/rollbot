@@ -192,4 +192,5 @@ _феникс прилетает только раз в жизни_
 <btn key="maze-start">Лесная опушка</btn>
 <btn key="diviner-start">В шатер пророчицы</btn>
 <btn key="dragon-start">Поход на дракона</btn>
+<btn key="space_quest-start">Приключение в космосе</btn>
 </loc>
