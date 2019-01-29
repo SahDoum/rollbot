@@ -4,8 +4,6 @@ from telebot import types
 
 def create_description(callback=None, param='q'):
     options = ''
-    loc_key = 'default'
-
     if callback:
         args = callback.data.split()
         btn_id = int(args[1])
@@ -14,18 +12,20 @@ def create_description(callback=None, param='q'):
 
         btn = Button.get(Button.id == btn_id)
         loc_key = btn.act_key
-        options = btn.update_options(options)
 
-        if loc_key == 'default':
+        if loc_key == 'default': # end of a quest
             return {
                     'text': callback_title(callback),
-                    'buttons': None, # Why None ? types.InlineKeyboardMarkup()
+                    'buttons': None,
                     }
 
-    loc = Location.get_with_options(loc_key, set(options)) #.where(Location.key == loc_key).order_by(fn.Random()).get()
-    btn_list = None
-    btn_list = Button.select_with_options(loc.id, options)#.where(Button.loc == loc.id)
+        options = btn.update_options(options)
+        loc = Location.get_with_options(loc_key, set(options))
+    else:
+        loc = Location.get_default()
 
+    btn_list = None
+    btn_list = Button.select_with_options(loc.id, options)
     dsc_title = callback_title(callback)
     text = dsc_title + loc.dsc
     buttons = create_keyboard(btn_list, options, param)

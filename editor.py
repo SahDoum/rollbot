@@ -26,7 +26,7 @@ class Editor:
     def add_file(self, file, file_name='fatal.xml', rewrite=True):
         file_path = self.path + file_name
 
-        if not rewrite and isfile(file_name):
+        if not rewrite and isfile(file_path):
             return ''
 
         with open(file_path, 'wb') as new_file:
@@ -76,8 +76,6 @@ class QuestEditor(Editor):
             for opt in unparsed_options:
                 options[opt['key']] = opt['char']
 
-            #print("Options: ", options)
-
             for loc in locations:
                 self.add_location(loc, options)
 
@@ -87,8 +85,8 @@ class QuestEditor(Editor):
         key = str(loc['key'])
 
         #print(key)
-        require_options = ''
-        unrequire_options = ''
+        require_options = ""
+        unrequire_options = ""
         if loc.has_attr('options'):
             #print("Options:", loc['options'])
             require_options, unrequire_options = self.parse_options(loc['options'], options)

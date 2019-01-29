@@ -61,6 +61,10 @@ class Location(BaseModel):
         return select.order_by(fn.Random()).get()
 
     @staticmethod
+    def get_default():
+        return Location.select().where(Location.key == 'default').order_by(fn.Random()).get()
+
+    @staticmethod
     def select_with_options(loc_key, options, dop_options, select):
 
         # select without unrequired options
