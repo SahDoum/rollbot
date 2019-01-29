@@ -1,44 +1,48 @@
 from models import Location, Button
-
 from telebot import types
-
 # from telegram.utils.helpers import escape_markdown
-from peewee import fn
 
 def create_description(callback=None, param='q'):
+    options = ''
+    loc_key = 'default'
+
     if callback:
-        btn_id = int(callback.data.split(' ')[1])
+        args = callback.data.split()
+        btn_id = int(args[1])
+        if len(args) > 2:
+            options = args[2]
+
         btn = Button.get(Button.id == btn_id)
         loc_key = btn.act_key
+        options = btn.update_options(options)
 
         if loc_key == 'default':
-            return {'text': callback_title(callback),
-                    'buttons': None
+            return {
+                    'text': callback_title(callback),
+                    'buttons': None, # Why None ? types.InlineKeyboardMarkup()
                     }
-    else:
-        loc_key = 'default'
 
-    loc = Location.select().where(Location.key == loc_key).order_by(fn.Random()).get()
-    btn_list = Button.select().where(Button.loc == loc.id)
+    loc = Location.get_with_options(loc_key, set(options)) #.where(Location.key == loc_key).order_by(fn.Random()).get()
+    btn_list = None
+    btn_list = Button.select_with_options(loc.id, options)#.where(Button.loc == loc.id)
 
     dsc_title = callback_title(callback)
     text = dsc_title + loc.dsc
-    markup = create_keyboard(btn_list, param)
-    dsc = {'text': text, 'buttons': markup}
+    buttons = create_keyboard(btn_list, options, param)
+    dsc = {'text': text, 'buttons': buttons}
     return dsc
 
 
-def create_keyboard(btn_list, param='q'):
-    markup = None
+def create_keyboard(btn_list, options, param='q'):
+    buttons = []
     if btn_list:
-        markup = types.InlineKeyboardMarkup()
         for btn in btn_list:
             inline_button = types.InlineKeyboardButton(
                 text=btn.dsc,
-                callback_data= param + " " + str(btn.id)
+                callback_data= param + ' ' + str(btn.id) + ' ' + options
                 )
-            markup.add(inline_button)
-    return markup
+            buttons.append(inline_button)
+    return buttons
 
 
 def callback_title(callback):

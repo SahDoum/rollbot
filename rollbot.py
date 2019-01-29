@@ -7,16 +7,16 @@ import signal
 
 from __init__ import bot, commands_handler, OFF_CHATS
 
-from models import DuelUser, Fatal
 from duel import duel_chat_handler, duel_players_handler, duel_start, duel_stub, duel_shoots
+from roll import roll_message, roll_fate, rollGURPS, try_roll, repeat_roll
 from utils import roll_hack_decorator, command_access_decorator, hack_dict
 import quest
 from editor import Editor as FatalEditor, QuestEditor
+from models import DuelUser, Fatal
+
 import dice
 import random
 from bs4 import BeautifulSoup
-from roll import roll_message, roll_fate, rollGURPS, try_roll, repeat_roll
-from peewee import fn
 
 text_messages = {
     'help':
@@ -204,7 +204,7 @@ def send_welcome(message):
 # Handle '/fatal'
 @bot.message_handler(func=commands_handler(['/fatal'], inline=True, switchable=True))
 def fatal_message(message):
-    fatal_message = Fatal.select().order_by(fn.Random()).get()
+    fatal_message = Fatal.get_fatal()
     bot.send_message(message.chat.id,
                      fatal_message.dsc,
                      parse_mode='Markdown')
@@ -245,7 +245,8 @@ def quest_message(message):
     bot.send_message(message.chat.id,
                      dsc['text'],
                      parse_mode='Markdown',
-                     reply_markup=dsc['buttons'])
+                     reply_markup=create_keyboard(dsc['buttons'])
+                     )
 
 
 @bot.callback_query_handler(func=lambda call: call.data.split(' ')[0] == QUEST_CALLBAK_PARAM)
@@ -256,6 +257,7 @@ def quest_callback(call):
 
 def add_quest_dsc_to(msg, dsc):
     text = quest.escape_markdown(msg.text) + '\n\n' + dsc['text']
+
     if text.count('>>') >= 3:
         if msg.chat.type == 'private':
             text = '>>' + text[2:].split('>>', maxsplit=1)[1]
@@ -271,9 +273,17 @@ def add_quest_dsc_to(msg, dsc):
         chat_id=msg.chat.id,
         message_id=msg.message_id,
         text=text,
-        reply_markup=dsc['buttons'],
+        reply_markup=create_keyboard(dsc['buttons']),
         parse_mode='Markdown'
         )
+
+
+def create_keyboard(buttons):
+    markup = None
+    if len(buttons) > 0:
+        markup = types.InlineKeyboardMarkup()
+        markup.add(buttons)
+    return markup
 
 
 # Handle '/clearquests'

@@ -2,8 +2,6 @@ from peewee import *
 
 database = SqliteDatabase('data/database.db', **{})
 
-class UnknownField(object):
-    def __init__(self, *_, **__): pass
 
 class BaseModel(Model):
     class Meta:
@@ -14,26 +12,83 @@ class Button(BaseModel):
     act_key = CharField(null=True)
     dsc = TextField(null=True)
     loc = IntegerField(db_column='loc_id', null=True)
+    require_options = CharField(null=True)
+    unrequire_options = CharField(null=True)
+    append_options = CharField(null=True)
+    delete_options = CharField(null=True)
 
     class Meta:
         db_table = 'rollclub_buttons'
+
+    @staticmethod
+    def select_with_options(loc_id, options):
+        options_set = set(options)
+        result = []
+        for btn in Button.select().where(Button.loc == loc_id):
+            if not options_set.issuperset(set(btn.require_options)):
+                continue
+            if not options_set.isdisjoint(set(btn.unrequire_options)):
+                continue
+            result.append(btn)
+        return result
+
+    def update_options(self, options):
+        opt = set(options)
+        opt.update(set(self.append_options))
+        opt.difference_update(set(self.delete_options))
+        l = list(opt)
+        l.sort()
+        return ''.join(l)
 
 
 class Location(BaseModel):
     dsc = TextField(null=True)
     key = CharField(null=True)
+    require_options = CharField(null=True)
+    unrequire_options = CharField(null=True)
 
     class Meta:
         db_table = 'rollclub_locations'
 
+    @staticmethod
+    def get_with_options(loc_key, options):
+        preselect = Location.select().where(Location.key == loc_key)
+        all_options = set()
+        for loc in preselect:
+            all_options.update(set(loc.require_options))
+            
+        select = Location.select_with_options(loc_key, options, all_options - options - {'z'}, preselect)
+        return select.order_by(fn.Random()).get()
 
-class SqliteSequence(BaseModel):
-    name = UnknownField(null=True)  # 
-    seq = UnknownField(null=True)  # 
+    @staticmethod
+    def select_with_options(loc_key, options, dop_options, select):
+
+        # select without unrequired options
+        # deselect withput required options
+        # sort by required leksigraphiccaly
+        # get max
+        # select by max required options
+
+        for opt in options:
+            select = select.where(~(Location.unrequire_options.contains(opt)))
+
+        for opt in dop_options:
+            select = select.where(~(Location.require_options.contains(opt)))
+
+        select = select.order_by(Location.require_options)
+        max_require = select.get().require_options
+        return select.where(Location.require_options == max_require)
+
+
+class Fatal(BaseModel):
+    dsc = TextField(null=True)
 
     class Meta:
-        db_table = 'sqlite_sequence'
-        primary_key = False
+        db_table = 'fatal'
+
+    @staticmethod
+    def get_fatal():
+        return Fatal.select().order_by(fn.Random()).get()
 
 
 class DuelUser(BaseModel):
@@ -62,12 +117,8 @@ class DuelUser(BaseModel):
                                    losses=0)
 
 
-class Fatal(BaseModel):
-    dsc = TextField(null=True)
-
-    class Meta:
-        db_table = 'fatal'
 
 if __name__ == '__main__':
-    # Fatal.drop_table()
-    database.create_tables([Fatal])
+    Button.drop_table()
+    Location.drop_table()
+    database.create_tables([Fatal, Button, Location])
