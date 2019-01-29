@@ -2,7 +2,7 @@
 
 <option key="magicmode" char="m">
 
-<loc key="default">
+<loc key="magicschool-start">
 Вы около главной магической школы герцогства Гастон. 
 
 Перед вами раскинулись величественные ворота, отделанными магическими символами.
@@ -17,7 +17,7 @@
 <btn key="school-dinner">В столовую</btn>
 <btn key="school-none">В библиотеку</btn>
 <btn key="school-dorm">В общежитие</btn>
-<btn key="default">Уйти</btn>
+<btn key="magicschool-start">Уйти</btn>
 </loc>
 
 <loc key="school">
@@ -29,7 +29,7 @@
 <btn key="school-dinner">В столовую</btn>
 <btn key="school-none">В библиотеку</btn>
 <btn key="school-dorm">В общежитие</btn>
-<btn key="default">Уйти</btn>
+<btn key="magicschool-start">Уйти</btn>
 </loc>
 
 <loc key="school-stairs">
