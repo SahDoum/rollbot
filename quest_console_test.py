@@ -1,5 +1,5 @@
-import quest
-import editor
+import adventures.quest as quest
+import adventures.editor as editor
 
 import optparse
 
@@ -24,7 +24,7 @@ if __name__ == "__main__":
 
     print(args)
 
-    editor = editor.QuestEditor(path='data/quests/')
+    editor = editor.QuestEditor(path='../data/quests/')
     editor.delete_all()
     for file_name in args:
         editor.import_from_file(file_name)

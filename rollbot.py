@@ -11,8 +11,8 @@ from __init__ import bot, commands_handler, OFF_CHATS, ADMIN_IDS
 from duel import duel_chat_handler, duel_players_handler, duel_start, duel_stub, duel_shoots
 from roll import roll_message, roll_fate, rollGURPS, try_roll, repeat_roll
 from utils import roll_hack_decorator, command_access_decorator, hack_dict
-import quest
-from editor import Editor as FatalEditor, QuestEditor
+import adventures.quest as quest
+from adventures.editor import Editor as FatalEditor, QuestEditor
 from models import DuelUser, Fatal
 
 import dice
