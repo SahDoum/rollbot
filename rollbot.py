@@ -253,12 +253,22 @@ def quest_message(message):
 @bot.callback_query_handler(func=lambda call: call.data.split(' ')[0] == QUEST_CALLBAK_PARAM)
 def quest_callback(call):
     dsc = quest.create_description(call, param=QUEST_CALLBAK_PARAM)
+    quest_wait(call.message)
     add_quest_dsc_to(call.message, dsc)
+
+
+def quest_wait(msg):
+    bot.edit_message_reply_markup(
+        chat_id=msg.chat.id,
+        message_id=msg.message_id,
+        reply_markup=None
+        )
+    time.sleep(1)
 
 
 def add_quest_dsc_to(msg, dsc):
     text = quest.escape_markdown(msg.text) + '\n\n' + dsc['text']
-    max_quest_steps = 4
+    max_quest_steps = 5
 
     if text.count('>>') >= max_quest_steps:
         if msg.chat.type == 'private':
