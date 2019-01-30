@@ -1,3 +1,10 @@
+<option key="sword" char="i">
+<option key="riffle" char="j">
+<option key="flare_gun" char="k">
+<option key="whip" char="l">
+<option key="bare_fists" char="m">
+<option key="super-weapon" char="w">
+
 <loc key="simulation-boss-1">
 ```
 [=======================]
