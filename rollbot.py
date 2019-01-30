@@ -253,11 +253,11 @@ def quest_message(message):
 @bot.callback_query_handler(func=lambda call: call.data.split(' ', maxsplit=1)[0] == QUEST_CALLBAK_PARAM)
 def quest_callback(call):
     dsc = quest.create_description(call, param=QUEST_CALLBAK_PARAM)
-    quest_wait(call.message)
+    #quest_wait(call.message)
     add_quest_dsc_to(call.message, dsc)
 
 
-tmp_inline_button = types.InlineKeyboardButton(text='...')
+tmp_inline_button = types.InlineKeyboardButton(text='...', callback_data='...')
 
 def add_quest_dsc_to(msg, dsc):
     text = quest.escape_markdown(msg.text) + '\n\n' + dsc['text']
@@ -276,14 +276,17 @@ def add_quest_dsc_to(msg, dsc):
 
     text = cut_long_text(text)
 
+    tmp_keyboard = types.InlineKeyboardMarkup()
+    for i in range(len(dsc['buttons'])):
+        tmp_keyboard.add(tmp_inline_button)
     bot.edit_message_text(
         chat_id=msg.chat.id,
         message_id=msg.message_id,
         text=text,
-        reply_markup=types.InlineKeyboardMarkup().add([tmp_inline_button]*len(dsc['buttons'])),
+        reply_markup=tmp_keyboard,
         parse_mode='Markdown'
         )
-    time.sleep(0.5)
+    time.sleep(1)
     bot.edit_message_reply_markup(
         chat_id=msg.chat.id,
         message_id=msg.message_id,
@@ -485,3 +488,4 @@ while __name__ == '__main__':
     except Exception as e:
         print('{0}: Unknown Exception:\n'
               '{1}: {2}\n\n'.format(time.time(), e, e.args))
+    
