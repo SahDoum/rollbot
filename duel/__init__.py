@@ -100,7 +100,7 @@ def bomm(message):
            'Часы начинают отбивать удары. Скоро будет пролита кровь.' \
            'Когда прозвучит последний удар, оба стреляют.\n' \
            'С последним ударом вы увидите символ, которым надо выстрелить.\n' \
-           'У кого рука окажется быстрее, тот выиграет дуэль.'.format(chat_duel.name(0), chat_duel.name(1), num_of_bom)
+           'У кого рука окажется быстрее, тот выиграет дуэль.'.format(chat_duel.link(0), chat_duel.link(1), num_of_bom)
     m = bot.send_message(chat_id, text, parse_mode='Markdown')
     DUELS[chat_id].messages.append(m)
 
@@ -112,7 +112,7 @@ def bomm(message):
         bot.edit_message_text(chat_id=chat_id, message_id=m.message_id, text=text, parse_mode='Markdown')
         time.sleep(random.randint(2, 10))
 
-    duel_symbols = ['!', '$', '%', '^', '&', '*', '(', ')', ',', '§', '~', 'z', 'G', 'F', '-', '=', 'Z', 'l', '😀']
+    duel_symbols = ['!', '$', '%', '^', '&', '*', '(', ')', ',', 'v', '~', 'z', 'G', 'F', '-', '=', 'Z', 'l', '😀']
     chat_duel.symbol = random.choice(duel_symbols)
     twr.symbol = chat_duel.symbol
     text = twr.next_bomm()

@@ -71,7 +71,13 @@ class User:
 
     def name(self):
         if hasattr(self, 'user'):
-            return self.user.first_name#'[{}](tg://user?id={})'.format(, self.user.id)
+            return self.user.first_name
+        else:
+            return '```@' + self.username + '```'
+
+    def link(self):
+        if hasattr(self, 'user'):
+            return '[{}](tg://user?id={})'.format(self.user.first_name, self.user.id)
         else:
             return '@' + self.username
 
@@ -84,5 +90,5 @@ class User:
             name += self.user.username + ' '
         return name
 
-    def duel_message(self, usr=None, type="wait message"):
-        return random.choice(duel_messages[type]).format(self.name, usr.name())
+    def duel_message(self, usr_link='', type="wait message"):
+        return random.choice(duel_messages[type]).format(self.link(), usr_link)
