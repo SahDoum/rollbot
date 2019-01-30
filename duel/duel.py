@@ -124,6 +124,10 @@ class Duel:
     def name(self, usr_num):
         return self.users[usr_num].name()
 
+    # дополнительные функции
+    def link(self, usr_num):
+        return self.users[usr_num].link()
+
     def duel_user(self, user):
         search = User(user)
         for i in self.users:
