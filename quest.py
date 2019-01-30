@@ -2,6 +2,9 @@ from models import Location, Button
 from telebot import types
 # from telegram.utils.helpers import escape_markdown
 
+LOG_MODE = False
+
+
 def create_description(callback=None, param='q'):
     options = ''
     if callback:
@@ -50,7 +53,7 @@ def callback_title(callback):
         return ''
 
     author = ''
-    if callback.message.chat.type != 'private':
+    if not LOG_MODE and callback.message.chat.type != 'private':
         author = user_to_author(callback.from_user)
     btn_id = int(callback.data.split(' ')[1])
     btn = Button.get(Button.id == btn_id)

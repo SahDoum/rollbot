@@ -84,14 +84,10 @@ class QuestEditor(Editor):
         dsc = str(loc.find(text=True, recursive=False)).strip()
         key = str(loc['key'])
 
-        #print(key)
         require_options = ""
         unrequire_options = ""
         if loc.has_attr('options'):
-            #print("Options:", loc['options'])
             require_options, unrequire_options = self.parse_options(loc['options'], options)
-            #print(require_options)
-            #print(unrequire_options)
 
         require_options += 'z' * (len(options) - len(require_options))
 
