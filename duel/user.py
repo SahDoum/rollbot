@@ -2,36 +2,37 @@ import random
 
 # ---- DUEL MESSAGES ----
 
-wait_messages = [
+duel_messages = {
+    "wait" = [
         '{} стоит на площади и бьет себя кулаком в грудь, ожидая боя!',
         '{} в нетерпении смотрит на часы',
         '{} сдувает со своего плеча пылинку',
     ]
 
-new_challenge_messages = [
+    "new challenge" = [
         'Вызов брошен! Последует ли на него ответ?',
         'Салун затихает, и все ждут, не струсит ли вызываемый',
         'Перчатка брошена, пути назад нет',
     ]
 
-new_duel_messages = [
+    "new duel" = [
         '{} выходит на главную площадь стреляться. Местные жители попрятались по домам',
         '{} стоит на главной улице. Никто из местных не решается перейти ему дорогу',
         '{} хлопает кружкой о барную стойку и орет, заглушая пианино: "Салаги, я любого из вас застрелю, даже не смейте переходить мне дорогу!"'
     ]
 
-new_enemies_messages = [
+    "new enemies" = [
         'Больше вызовов богу вызовов!'
     ]
 
-accept_duel_messages = [
+    "accept duel" = [
         '{} принимает вызов!'
     ]
 
-leave_messages = [
+    "leave" = [
         '{} не дожидается противника и уходит в закат'
     ]
-
+}
 # ---- USER CLASS ----
 
 class User:
@@ -83,20 +84,5 @@ class User:
             name += self.user.username + ' '
         return name
 
-    def wait_msg(self):
-        return random.choice(wait_messages).format(self.name())
-
-    def new_challenge(self):
-        return random.choice(new_challenge_messages).format(self.name())
-
-    def new_duel_msg(self):
-        return random.choice(new_duel_messages).format(self.name())
-
-    def new_enemies_msg(self):
-        return random.choice(new_enemies_messages).format(self.name())
-
-    def accept_duel_msg(self):
-        return random.choice(accept_duel_messages).format(self.name())
-
-    def leave_msg(self):
-        return random.choice(leave_messages).format(self.name())
+    def duel_message(self, usr=None, type="wait message"):
+        return random.choice(duel_messages[message_type]).format(self.name, usr.name())

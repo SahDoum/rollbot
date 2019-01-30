@@ -6,7 +6,7 @@ import os
 import signal
 from telebot import types
 
-from __init__ import bot, commands_handler, OFF_CHATS
+from __init__ import bot, commands_handler, OFF_CHATS, ADMIN_IDS
 
 from duel import duel_chat_handler, duel_players_handler, duel_start, duel_stub, duel_shoots
 from roll import roll_message, roll_fate, rollGURPS, try_roll, repeat_roll
@@ -101,7 +101,7 @@ def me(message):
 
 
 @bot.message_handler(func=commands_handler(['/on']))
-@command_access_decorator([155493213, 120046977])
+@command_access_decorator(ADMIN_IDS)
 def chat_on(message):
     chat_id = message.chat.id
     if chat_id in OFF_CHATS:
@@ -109,7 +109,7 @@ def chat_on(message):
 
 
 @bot.message_handler(func=commands_handler(['/off']))
-@command_access_decorator([155493213, 120046977])
+@command_access_decorator(ADMIN_IDS)
 def chat_off(message):
     chat_id = message.chat.id
     if chat_id not in OFF_CHATS:
@@ -117,7 +117,7 @@ def chat_off(message):
 
 
 @bot.message_handler(func=commands_handler(['/update']))
-@command_access_decorator([155493213, 120046977])
+@command_access_decorator(ADMIN_IDS)
 def update_bot(message):
     if not hasattr(update_bot, "check_sure"):
         update_bot.check_sure = True
@@ -194,7 +194,7 @@ def help(message):
 
 # Handle '/admin'
 @bot.message_handler(func=commands_handler(['/admin']))
-@command_access_decorator([155493213, 120046977])
+@command_access_decorator(ADMIN_IDS)
 def send_welcome(message):
     bot.reply_to(message, text_messages['admin'])
 
@@ -213,7 +213,7 @@ def fatal_message(message):
 
 # Handle '/editfatal'
 @bot.message_handler(func=commands_handler(['/editfatal']))
-@command_access_decorator([155493213, 120046977])
+@command_access_decorator(ADMIN_IDS)
 def editfatal(message):
     bot.reply_to(message, 'Вкидывай файл:')
     bot.register_next_step_handler(message, fatal_file)
@@ -258,8 +258,9 @@ def quest_callback(call):
 
 def add_quest_dsc_to(msg, dsc):
     text = quest.escape_markdown(msg.text) + '\n\n' + dsc['text']
+    max_quest_steps = 4
 
-    if text.count('>>') >= 3:
+    if text.count('>>') >= max_quest_steps:
         if msg.chat.type == 'private':
             text = '>>' + text[2:].split('>>', maxsplit=1)[1]
         else:
@@ -270,6 +271,8 @@ def add_quest_dsc_to(msg, dsc):
             else:
                 text = '$' + text[1:].split('$', maxsplit=1)[1]
 
+    text = cut_long_text(text)
+
     bot.edit_message_text(
         chat_id=msg.chat.id,
         message_id=msg.message_id,
@@ -279,17 +282,27 @@ def add_quest_dsc_to(msg, dsc):
         )
 
 
+def cut_long_text(text, max_len=4250):
+    if len(text) > max_len:
+        text = '…' + text[len(text) - max_len + 1:]
+    return text
+
+
 def create_keyboard(buttons):
     markup = None
     if len(buttons) > 0:
         markup = types.InlineKeyboardMarkup()
-        markup.add(*buttons)
+        for btn in buttons:
+            markup.add(btn)
     return markup
+
+
+# ---- QUESTS EDIT ----
 
 
 # Handle '/clearquests'
 @bot.message_handler(func=commands_handler(['/clearquests']))
-@command_access_decorator([155493213, 120046977])
+@command_access_decorator(ADMIN_IDS)
 def clearquest(message):
     editor = QuestEditor(path='data/quests/')
     editor.delete_all()
@@ -298,7 +311,7 @@ def clearquest(message):
 
 # Handle '/rebuildquests'
 @bot.message_handler(func=commands_handler(['/rebuildquests']))
-@command_access_decorator([155493213, 120046977])
+@command_access_decorator(ADMIN_IDS)
 def rebuldquests(message):
     editor = QuestEditor(path='data/quests/')
     editor.delete_all()
@@ -309,7 +322,7 @@ def rebuldquests(message):
 
 # Handle '/checkquests'
 @bot.message_handler(func=commands_handler(['/checkquests']))
-@command_access_decorator([155493213, 120046977])
+@command_access_decorator(ADMIN_IDS)
 def rebuldquests(message):
     editor = QuestEditor(path='data/quests/')
     correct, errlog = editor.is_correct()
@@ -319,7 +332,7 @@ def rebuldquests(message):
 
 # Handle '/editquest'
 @bot.message_handler(func=commands_handler(['/addquest']))
-@command_access_decorator([155493213, 120046977])
+@command_access_decorator(ADMIN_IDS)
 def editquest(message):
     bot.reply_to(message, 'Вкидывай файл:')
     bot.register_next_step_handler(message, quest_file, False)
@@ -327,7 +340,7 @@ def editquest(message):
 
 # Handle '/rewritequest'
 @bot.message_handler(func=commands_handler(['/rewritequest']))
-@command_access_decorator([155493213, 120046977])
+@command_access_decorator(ADMIN_IDS)
 def editquest(message):
     bot.reply_to(message, 'Вкидывай файл:')
     bot.register_next_step_handler(message, quest_file, True)
@@ -351,6 +364,7 @@ def quest_file(message, rewrite):
 
 # ---- GURPS ----
 
+
 # Handle '/gurps'
 @bot.message_handler(func=commands_handler(['/gurps', '/GURPS'], switchable=True))
 def gurps(message):
@@ -363,7 +377,7 @@ def gurps(message):
 
 # Handle '/editgurpsl'
 @bot.message_handler(func=commands_handler(['/editgurps']))
-@command_access_decorator([155493213, 120046977])
+@command_access_decorator(ADMIN_IDS)
 def editgurps(message):
     bot.reply_to(message, 'Вкидывай файл:')
     bot.register_next_step_handler(message, gurps_file)
@@ -415,6 +429,7 @@ bot.message_handler(content_types=["text"])\
 
 # ---- GREETINGS ----
 
+
 @bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
 def new_chat_participant(message):
     chat_id = message.chat.id
@@ -427,6 +442,7 @@ def test_callback(call):
 
 
 # ---- POLLING ---- #
+
 
 while __name__ == '__main__':
     try:

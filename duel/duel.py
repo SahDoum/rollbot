@@ -47,17 +47,17 @@ class Duel:
                 print('New duel initiation by: ' + str(user))
 
             if len(self.users) > 0:
-                text = user.accept_duel_msg()
+                text = user.duel_message(type="accept duel")
             elif len(new_enemies) > 0:
-                text = user.new_challenge()
+                text = user.duel_message(type="new challegne")
             else:
-                text = user.new_duel_msg()
+                text = user.duel_message(type="new duel")
             self.users.append(user)
 
         elif len(new_enemies) == 0:
-            text = user.wait_msg()
+            text = user.duel_message(type="wait")
         else:
-            text = user.new_enemies_msg()
+            text = user.duel_message(type="new enemies")
 
         self.enemies.extend(new_enemies)
         self.time = time.time()
@@ -95,7 +95,7 @@ class Duel:
         if self.active: return None
         if len(self.users) == 0: return None
 
-        text = self.users[0].leave_msg()
+        text = self.users[0].duel_message(type="leave")
 
         self.users = []
         self.enemies = []
