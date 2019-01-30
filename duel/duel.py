@@ -49,7 +49,7 @@ class Duel:
             if len(self.users) > 0:
                 text = user.duel_message(type="accept duel")
             elif len(new_enemies) > 0:
-                text = user.duel_message(type="new challegne")
+                text = user.duel_message(type="new challenge")
             else:
                 text = user.duel_message(type="new duel")
             self.users.append(user)
