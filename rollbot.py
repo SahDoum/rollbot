@@ -250,21 +250,14 @@ def quest_message(message):
                      )
 
 
-@bot.callback_query_handler(func=lambda call: call.data.split(' ')[0] == QUEST_CALLBAK_PARAM)
+@bot.callback_query_handler(func=lambda call: call.data.split(' ', maxsplit=1)[0] == QUEST_CALLBAK_PARAM)
 def quest_callback(call):
     dsc = quest.create_description(call, param=QUEST_CALLBAK_PARAM)
     quest_wait(call.message)
     add_quest_dsc_to(call.message, dsc)
 
 
-def quest_wait(msg):
-    bot.edit_message_reply_markup(
-        chat_id=msg.chat.id,
-        message_id=msg.message_id,
-        reply_markup=None
-        )
-    time.sleep(1)
-
+tmp_inline_button = types.InlineKeyboardButton(text='...')
 
 def add_quest_dsc_to(msg, dsc):
     text = quest.escape_markdown(msg.text) + '\n\n' + dsc['text']
@@ -287,8 +280,14 @@ def add_quest_dsc_to(msg, dsc):
         chat_id=msg.chat.id,
         message_id=msg.message_id,
         text=text,
-        reply_markup=create_keyboard(dsc['buttons']),
+        reply_markup=types.InlineKeyboardMarkup().add([tmp_inline_button]*len(dsc['buttons'])),
         parse_mode='Markdown'
+        )
+    time.sleep(0.5)
+    bot.edit_message_reply_markup(
+        chat_id=msg.chat.id,
+        message_id=msg.message_id,
+        reply_markup=create_keyboard(dsc['buttons'])
         )
 
 
