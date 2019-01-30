@@ -1,0 +1,713 @@
+<loc key="simulation-boss-1">
+```
+[=======================]
+  999/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-313" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-181" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-501" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-6" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-2" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-5">
+```
+[=======================]
+  995/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-317" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-185" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-505" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-10" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-6" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-180">
+```
+[===================    ]
+  820/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-492" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-360" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-680" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-185" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-181" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-500">
+```
+[============           ]
+  500/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-812" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-680" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-1000" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-505" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-501" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-312">
+```
+[================       ]
+  688/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-624" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-492" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-812" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-317" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-313" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-6">
+```
+[=======================]
+  994/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-318" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-186" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-506" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-11" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-7" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-501">
+```
+[============           ]
+  499/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-813" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-681" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-1001" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-506" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-502" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-181">
+```
+[===================    ]
+  819/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-493" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-361" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-681" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-186" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-182" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-313">
+```
+[================       ]
+  687/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-625" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-493" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-813" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-318" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-314" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-185">
+```
+[===================    ]
+  815/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-497" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-365" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-685" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-190" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-186" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-505">
+```
+[============           ]
+  495/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-817" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-685" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-1005" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-510" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-506" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-317">
+```
+[================       ]
+  683/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-629" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-497" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-817" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-322" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-318" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-318">
+```
+[================       ]
+  682/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-630" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-498" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-818" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-323" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-319" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-186">
+```
+[===================    ]
+  814/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-498" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-366" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-686" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-191" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-187" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-506">
+```
+[============           ]
+  494/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-818" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-686" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-1006" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-511" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-507" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-680">
+```
+[========               ]
+  320/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-992" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-860" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-1180" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-685" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-681" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-492">
+```
+[============           ]
+  508/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-804" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-672" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-992" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-497" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-493" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-493">
+```
+[============           ]
+  507/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-805" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-673" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-993" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-498" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-494" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-681">
+```
+[========               ]
+  319/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-993" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-861" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-1181" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-686" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-682" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-497">
+```
+[============           ]
+  503/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-809" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-677" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-997" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-502" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-498" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-685">
+```
+[========               ]
+  315/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-997" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-865" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-1185" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-690" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-686" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-498">
+```
+[============           ]
+  502/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-810" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-678" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-998" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-503" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-499" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-686">
+```
+[========               ]
+  314/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-998" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-866" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-1186" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-691" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-687" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-812">
+```
+[=====                  ]
+  188/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-1124" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-992" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-1312" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-817" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-813" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-813">
+```
+[=====                  ]
+  187/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-1125" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-993" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-1313" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-818" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-814" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-817">
+```
+[=====                  ]
+  183/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-1129" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-997" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-1317" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-822" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-818" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-818">
+```
+[=====                  ]
+  182/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-1130" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-998" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-1318" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-823" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-819" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-992">
+```
+[=                      ]
+    8/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-1304" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-1172" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-1492" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-997" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-993" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-993">
+```
+[=                      ]
+    7/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-1305" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-1173" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-1493" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-998" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-994" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-997">
+```
+[=                      ]
+    3/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-1309" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-1177" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-1497" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-1002" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-998" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
+<loc key="simulation-boss-998">
+```
+[=                      ]
+    2/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-1310" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-1178" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-1498" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-1003" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-999" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
+
