@@ -1,4 +1,5 @@
 from __init__ import BOT_NAME, OFF_CHATS
+import re
 
 #import sys
 #sys.path.append("../statistics display")

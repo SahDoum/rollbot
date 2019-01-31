@@ -1,7 +1,9 @@
 from models import Location, Button
 from utils import escape_markdown
 from telebot import types
-# from telegram.utils.helpers import escape_markdown
+
+from pychievements import tracker
+
 
 LOG_MODE = False
 
@@ -27,6 +29,8 @@ def create_description(callback=None, param='q'):
         loc = Location.get_with_options(loc_key, set(options))
     else:
         loc = Location.get_default()
+
+    check_achievement(loc, callback)
 
     btn_list = None
     btn_list = Button.select_with_options(loc.id, options)
@@ -68,3 +72,14 @@ def user_to_author(usr):
     else:
         author = '$ ' + usr.first_name + ' '
     return escape_markdown(author)
+
+
+def check_achievement(location, callback):
+    if not location.achievement or not callback:
+        return
+
+    print(tracker.achievements())
+    print(location.achievement)
+
+    id = callback.from_user.id
+    tracker.evaluate(id, location.achievement, 0, 1)

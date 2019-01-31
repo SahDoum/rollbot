@@ -46,6 +46,7 @@ class Location(BaseModel):
     key = CharField(null=True)
     require_options = CharField(null=True)
     unrequire_options = CharField(null=True)
+    achievement = CharField(null=True)
 
     class Meta:
         db_table = 'rollclub_locations'

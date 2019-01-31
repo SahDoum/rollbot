@@ -1,6 +1,6 @@
 import logging
-import re
 import telebot
+from achievements import init_achievements
 
 #import sys
 #sys.path.append("../statistics display")
@@ -16,3 +16,4 @@ BOT_NAME = '@rollclub_bot'
 logger = telebot.logger
 telebot.logger.setLevel(logging.INFO)
 bot = telebot.TeleBot(API_TOKEN1, threaded=False)
+init_achievements()

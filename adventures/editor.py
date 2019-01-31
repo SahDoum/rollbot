@@ -83,19 +83,20 @@ class QuestEditor(Editor):
     def add_location(self, loc, options):
         dsc = str(loc.find(text=True, recursive=False)).strip()
         key = str(loc['key'])
+        achievement = loc['achievement'] if loc.has_attr('achievement') else None
 
         require_options = ""
         unrequire_options = ""
         if loc.has_attr('options'):
             require_options, unrequire_options = self.parse_options(loc['options'], options)
-
         require_options += 'z' * (len(options) - len(require_options))
 
         location = Location.create(
             key=key, 
             dsc=dsc, 
             require_options=require_options,
-            unrequire_options=unrequire_options
+            unrequire_options=unrequire_options,
+            achievement=achievement
             )
 
         buttons = loc.find_all('btn')

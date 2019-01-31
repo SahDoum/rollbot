@@ -81,7 +81,7 @@
 <btn key="die">Поздороваться</btn>
 </loc>
 
-<loc key="kill_dragon">
+<loc key="kill_dragon" achievement="dragon_killer">
 Вы ударяете дракона мечом в зазор в его броне. Он конвульсивно вздирает голову на длинной шее и падает замертво.
 </loc>
 

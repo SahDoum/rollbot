@@ -20,6 +20,8 @@ import dice
 import random
 from bs4 import BeautifulSoup
 
+from pychievements import tracker
+
 text_messages = {
     'help':
         u'Во многой мудрости много печали; и кто умножает познания, умножает скорбь.\n'
@@ -198,6 +200,26 @@ def help(message):
 @command_access_decorator(ADMIN_IDS)
 def send_welcome(message):
     bot.reply_to(message, text_messages['admin'])
+
+
+# ---- ACHIEVEMENTS ----
+
+
+# Handle '/achievements'
+@bot.message_handler(func=commands_handler(['/achievements']))
+def show_achievements(message):
+    id = message.from_user.id
+    achievements = tracker.achievements_for_id(id)
+
+    if len(achievements) == 0:
+        bot.reply_to(message, "У вас пока нет ачивок. Поиграйте в квесты, чтобы получить их.")
+        return
+
+    text = "*Ваши ачивки:* \n\n"
+    for ach in achievements:
+        text += '✓ _' + ach.name + '_\n'
+
+    bot.reply_to(message, text, parse_mode='Markdown')
 
 
 # ---- FATAL ----
@@ -489,9 +511,9 @@ while __name__ == '__main__':
         print('{0}: Runtime Error.\n'
               'Retrying in 3 seconds.\n'.format(time.time()))
         time.sleep(3)
-
+'''
     # если что-то неизвестное
     except Exception as e:
         print('{0}: Unknown Exception:\n'
               '{1}: {2}\n\n'.format(time.time(), e, e.args))
-    
+'''
