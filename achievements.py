@@ -49,5 +49,9 @@ def get_achievement_descriptions():
              'description' : 'Поймать нимфу',
              'unique_keyword' : 'lake_nen_win'
             },
+            {'name' : 'Небинарный',
+             'description' : 'Выпить зелье троллиной похоти',
+             'unique_keyword' : 'tavern_troll_sex'
+            },
         ]
     return achievements
