@@ -29,8 +29,8 @@ def get_achievement_descriptions():
              'description' : 'За хорошие сборы в поход и убийство змия!',
              'unique_keyword' : 'dragon_killer'
             },
-            {'name' : 'Спутник Феникса',
-             'description' : 'Для тех, кто сумел отказаться от приключений и ушел с Фениксом',
+            {'name' : 'Судьба Феникса',
+             'description' : 'Отправиться в безнадежное приключение с Фениксом',
              'unique_keyword' : 'phoenix_friend'
             },
             {'name' : 'Вор из Гастона',
