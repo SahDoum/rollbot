@@ -288,7 +288,7 @@ def add_quest_dsc_to(msg, dsc):
             )    
     except Exception as e:
         print("Failed to add description.")
-        print("Messsage:\n{}\nDescription:\n{}\nException:\n{}".format(msg.text, dsc['text'], e))
+        print("Messsage:\n{}\nDescription:\n{}\nException:\n{}".format(msg.text, text, e))
 
     time.sleep(1)
 
