@@ -82,4 +82,5 @@ def check_achievement(location, callback):
     print(location.achievement)
 
     id = callback.from_user.id
-    tracker.evaluate(id, location.achievement, 0, 1)
+    tracker.increment(id, location.achievement)
+    #tracker.evaluate(id, location.achievement, 0, 1)

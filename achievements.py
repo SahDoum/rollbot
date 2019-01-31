@@ -28,6 +28,22 @@ def get_achievement_descriptions():
             {'name' : 'Убийца драконов',
              'description' : 'За хорошие сборы в поход и убийство змия!',
              'unique_keyword' : 'dragon_killer'
-            }
+            },
+            {'name' : 'Спутник Феникса',
+             'description' : 'Для тех, кто сумел отказаться от приключений и ушел с Фениксом',
+             'unique_keyword' : 'phoenix_friend'
+            },
+            {'name' : 'Вор из Гастона',
+             'description' : 'Укравшим драгоценности в Башне трех мудрецов',
+             'unique_keyword' : 'robber_of_tower_of_the_three_wise_man'
+            },
+            {'name' : 'Тесей',
+             'description' : 'Для тех, кто сумел выбраться из лабиринта',
+             'unique_keyword' : 'maze_escape'
+            },
+            {'name' : 'Старший тестировщик ВегаРолл',
+             'description' : 'Для нашедших секретную концовку в симуляции',
+             'unique_keyword' : 'simulation_win'
+            },
         ]
     return achievements

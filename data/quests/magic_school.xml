@@ -190,7 +190,7 @@
 <btn key="school-second-balcony-return" opt="!magicmode">На балконе</btn>
 </loc>
 
-<loc key="school-second-balcony-return">
+<loc key="school-second-balcony-return" achievement="robber_of_tower_of_the_three_wise_man">
 Вы смотрите, что схватили — это хрустальная сфера. Наверняка магическая. Надо бы её подробнее изучить на досуге.
 Вы почувствовали, что магические силы покинули вас окончательно.
 <btn key="school-second">Войти внутрь</btn>

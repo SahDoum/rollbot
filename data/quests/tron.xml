@@ -51,7 +51,7 @@ Exiting game...
 ```
 </loc>
 
-<loc key="simulation-start" options="kill-boss">
+<loc key="simulation-start" options="kill-boss" achievement="simulation_win">
 ```
 Level comlete!
 You beat the boss!

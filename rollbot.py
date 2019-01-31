@@ -81,13 +81,6 @@ def me(message):
                                                   message.from_user.id)
     text = "{} {}".format(usr_name, your_message)
 
-    '''
-    text.replace('_', '\_')
-    text.replace('\_\_', '_')
-    text.replace('*', '\*')
-    text.replace('\*\*', '*')
-    '''
-
     try:
         if getattr(message, 'reply_to_message') is not None:
             bot.reply_to(message.reply_to_message, text) #, parse_mode="Markdown")
@@ -217,7 +210,7 @@ def show_achievements(message):
 
     text = "*Ваши ачивки:* \n\n"
     for ach in achievements:
-        text += '✓ _' + ach.name + '_\n'
+        text += '✓ _{}_\n{}\t\n'.format(ach.name, ach.description)
 
     bot.reply_to(message, text, parse_mode='Markdown')
 
@@ -312,6 +305,7 @@ def add_quest_dsc_to(msg, dsc):
     except Exception as e:
         print("Failed to add description.")
         print("Messsage:\n{}\nDescription:\n{}\nException:\n{}".format(msg.text, text, e))
+        return
 
     time.sleep(1)
 
