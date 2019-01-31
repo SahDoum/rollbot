@@ -26,7 +26,7 @@ def init_achievements():
 def get_achievement_descriptions():
     achievements = [
             {'name' : 'Убийца драконов',
-             'description' : 'За хорошие сборы в поход и убийство змия!',
+             'description' : 'Хорошо собраться в поход и убить змия!',
              'unique_keyword' : 'dragon_killer'
             },
             {'name' : 'Судьба Феникса',
@@ -34,16 +34,20 @@ def get_achievement_descriptions():
              'unique_keyword' : 'phoenix_friend'
             },
             {'name' : 'Вор из Гастона',
-             'description' : 'Укравшим драгоценности в Башне трех мудрецов',
+             'description' : 'Украсть драгоценности в Башне трех мудрецов',
              'unique_keyword' : 'robber_of_tower_of_the_three_wise_man'
             },
             {'name' : 'Тесей',
-             'description' : 'Для тех, кто сумел выбраться из лабиринта',
+             'description' : 'Выбраться из лабиринта',
              'unique_keyword' : 'maze_escape'
             },
             {'name' : 'Старший тестировщик ВегаРолл',
-             'description' : 'Для нашедших секретную концовку в симуляции',
+             'description' : 'Найти секретную концовку в симуляции',
              'unique_keyword' : 'simulation_win'
+            },
+            {'name' : 'Ценитель прекрасного',
+             'description' : 'Поймать нимфу',
+             'unique_keyword' : 'lake_nen_win'
             },
         ]
     return achievements
