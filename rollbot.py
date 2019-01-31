@@ -260,7 +260,7 @@ def quest_callback(call):
     try:
         add_quest_dsc_to(call.message, dsc)
     except Exception as e:
-        print("Failed to add description.\nMesssage:{}\nDescription:{}\nException:{}".format(call.message.text, dsc, e))
+        print("ERROR: Failed add_quest_dsc_to")
 
 
 tmp_inline_button = types.InlineKeyboardButton(text='...', callback_data='...')
@@ -285,13 +285,18 @@ def add_quest_dsc_to(msg, dsc):
     tmp_keyboard = types.InlineKeyboardMarkup()
     for i in range(len(dsc['buttons'])):
         tmp_keyboard.add(tmp_inline_button)
-    bot.edit_message_text(
-        chat_id=msg.chat.id,
-        message_id=msg.message_id,
-        text=text,
-        reply_markup=tmp_keyboard,
-        parse_mode='Markdown'
-        )
+    try:
+        bot.edit_message_text(
+            chat_id=msg.chat.id,
+            message_id=msg.message_id,
+            text=text,
+            reply_markup=tmp_keyboard,
+            parse_mode='Markdown'
+            )    
+    except Exception as e:
+        print("Failed to add description.")
+        print("Messsage:\n{}\nDescription:\n{}\nException:\n{}".format(call.message.text, dsc['text'], e))
+
     time.sleep(1)
     bot.edit_message_reply_markup(
         chat_id=msg.chat.id,
