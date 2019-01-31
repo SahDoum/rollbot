@@ -67,7 +67,7 @@ def achievement_with_part_factory(name, description, final_description, unique_k
 
     # generate part achievments    
     for i in range(number_of_parts):
-        class_name = unique_keyword + '_part' + str(i)
+        class_name = unique_keyword + '_' + str(i+1)
         print(class_name)
         ach = part_achievement_factory(
                                         keywords=[unique_keyword, 'quest_part'], 
@@ -121,17 +121,6 @@ def get_simple_achievement_descriptions():
              'description' : 'Поймать нимфу',
              'unique_keyword' : 'lake_nen_win',
             },
-        ]
-    return achievements
-
-def get_part_achievement_descriptions():
-    achievements = [
-            {'name' : 'Test name',
-             'description' : 'Test description',
-             'final_description' : 'Test final description',
-             'unique_keyword' : 'test_keyword',
-             'number_of_parts' : 5,
-            },
             {'name' : 'Небинарный',
              'description' : 'Выпить зелье троллиной похоти',
              'unique_keyword' : 'tavern_troll_sex'
@@ -139,6 +128,17 @@ def get_part_achievement_descriptions():
             {'name' : 'Бесшумный убийца',
              'description' : 'Сделать работу без лишнего шума',
              'unique_keyword' : 'silent_killer'
+            },
+        ]
+    return achievements
+
+def get_part_achievement_descriptions():
+    achievements = [
+            {'name' : 'Исследователь',
+             'description' : 'На пути познания',
+             'final_description' : 'Познать все доступные миры',
+             'unique_keyword' : 'discoverer',
+             'number_of_parts' : 11,
             },
         ]
     return achievements

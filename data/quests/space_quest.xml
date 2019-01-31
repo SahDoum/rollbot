@@ -2,7 +2,7 @@
 <option key="alarm" char="b">
 <option key="dagger" char="c">
 
-<loc key="space_quest-start">
+<loc key="space_quest-start" achievement="discoverer_8">
 Вы просыпаетесь в холодном поту на борту звездолета "Мечта-16". Перед вами многочисленные экраны — "глаза" вашего судна.
 <btn key="exam_screens">Изучить экраны</btn> 
 </loc>

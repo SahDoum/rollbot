@@ -2,7 +2,7 @@
 <option key="lamp" char="b">
 <option key="well" char="c">
 
-<loc key="dragon-start">
+<loc key="dragon-start" achievement="discoverer_10">
 Вы собираетесь в поход на дракона.
 Вы стоите перед входом в его пещеру.
 Рядом с вами валяется меч, лежит куча рухляди и стоит колодец.

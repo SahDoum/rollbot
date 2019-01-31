@@ -1,0 +1,25 @@
+<loc key="default">
+Добро пожаловать в симуляцию.
+Выберите мир для загрузки.
+Ваш помощник Джил смоделирует для вас выбранную реальность.
+<btn key="tavern-start">Таверна</btn>
+<btn key="giant-start">Встреча с Гигантом</btn>
+<btn key="magicschool-start">Школа магии Гастон</btn>
+<btn key="lake_nen-start">Окрестности озера Нен</btn>
+<btn key="market-start">Базар</btn>
+<btn key="maze-start">Лесная опушка</btn>
+<btn key="diviner-start">В шатер пророчицы</btn>
+<btn key="dragon-start">Поход на дракона</btn>
+</loc>
+
+<loc key="default">
+Вы стоите в пустоте. Пустота мягко светиться
+<btn key="tavern-start">Таверна</btn>
+<btn key="giant-start">Встреча с Гигантом</btn>
+<btn key="magicschool-start">Школа магии Гастон</btn>
+<btn key="lake_nen-start">Окрестности озера Нен</btn>
+<btn key="market-start">Базар</btn>
+<btn key="maze-start">Лесная опушка</btn>
+<btn key="diviner-start">В шатер пророчицы</btn>
+<btn key="dragon-start">Поход на дракона</btn>
+</loc>

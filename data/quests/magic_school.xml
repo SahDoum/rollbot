@@ -2,7 +2,7 @@
 
 <option key="magicmode" char="m">
 
-<loc key="magicschool-start">
+<loc key="magicschool-start"  achievement="discoverer_4">
 Вы около главной магической школы герцогства Гастон. 
 
 Перед вами раскинулись величественные ворота, отделанными магическими символами.

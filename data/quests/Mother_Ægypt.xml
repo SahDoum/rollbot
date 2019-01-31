@@ -1,7 +1,7 @@
 < ---- ---- Вещая Египтянка ---- ---- >
 
 
-<loc key="diviner-start">
+<loc key="diviner-start" achievement="discoverer_7">
 Вы стоите перед черным шатром, покрытом звёздами. На вывеске над входом написано: "Вещая Египтянка".
 <btn key="diviner">Зайти</btn>
 

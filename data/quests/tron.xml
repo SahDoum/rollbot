@@ -21,7 +21,7 @@
 <btn key="simulation-start">Начать</btn>
 </not-loc>
 
-<loc key="simulation-start">
+<loc key="simulation-start" achievement="discoverer_11">
 ```
 Game loading...
 100% [=====================] 2.0PB 7.6GB/s

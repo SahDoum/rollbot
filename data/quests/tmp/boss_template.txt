@@ -1,0 +1,22 @@
+<loc key="simulation-boss-{}">
+```
+[{}]
+ {:4d}/1000
+
+／ﾌﾌ ▔▔▔▔▔▔▔▔▔▔▔ム｀ヽ  
+/ノ) 　　　　　  　）. ヽ　　　　　　　 　 
+/ ｜　  ( ͡° ͜ʖ ͡°)⌒(ゝ-ノ　　　　　 
+/  ﾉ⌒7⌒ ヽ ーく　 ＼  /　　　　 
+丶＿ノ  　  ｡ ノ､ ｡|/　　　　　　 　 　　　　 
+　　 `ヽ `ー--人`ーﾉ　　　　　　 　　 
+　　　  丶 ￣-人'彡ﾉ
+```
+
+<btn key="simulation-boss-{}" req="sword" opt="!sword">Ударить мечом</btn>
+<btn key="simulation-boss-{}" req="whip" opt="!whip">Ударить кнутом</btn>
+<btn key="simulation-boss-{}" req="riffle" opt="!riffle">Выстрелить из ружья</btn>
+<btn key="simulation-boss-{}" req="flare_gun" opt="!flare_gun">Выстрелить из сигнального пистолета</btn>
+<btn key="simulation-boss-1002" req="super-weapon" opt="!super-weapon">Выстрелить из автомата</btn>
+<btn key="simulation-boss-{}" req="bare_fists" opt="!bare_fists">Ударить голыми руками</btn>
+<btn key="simulation-boss-escape">Постараться убежать обратно</btn>
+</loc>
