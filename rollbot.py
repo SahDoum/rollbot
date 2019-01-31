@@ -229,6 +229,9 @@ def fatal_message(message):
                      fatal_message.dsc,
                      parse_mode='Markdown')
 
+    if message.chat.type != 'private':
+        tracker.increment(message.from_user.id, 'fatal')
+
 
 # Handle '/editfatal'
 @bot.message_handler(func=commands_handler(['/editfatal']))
