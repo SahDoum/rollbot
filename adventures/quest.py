@@ -1,4 +1,5 @@
 from models import Location, Button
+from utils import escape_markdown
 from telebot import types
 # from telegram.utils.helpers import escape_markdown
 
@@ -67,12 +68,3 @@ def user_to_author(usr):
     else:
         author = '$ ' + usr.first_name + ' '
     return escape_markdown(author)
-
-
-def escape_markdown(str):
-    str = str \
-        .replace('_', '\\_') \
-        .replace('*', '\\*') \
-        .replace('[', '\\[') \
-        .replace('`', '\\`')
-    return str

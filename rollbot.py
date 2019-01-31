@@ -6,7 +6,8 @@ import os
 import signal
 from telebot import types
 
-from __init__ import bot, commands_handler, OFF_CHATS, ADMIN_IDS
+from __init__ import bot, OFF_CHATS, ADMIN_IDS
+from utils import commands_handler, escape_markdown
 
 from duel import duel_chat_handler, duel_players_handler, duel_start, duel_stub, duel_shoots
 from roll import roll_message, roll_fate, rollGURPS, try_roll, repeat_roll
@@ -35,10 +36,10 @@ text_messages = {
 
     'start':
         u'Bot enabled...\n'
-        u'Protocol alpha is running...\n'
+        u'Protocol Jill is running...\n'
         u'System has confirmed your access...\n'
-        u'You are welcome to use!\n'
-        u'For more information use command /help\n',
+        u'You are welcome to use my functions!\n'
+        u'For more information aboum me use command /help\n',
 
     'me_help':
         u'Вбейте сообщение после команды /me, и бот напишет ваше сообщение в третьем лице.\n'
@@ -259,7 +260,7 @@ def quest_callback(call):
 tmp_inline_button = types.InlineKeyboardButton(text='...', callback_data='...')
 
 def add_quest_dsc_to(msg, dsc):
-    text = quest.escape_markdown(msg.text) + '\n\n' + dsc['text']
+    text = escape_markdown(msg.text) + '\n\n' + dsc['text']
     max_quest_steps = 5
 
     if text.count('>>') >= max_quest_steps:
