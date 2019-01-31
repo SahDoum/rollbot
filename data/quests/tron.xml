@@ -25,6 +25,8 @@
 ```
 Game loading...
 100% [=====================] 2.0PB 7.6GB/s
+Game level analyse...
+There are possible ways to end level.
 Requirement already satisfied: fatal_gay_ogres>=12.0.1
 
 Game loaded successfully!
@@ -35,13 +37,16 @@ Welcome back!
 
 <loc key="simulation-start" options="bridge bowl door walls black_door">
 ```
-Game analyse...
+Game loading...
+100% [=====================] 2.0PB 5.2GB/s
+
+Game level analyse...
 Recalculate possible ways to end level...
 [================]
-
 No possible ways
 Sorry, level failed. 
 Good buy!
+
 Exiting game...
 ```
 </loc>
@@ -309,9 +314,17 @@ _— Теперь тебе надо выбрать один из путей._
 <loc key="simulation-nothing">
 Точно такой же коридор. Мягко светящиеся стены и абсолютно ровный желтый пол.
 Вы доходите до развилки. На левом ответвлении кем-то нацарапано: *Тут нет выходов, мы взаперти Вырваться не получится*
+На полу лежит сигнальный пистолет.
 <btn key="simulation-doors">Пойти налево</btn>
 <btn key="simulation-3">Пойти направо</btn>
 <btn key="simulation-nothing-flare_gun" opt="flare_gun">Поднять пистолет</btn>
+</loc>
+
+<loc key="simulation-nothing" options="flare_gun">
+Точно такой же коридор. Мягко светящиеся стены и абсолютно ровный желтый пол.
+Вы доходите до развилки. На левом ответвлении кем-то нацарапано: *Тут нет выходов, мы взаперти Вырваться не получится*
+<btn key="simulation-doors">Пойти налево</btn>
+<btn key="simulation-3">Пойти направо</btn>
 </loc>
 
 <loc key="simulation-nothing-flare_gun">
@@ -324,13 +337,13 @@ _— Теперь тебе надо выбрать один из путей._
 Вы приходите в большой зал. Стены зала покрыты различными дверьми. Двери плоские с простыми ручками, все матовых отттенков и светятся изнутри, практически сливаясь со стенами. Только одна дверь выделяется — она абсолютно черная и на ней сделана резьба в виде ворона, клюющего павшую лошадь.
 <btn key="simulation-doors-open">Подергать матовые двери</btn>
 <btn key="simulation-doors-black">Открыть черную дверь</btn>
-<btn key="simulation-3">Вернуться и пойти в другой коридор</btn>
+<btn key="simulation-nothing">Вернуться</btn>
 </loc>
 
 <loc key="simulation-doors-open">
 Вы пробуете открывать двери, но они все заперты. На одной из них вы находите инструкцию: _Дополнительные уровни. Выход отсюда через любую дверь._
 <btn key="simulation-doors-black">Открыть черную дверь</btn>
-<btn key="simulation-3">Вернуться и пойти в другой коридор</btn>
+<btn key="simulation-nothing">Уйти из комнаты</btn>
 </loc>
 
 <loc key="simulation-doors-black">
@@ -358,8 +371,8 @@ _— Теперь тебе надо выбрать один из путей._
 Вы выходите в пещерообразную комнату. Проход за вами закрывается опускающейся дверью Неровные стены похожи на кристалы, повсюду со стен свисают мягко светящиеся сталактиты. Пол ровный и зеленого цвета.
 На другой стороне пещеры есть два прохода, подписанные *Major* и *Extra*.
 Проход *Major* закрыт дверью на два механических засова.
-
 <btn key="simulation-3-major">Оглядеть закрытую дверь</btn>
+<btn key="simulation-3-search" opt="riffle">Обыскать комнату</btn>
 <btn key="simulation-3-extra">Пойти в открытый проход</btn>
 </loc>
 
@@ -392,7 +405,8 @@ _— Теперь тебе надо выбрать один из путей._
 
 <loc key="simulation-3-search">
 В одном из углов комнаты вы находите ружье. В хорошем состоянии. Можно быстро выстрелить от бедра.
-<btn key="simulation-boss">Пойти в открытый проход</btn>
+<btn key="simulation-boss" req="!door">Пойти в открытый проход</btn>
+<btn key="simulation-extra" req="door">Пойти в открытый проход</btn>
 </loc>
 
 <loc key="simulation-4">
