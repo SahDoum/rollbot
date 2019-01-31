@@ -197,12 +197,12 @@ def send_welcome(message):
 
 # ---- ACHIEVEMENTS ----
 
-
+from achievements import test 
 # Handle '/achievements'
 @bot.message_handler(func=commands_handler(['/achievements']))
 def show_achievements(message):
     id = message.from_user.id
-    achievements = tracker.achievements_for_id(id)
+    achievements = tracker.achievements_for_id(id, category="quest")
 
     if len(achievements) == 0:
         bot.reply_to(message, "У вас пока нет ачивок. Поиграйте в квесты, чтобы получить их.")
@@ -210,8 +210,10 @@ def show_achievements(message):
 
     text = "*Ваши ачивки:* \n\n"
     for ach in achievements:
-        for g in ach.goals:
-            text += '✓ _{}_\n\t{}\n'.format(g['name'], g['description'])
+        if len(ach.achieved) == 0: #impossible ?
+            continue
+        g = ach.achieved[-1]
+        text += '✓ _{}_\n\t{}\n'.format(g['name'], g['description'])
 
     bot.reply_to(message, text, parse_mode='Markdown')
 
