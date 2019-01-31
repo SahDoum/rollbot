@@ -70,7 +70,9 @@ def user_to_author(usr):
 
 
 def escape_markdown(str):
-    str = str.replace('_', '\_')
-    str = str.replace('[', '\[')
-    str = str.replace(']', '\]')
+    str = str
+        .replace('_', '\\_')
+        .replace('*', '\\*')
+        .replace('[', '\\[')
+        .replace('`', '\\`')
     return str
