@@ -132,6 +132,14 @@ def get_part_achievement_descriptions():
              'unique_keyword' : 'test_keyword',
              'number_of_parts' : 5,
             },
+            {'name' : 'Небинарный',
+             'description' : 'Выпить зелье троллиной похоти',
+             'unique_keyword' : 'tavern_troll_sex'
+            },
+            {'name' : 'Бесшумный убийца',
+             'description' : 'Сделать работу без лишнего шума',
+             'unique_keyword' : 'silent_killer'
+            },
         ]
     return achievements
 
