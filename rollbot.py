@@ -210,7 +210,8 @@ def show_achievements(message):
 
     text = "*Ваши ачивки:* \n\n"
     for ach in achievements:
-        text += '✓ _{}_\n{}\t\n'.format(ach.name, ach.description)
+        for g in ach.goals:
+            text += '✓ _{}_\n\t{}\n'.format(g['name'], g['description'])
 
     bot.reply_to(message, text, parse_mode='Markdown')
 
