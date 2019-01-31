@@ -252,15 +252,8 @@ def quest_message(message):
 
 @bot.callback_query_handler(func=lambda call: call.data.split(' ', maxsplit=1)[0] == QUEST_CALLBAK_PARAM)
 def quest_callback(call):
-    try:
-        dsc = quest.create_description(call, param=QUEST_CALLBAK_PARAM)
-    except Exception as e:
-        print("Failed to create_description.\nCallback:{}\nException:{}".format(call.data, e))
-    #quest_wait(call.message)
-    try:
-        add_quest_dsc_to(call.message, dsc)
-    except Exception as e:
-        print("ERROR: Failed add_quest_dsc_to")
+    dsc = quest.create_description(call, param=QUEST_CALLBAK_PARAM)
+    add_quest_dsc_to(call.message, dsc)
 
 
 tmp_inline_button = types.InlineKeyboardButton(text='...', callback_data='...')
@@ -295,9 +288,10 @@ def add_quest_dsc_to(msg, dsc):
             )    
     except Exception as e:
         print("Failed to add description.")
-        print("Messsage:\n{}\nDescription:\n{}\nException:\n{}".format(call.message.text, dsc['text'], e))
+        print("Messsage:\n{}\nDescription:\n{}\nException:\n{}".format(msg.text, dsc['text'], e))
 
     time.sleep(1)
+
     bot.edit_message_reply_markup(
         chat_id=msg.chat.id,
         message_id=msg.message_id,
