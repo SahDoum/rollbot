@@ -14,7 +14,7 @@ from roll import roll_message, roll_fate, rollGURPS, try_roll, repeat_roll
 from utils import roll_hack_decorator, command_access_decorator, hack_dict
 import adventures.quest as quest
 from adventures.editor import Editor as FatalEditor, QuestEditor
-from models import DuelUser, Fatal
+from models import DuelUser, Fatal, GURPS
 
 import dice
 import random
@@ -210,10 +210,14 @@ def show_achievements(message):
 
     text = "*Ваши ачивки:* \n\n"
     for ach in achievements:
-        if len(ach.achieved) == 0: #impossible ?
+        if len(ach.achieved) == 0: #impossible case ?
             continue
         g = ach.achieved[-1]
         text += '✓ _{}_\n\t{}\n'.format(g['name'], g['description'])
+
+    gurps = get_gurps(id)
+    if gurps:
+        text += "\n*Ваша абилка:*{}".format(gurps)
 
     bot.reply_to(message, text, parse_mode='Markdown')
 
@@ -413,6 +417,7 @@ def gurps(message):
         abilities = soup.find_all('gurps')
         ab = random.choice(abilities)
         bot.reply_to(message, ab.text, parse_mode='Markdown')
+        save_gurps(message.from_user.id, ab.text)
 
 
 # Handle '/editgurpsl'
@@ -430,6 +435,22 @@ def gurps_file(message):
         with open('data/gurps.xml', 'wb') as new_file:
             new_file.write(file)
         bot.reply_to(message, 'Добавлено!')
+
+
+def save_gurps(id, gurps):
+    try:
+        g = GURPS.get(user_id=id)
+        g.gurps = gurps
+        g.save()
+    except:
+        GURPS.create(user_id=id, gurps=gurps)
+
+
+def get_gurps(id):
+    try:
+        return GURPS.get(user_id=id).gurps
+    except:
+        return None
 
 
 # ---- ROLLS ----

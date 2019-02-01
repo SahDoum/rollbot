@@ -78,9 +78,6 @@ def check_achievement(location, callback):
     if not location.achievement or not callback:
         return
 
-    print(tracker.achievements())
-    print(location.achievement)
-
     id = callback.from_user.id
     tracker.increment(id, location.achievement)
     #tracker.evaluate(id, location.achievement, 0, 1)

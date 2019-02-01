@@ -7,22 +7,21 @@ from pychievements import icons
 
 from data.achievements_data import achievements
 
+
 class PartAchievement(Achievement):
     complete_class_type = None
 
-class AchievmentWithParts(Achievement):
+class AchievementWithParts(Achievement):
     part_achievement_class_name = ''
 
 
 @receiver(goal_achieved)
-def check_multiple_achievment(tracked_id, achievement, goals, **kwargs):
-    print("knjdsknjd")
+def check_multiple_achievement(tracked_id, achievement, goals, **kwargs):
     if not isinstance(achievement, PartAchievement):
-        print(type(achievement))
         return
     #may be move to class method 
     ach = tracker.achievements_for_id(tracked_id, keywords=achievement.keywords, category='quest_part')
-    big_ach = tracker.achievement_for_id(tracked_id, achievement.big_achievement_class_type)
+    big_ach = tracker.achievement_for_id(tracked_id, achievement.complete_class_type)
     tracker.set_level(tracked_id, big_ach, len(ach))
 
 
@@ -48,7 +47,7 @@ def part_achievement_factory(keyword, class_name, big_type):
 
 
 def achievement_with_parts_factory(dsc): 
-    # generate goals for big achievment
+    # generate goals for big achievement
     # may be move to init method of class
     goals = []
     for i in range(dsc['parts']-1):
@@ -61,9 +60,9 @@ def achievement_with_parts_factory(dsc):
              'keywords': ('quest', dsc['unique_keyword']),
              'goals': goals}
 
-    new_achievement = type(dsc['unique_keyword'], (AchievmentWithParts,), attrs)
+    new_achievement = type(dsc['unique_keyword'], (AchievementWithParts,), attrs)
 
-    # generate part achievments    
+    # generate part achievements    
     for i in range(dsc['parts']):
         class_name = dsc['unique_keyword'] + '_' + str(i+1)
         print(class_name)

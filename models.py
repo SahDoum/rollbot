@@ -2,7 +2,6 @@ from peewee import *
 
 database = SqliteDatabase('data/database.db', **{})
 
-
 class BaseModel(Model):
     class Meta:
         database = database
@@ -85,6 +84,7 @@ class Location(BaseModel):
         return select.where(Location.require_options == max_require)
 
 
+
 class Fatal(BaseModel):
     dsc = TextField(null=True)
 
@@ -94,6 +94,14 @@ class Fatal(BaseModel):
     @staticmethod
     def get_fatal():
         return Fatal.select().order_by(fn.Random()).get()
+
+
+class GURPS(BaseModel):
+    user_id = IntegerField(unique=True)
+    gurps = TextField(null=True)
+
+    class Meta:
+        db_table = 'gurps'
 
 
 class DuelUser(BaseModel):
@@ -124,6 +132,7 @@ class DuelUser(BaseModel):
 
 
 if __name__ == '__main__':
-    Button.drop_table()
-    Location.drop_table()
-    database.create_tables([Fatal, Button, Location])
+    #Button.drop_table()
+    #Location.drop_table()
+    #database.create_tables([Fatal, Button, Location])
+    database.create_tables([GURPS])
