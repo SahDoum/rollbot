@@ -119,7 +119,7 @@
 
 <loc key="meta-diviner">
 Клубы внутри шара становятся всё причудливее и загадочнее - кажется что каждый предвещает великие наслаждения или грозит огромными потерями.
-<btn key="market-start">Продолжить смотреть</btn>
+<btn key="diviner-start">Продолжить смотреть</btn>
 <btn key="meta-right" opt="late" req="!late">Отвести взгляд</btn>
 <btn key="meta-death" req="late">Отвести взгляд</btn>
 </loc>
