@@ -9,7 +9,7 @@ from telebot import types
 from __init__ import bot, OFF_CHATS, ADMIN_IDS
 from utils import commands_handler, escape_markdown
 
-from duel import duel_chat_handler, duel_players_handler, duel_start, duel_stub, duel_shoots
+from duel import duel_chat_handler, duel_players_handler, duel_challenge, duel_stub, duel_shoots
 from roll import roll_message, roll_fate, rollGURPS, try_roll, repeat_roll
 from utils import roll_hack_decorator, command_access_decorator, hack_dict
 import adventures.quest as quest
@@ -532,9 +532,9 @@ while __name__ == '__main__':
         print('{0}: Runtime Error.\n'
               'Retrying in 3 seconds.\n'.format(time.time()))
         time.sleep(3)
-
+'''
     # если что-то неизвестное
     except Exception as e:
         print('{0}: Unknown Exception:\n'
               '{1}: {2}\n\n'.format(time.time(), e, e.args))
-
+'''

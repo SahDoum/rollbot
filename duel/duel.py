@@ -2,7 +2,7 @@ from models import DuelUser
 from .user import User
 
 
-def enemies_from_message(message):
+def enemies_from_message(msg):
     enemies = []
     for ent in msg.entities:
         if ent.type == 'mention':
@@ -12,7 +12,7 @@ def enemies_from_message(message):
         if ent.type == 'text_mention':
             enemy = User(usr=ent.user)
             enemies.append(enemy)
-    return emenies
+    return enemies
     
 
 # ---- DUEL CLASS ----
@@ -27,8 +27,8 @@ class Duel:
         self.symbol = None
         
     def update(self, enemies):
-        self.enemies.append(enemies)
-        elif not new_enemies:
+        self.enemies += enemies
+        if not enemies:
             text = self.users[0].duel_message(type="wait")
         else:
             text = self.users[0].duel_message(type="new enemies")
@@ -47,14 +47,20 @@ class Duel:
         user = User(usr=msg.from_user)
         new_enemies = enemies_from_message(msg)
 
+        print(self.enemies)
         text = None
+        # если не было вызовов
+        if not self.users:
+            self.users.append(user)
+            self.enemies += new_enemies
+            text = user.duel_message(type="new duel")
         # если пользователь снова вызывает дуэль
-        if user in users:
+        elif user in self.users:
             text = self.update(new_enemies)
             # обновить дуэль
         # если перекрестные вызовы
-        elif (user in self.enemies or not self.enemies) and \
-             (self.users[0] in new_enemies or not new enemies):
+        elif (not self.enemies or user in self.enemies) and \
+                (not new_enemies or self.users[0] in new_enemies):
              text = self.start(user)
            # начать дуэль
         else:
@@ -71,18 +77,18 @@ class Duel:
         result = usr.shoot(msg.text, self.symbol)
         return result
 
-    def update_status(self, msg):
+    def update_status(self):
+        print("update")
         text = None
         for usr in self.users:
             if usr.status == 1:
                 self.active = False
-            if not user.status == -1:
-                self.active = False
-                text = 'Оба стрелка промахнулись. Дуэль окончена без жертв.'
-        if not self.active:
-            print('Duel end')
-        return text
-
+                return None
+            if usr.status == 0:
+                return None
+        self.active = False
+        return 'Оба стрелка промахнулись. Дуэль окончена без жертв.'
+ 
     def leave_duel(self):
         if self.active: return None
         if not self.users: return None

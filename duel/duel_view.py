@@ -29,14 +29,14 @@ class DuelView:
             # self.last_message = msg
 
         if self.duel.active:
-            t = threading.Thread(target=start, args=(self, message,))
+            t = threading.Thread(target=self.start, args=(message,))
             t.daemon = True
             t.start()
             
             print("Starting duel")
             print(str(message.chat.id))
         else:
-            t = threading.Thread(target=leave, args=(self, message,))
+            t = threading.Thread(target=self.leave, args=(message,))
             t.daemon = True
             t.start()
     
@@ -61,7 +61,7 @@ class DuelView:
     
         text = DUEL_START_TEXT.format(self.duel.link(0), self.duel.link(1))
         m = bot.send_message(chat_id, text, parse_mode='Markdown')
-        time.sleep(8)
+        time.sleep(15)
         
         self.tower = Tower(num_of_boms)
         for i in range(num_of_boms):
@@ -93,9 +93,14 @@ class DuelView:
             )
             
     def shoot(self, msg):
+        if not self.duel.symbol:
+            return
+
         text = self.duel.shoot(msg)
-        bot.send_message(msg.chat.id, text, parse_mode='Markdown')
+        if text:
+            bot.send_message(msg.chat.id, text, parse_mode='Markdown')
         
         text = self.duel.update_status()
         if text:
             bot.send_message(msg.chat.id, text, parse_mode='Markdown')
+
