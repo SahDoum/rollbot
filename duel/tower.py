@@ -4,6 +4,8 @@ import random
 
 
 class Tower:
+    lines = {0:0, 1:2, 2:4, 3:5, 4:8, 5:10, 6:11, 7:12 , 8:13, 9:14}
+
     def __init__(self, max_time=0):
         self.time = 0
         self.max_time = max_time
@@ -14,7 +16,7 @@ class Tower:
         text = None
         if self.time == self.max_time:
             text = 'Пaтрoн: ' + self.symbol
-        line = self.time + 1 
+        line = self.time + 1 # Tower.lines[self.time]
         add_text_to_tower(self.tower, line, text)
         tower = add_clock(self.tower, self.time + 1)
         self.time += 1
@@ -38,14 +40,15 @@ def add_text_to_tower(tower, line, text=None):
         text = 'Б' + 'О' * random.randint(1, 5) + 'М'
     length = 13
     start = 12
-    
+    # if length > len(text):
+    #     start = random.randint(0, length - len(text)-1)
     tower[line] = tower[line][:start] + text + tower[line][start+len(text):]
     return tower
 
 
 def add_clock(tower, time, max_time=None):
     time = time % 8
-    length = 0
+    length = 0 # 13
 
     clock_x = 5
     clock_y = 3

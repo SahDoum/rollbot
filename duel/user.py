@@ -33,32 +33,26 @@ duel_messages = {
         '{} не дожидается противника и уходит в закат'
     ],
 }
-
 # ---- USER CLASS ----
 
 class User:
-    def __init__(self, usr=None, username=None):
+    def __init__(self, usr):
         self.status = 0
-        self.user = usr
-        if username:
-            self.username = usrername
-            self.id = None
-        if usr:
-            self.username = usr.username
-            self.id = usr.id
+        if isinstance(usr, str):
+            self.username = usr
+        else:
+            self.user = usr
 
     def __eq__(usr1, usr2):
-        if usr1.user and usr2.user:
-            return usr1.id == usr2.id
-        elif usr1.user:
-            if usr1.username == usr2.username:
+        if hasattr(usr1, 'user') and hasattr(usr2, 'user') :
+            return usr1.user.id == usr2.user.id
+        elif hasattr(usr1, 'user'):
+            if usr1.user.username == usr2.username:
                 usr2.user = usr1.user
-                usr2.id = usr1.id
                 return True
-        elif usr2.user:
-            if usr2.username == usr1.username:
+        elif hasattr(usr2, 'user'):
+            if usr2.user.username == usr1.username:
                 usr1.user = usr2.user
-                usr1.id = usr2.id
         else:
             return usr1.username == usr2.username
         return False
@@ -76,14 +70,14 @@ class User:
             return 'Патроны кончились!'
 
     def name(self):
-        if self.user:
+        if hasattr(self, 'user'):
             return self.user.first_name
         else:
             return '```@' + self.username + '```'
 
     def link(self):
-        if self.user:
-            return '[{}](tg://user?id={})'.format(self.user.first_name, self.id)
+        if hasattr(self, 'user'):
+            return '[{}](tg://user?id={})'.format(self.user.first_name, self.user.id)
         else:
             return '@' + self.username
 

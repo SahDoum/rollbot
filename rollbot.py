@@ -137,7 +137,7 @@ bot.message_handler(func=duel_chat_handler,
 bot.message_handler(func=commands_handler(['/duel'],
                     inline=True,
                     switchable=True))\
-                    (duel_challenge)
+                    (duel_start)
 
 
 # Handle '/duelstats'
