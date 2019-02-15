@@ -57,7 +57,7 @@ class User:
         self.status = UserStatus.Equiped
         self.user = usr
         if username:
-            self.username = usrername
+            self.username = username
             self.id = None
         if usr:
             self.username = usr.username
