@@ -80,7 +80,7 @@ class User:
         return False
 
     def shoot(self, text, symbol):
-        if text[0] == symbol 
+        if text[0] == symbol \
         and self.status == UserStatus.Equiped:
             self.status = UserStatus.Winner
             return self.duel_message(type='kill')
