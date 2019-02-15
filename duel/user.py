@@ -1,4 +1,5 @@
 import random
+from enum import Enum
 
 # ---- DUEL MESSAGES ----
 
@@ -42,11 +43,18 @@ duel_messages = {
     ]
 }
 
+# ---- USER STATUS ----
+
+class UserStatus(Enum):
+    Equiped = 0
+    Empty = 1
+    Winner = 2
+
 # ---- USER CLASS ----
 
 class User:
     def __init__(self, usr=None, username=None):
-        self.status = 0
+        self.status = UserStatus.Equiped
         self.user = usr
         if username:
             self.username = usrername
@@ -72,13 +80,14 @@ class User:
         return False
 
     def shoot(self, text, symbol):
-        if text[0] == symbol and self.status == 0:
-            self.status = 1
+        if text[0] == symbol 
+        and self.status == UserStatus.Equiped:
+            self.status = UserStatus.Winner
             return self.duel_message(type='kill')
         elif text[0] == symbol:
             return 'Пистолет разряжен!!!'
-        elif self.status == 0:
-            self.status = -1
+        elif self.status == UserStatus.Equiped:
+            self.status = UserStatus.Empty
             return 'Мимо!'
         else:
             return 'Патроны кончились!'

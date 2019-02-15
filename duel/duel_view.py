@@ -107,4 +107,5 @@ class DuelView:
             bot.send_message(msg.chat.id, text, parse_mode='Markdown')
             
         if not self.duel.active:
+            print("End duel")
             DUELS.pop(msg.chat.id)

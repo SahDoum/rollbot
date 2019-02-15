@@ -1,5 +1,5 @@
 from models import DuelUser
-from .user import User
+from .user import User, UserStatus
 
 
 def enemies_from_message(msg):
@@ -81,10 +81,10 @@ class Duel:
         print("update")
         text = None
         for usr in self.users:
-            if usr.status == 1:
+            if usr.status == UserStatus.Winner:
                 self.active = False
                 return None
-            if usr.status == 0:
+            if usr.status == UserStatus.Equiped:
                 return None
         self.active = False
         return 'Оба стрелка промахнулись. Дуэль окончена без жертв.'
