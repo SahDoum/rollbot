@@ -47,8 +47,9 @@ class DuelView:
         
         if self.duel.active:
             return
-        
-        DUELS.pop(message.chat.id)
+            
+        if message.chat.id in DUELS:
+            DUELS.pop(message.chat.id)
         
         text = self.duel.leave_duel()
         bot.send_message(
