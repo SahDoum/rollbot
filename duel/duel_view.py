@@ -108,4 +108,3 @@ class DuelView:
             
         if not self.duel.active:
             print("End duel")
-            DUELS.pop(msg.chat.id)
