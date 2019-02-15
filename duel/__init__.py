@@ -15,13 +15,12 @@ def duel_chat_handler(m):
            DUELS[m.chat.id].duel.active
 
 
-# handler for all messages
+# ---- DUEL WRAPPER ----
+# called only if duel active
+
 def duel_stub(message):
     return
     
-
-# ---- DUEL WRAPPER ----
-
 
 def duel_shoots(message):
     print('SHOOT')
@@ -36,6 +35,7 @@ def duel_shoots(message):
 
 
 def duel_challenge(message):
+    print("DUELS:", DUELS)
     chat_id = message.chat.id
     if chat_id not in DUELS:
         print("creating new duel")

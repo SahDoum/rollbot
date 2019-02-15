@@ -23,10 +23,12 @@ class DuelView:
         self.time = time.time()
         
     def update(self, message):
+        if self.duel.active:
+            return
+            
         text = self.duel.update_with_msg(message)
         if text:
             msg = bot.send_message(message.chat.id, text, parse_mode='Markdown')
-            # self.last_message = msg
 
         if self.duel.active:
             t = threading.Thread(target=self.start, args=(message,))
@@ -79,15 +81,15 @@ class DuelView:
                 )
         time.sleep(random.randint(2, 10))
         
-    def shooting(self, m):
+    def shooting(self, msg):
         symbol = random.choice(DUEL_SYMBOLS)
         self.duel.symbol = symbol
         self.tower.symbol = symbol
         
         text = self.tower.next_bomm()
         bot.edit_message_text(
-            chat_id=m.chat.id, 
-            message_id=m.message_id, 
+            chat_id=msg.chat.id, 
+            message_id=msg.message_id, 
             text=text, 
             parse_mode='Markdown'
             )
@@ -103,4 +105,6 @@ class DuelView:
         text = self.duel.update_status()
         if text:
             bot.send_message(msg.chat.id, text, parse_mode='Markdown')
-
+            
+        if not self.duel.active:
+            DUELS.pop(msg.chat.id)
