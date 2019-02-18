@@ -36,6 +36,7 @@ class Duel:
         self.symbol = None
         print("duel init")
         print("init users", self.users)
+        print("args", users_, enemies_)
         
     def update_enemies(self, enemies):
         self.enemies += enemies
