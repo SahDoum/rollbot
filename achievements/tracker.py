@@ -1,4 +1,4 @@
-from pychievements.tracker import AchievementTracker
+from pychievements.trackers import AchievementTracker
 
 
 class OrderedTracker(AchievementTracker):

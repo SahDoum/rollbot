@@ -12,7 +12,7 @@ DUEL_SYMBOLS = ['!', '$', '%', '^', 'Y', '1', '*', '(', ')', ',', 'v', '~', 'z',
 
 class DuelView:
     def __init__(self):
-        self.duel = Duel()
+        self.duel = Duel([], [])
         self.tower = None
         self.time = time.time()
         
