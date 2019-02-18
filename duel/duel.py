@@ -29,11 +29,12 @@ class DuelStatus(Enum):
 class Duel:
     delay = 2*60
 
-    def __init__(self, users=[], enemies=[]):
-        self.users = users
-        self.enemies = enemies
+    def __init__(self, users_=[], enemies_=[]):
+        self.users = users_
+        self.enemies = enemies_
         self.status = DuelStatus.Preparing
         self.symbol = None
+        print("duel init")
         print("init users", self.users)
         
     def update_enemies(self, enemies):
