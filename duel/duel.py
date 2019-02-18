@@ -34,6 +34,8 @@ class DuelStatus(Enum):
 # ---- DUEL CLASS ----
 
 class Duel:
+    delay = 2*60
+
     def __init__(self, users, enemies):
         self.users = users
         self.enemies = enemies
