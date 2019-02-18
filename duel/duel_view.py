@@ -17,7 +17,6 @@ DUEL_SYMBOLS = ['!', '$', '%', '^', '&', '*', '(', ')', ',', 'v', '~', 'z', 'G',
 
 class DuelView:
     def __init__(self):
-        # self.last_message = None
         self.duel = Duel()
         self.tower = None
         self.time = time.time()
@@ -30,7 +29,7 @@ class DuelView:
         if text:
             msg = bot.send_message(message.chat.id, text, parse_mode='Markdown')
 
-        if self.duel.active:
+        if self.duel.status == DuelStatus.Active:
             t = threading.Thread(target=self.start, args=(message,))
             t.daemon = True
             t.start()
