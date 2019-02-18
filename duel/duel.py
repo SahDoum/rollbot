@@ -119,7 +119,7 @@ class Duel:
         
 # ---- extra methods ----
 
-    def get_start_text():
+    def get_start_text(self):
         return DUEL_START_TEXT.format(
             self.users[0].link(), 
             self.users[1].link()
