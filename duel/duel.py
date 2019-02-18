@@ -91,7 +91,7 @@ class Duel:
         text = None
         for usr in self.users:
             if usr.status == UserStatus.Winner:
-                self.statis = DuelStaus.Finished
+                self.status = DuelStatus.Finished
                 return None
             if usr.status == UserStatus.Equiped:
                 return None

@@ -28,7 +28,7 @@ def duel_shoots(message):
     print('SHOOT')
     chat_duel = DUELS[message.chat.id]
     chat_duel.shoot(message)
-    if chat_duel.status == DuelStatus.Finished
+    if chat_duel.duel.status == DuelStatus.Finished:
         print("duel end")
         print(DUELS)
         chat_duel.duel.update_score(message.chat.id)
