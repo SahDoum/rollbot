@@ -43,7 +43,7 @@ class Duel:
             text = self.users[0].duel_message(type="new enemies")
         return text
         
-    def start(self, user):
+    def start_duel(self, user):
         text = user.duel_message(type="accept duel")
         self.users.append(user)
         self.status = DuelStatus.Active
@@ -56,7 +56,7 @@ class Duel:
         user = User(usr=msg.from_user)
         new_enemies = enemies_from_message(msg)
 
-        print(self.enemies)
+        print("duel users:", self.users)
         text = None
         
         # если не было вызовов, создадим вызов
@@ -71,7 +71,7 @@ class Duel:
         # если перекрестные вызовы, начнем дуэль
         elif (not self.enemies or user in self.enemies) and \
                 (not new_enemies or self.users[0] in new_enemies):
-             text = self.start(user)
+             text = self.start_duel(user)
         # иначе, создадим новую дуэль
         else:
             print("Extra case")

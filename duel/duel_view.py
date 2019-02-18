@@ -44,7 +44,7 @@ class DuelView:
     def leave(self, message):
         time.sleep(self.duel.delay)
         
-        if self.duel.active:
+        if self.duel.status is not DuelStatus.Preparing:
             return
             
         if message.chat.id in DUELS:
