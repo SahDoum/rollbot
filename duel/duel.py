@@ -34,6 +34,7 @@ class Duel:
         self.enemies = enemies
         self.status = DuelStatus.Preparing
         self.symbol = None
+        print("init users", self.users)
         
     def update_enemies(self, enemies):
         self.enemies += enemies
