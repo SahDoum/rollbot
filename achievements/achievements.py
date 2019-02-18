@@ -1,11 +1,14 @@
-from pychievements import tracker, Achievement
+from .tracker import tracker
+from data.achievements_data import achievements
+
+from pychievements import Achievement
 from pychievements.signals import receiver, goal_achieved, highest_level_achieved
+
 from pychievements.backends import SQLiteAchievementBackend
 
-from pychievements.cli import print_goal, print_goals_for_tracked
-from pychievements import icons
 
-from data.achievements_data import achievements
+
+# ---- ACHIEVEMENTS ---X
 
 
 class PartAchievement(Achievement):
@@ -23,6 +26,9 @@ def check_multiple_achievement(tracked_id, achievement, goals, **kwargs):
     ach = tracker.achievements_for_id(tracked_id, keywords=achievement.keywords, category='quest_part')
     big_ach = tracker.achievement_for_id(tracked_id, achievement.complete_class_type)
     tracker.set_level(tracked_id, big_ach, len(ach))
+
+
+# ---- FACTORIES ----
 
 
 def simple_achievement_factory(dsc): 
@@ -85,6 +91,7 @@ def fatal_achievement_factory(dsc):
 def quest_die_achievement(dsc):
     return None
 
+# ---- INIT ----
 
 def init_achievements():
     db_name = "data/achievements.db"
@@ -105,16 +112,3 @@ def init_achievements():
             ach = quest_die_achievement(ach_dsc)
             tracker.register(ach)
 
-
-def test():
-    test_id=155493213
-    tracker.increment(test_id, 'test_keyword_part0')
-    tracker.increment(test_id, 'test_keyword_part1')
-    tracker.increment(test_id, 'test_keyword_part2')
-    #tracker.increment(test_id, 'test_keyword_part3')
-    #tracker.increment(test_id, 'test_keyword_part4')
-
-
-if __name__ == "__main__":
-    init_achievements()
-    print_goals_for_tracked(test_id, achieved=True, unachieved=True, only_current=False, level=False)

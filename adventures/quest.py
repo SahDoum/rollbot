@@ -2,7 +2,7 @@ from models import Location, Button
 from utils import escape_markdown
 from telebot import types
 
-from pychievements import tracker
+from achievements import tracker
 
 
 LOG_MODE = False
