@@ -32,11 +32,9 @@ def duel_shoots(message):
         chat_duel.duel.update_score(message.chat.id)
         DUELS.pop(message.chat.id)
         print("duel end")
-        print("duels total left:", DUELS)
 
 
 def duel_challenge(message):
-    print("DUELS:", DUELS)
     chat_id = message.chat.id
     if chat_id not in DUELS:
         print("creating new duel")

@@ -29,15 +29,20 @@ class DuelStatus(Enum):
 class Duel:
     delay = 2*60
 
+    def __init__(self):
+        self.users = []
+        self.enemies = []
+        self.status = DuelStatus.Preparing
+        self.symbol = None
+        
     def __init__(self, users_=[], enemies_=[]):
         self.users = users_
         self.enemies = enemies_
         self.status = DuelStatus.Preparing
         self.symbol = None
-        print("duel init")
-        print("init users", self.users)
-        print("args", users_, enemies_)
         
+# ---- starting duel methods ----
+
     def update_enemies(self, enemies):
         self.enemies += enemies
         if not enemies:
@@ -50,8 +55,6 @@ class Duel:
         text = user.duel_message(type="accept duel")
         self.users.append(user)
         self.status = DuelStatus.Active
-        print('Start duel: ' + str(user))
-
         return text
 
     # вызов на дуэль
@@ -81,6 +84,8 @@ class Duel:
             self = Duel([user], new_enemies)
             text = user.duel_message(type="new duel")
         return text
+        
+# ---- shooting ----
 
     def shoot(self, msg):
         if not self.symbol: 
@@ -91,7 +96,6 @@ class Duel:
         return result
 
     def update_status(self):
-        print("update")
         text = None
         for usr in self.users:
             if usr.status == UserStatus.Winner:
@@ -114,9 +118,11 @@ class Duel:
         self.enemies = []
 
         return text
+        
+# ---- extra methods ----
 
     def update_score(self, chat_id):
-        if all(user.status != 1 for user in self.users):
+        if all(user.status != UserStatus.Winner for user in self.users):
             for usr in self.users:
                 duel_usr = DuelUser.login(chat_id, usr.user.id)
                 duel_usr.name = usr.name()
@@ -126,7 +132,7 @@ class Duel:
         for usr in self.users:
             duel_usr = DuelUser.login(chat_id, usr.user.id)
             duel_usr.name = usr.name()
-            if usr.status == 1:
+            if usr.status == UserStatus.Winner:
                 duel_usr.wins = duel_usr.wins + 1
             else:
                 duel_usr.losses = duel_usr.losses + 1

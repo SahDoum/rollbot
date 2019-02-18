@@ -96,7 +96,7 @@ class DuelView:
             
     def shoot(self, msg):
         if not self.duel.symbol:
-            return None
+            return
 
         text = self.duel.shoot(msg)
         if text:
@@ -108,4 +108,3 @@ class DuelView:
             
         if self.duel.status == DuelStatus.Finished:
             print("End duel")
-            return "Finished"
