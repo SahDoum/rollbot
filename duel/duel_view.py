@@ -3,7 +3,7 @@ import time
 import random
 import threading
 from .tower import Tower
-from .duel import Duel
+from .duel import Duel, DuelStatus
 
 
 DUELS = {}
@@ -23,7 +23,7 @@ class DuelView:
         self.time = time.time()
         
     def update(self, message):
-        if self.duel.active:
+        if self.duel.status is not DuelStatus.Preparing:
             return
             
         text = self.duel.update_with_msg(message)
@@ -97,7 +97,7 @@ class DuelView:
             
     def shoot(self, msg):
         if not self.duel.symbol:
-            return
+            return None
 
         text = self.duel.shoot(msg)
         if text:
@@ -107,5 +107,6 @@ class DuelView:
         if text:
             bot.send_message(msg.chat.id, text, parse_mode='Markdown')
             
-        if not self.duel.active:
+        if self.duel.status == DuelStatus.Finished:
             print("End duel")
+            return "Finished"

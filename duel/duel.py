@@ -1,5 +1,6 @@
 from models import DuelUser
 from .user import User, UserStatus
+from enum import Enum
 
 
 def enemies_from_message(msg):
@@ -13,7 +14,15 @@ def enemies_from_message(msg):
             enemy = User(usr=ent.user)
             enemies.append(enemy)
     return enemies
-    
+
+
+# ---- DUEL STATUS ----
+
+class DuelStatus(Enum):
+    Preparing = 0
+    Active = 1
+    Finished = 2
+
 
 # ---- DUEL CLASS ----
 
@@ -23,7 +32,7 @@ class Duel:
     def __init__(self, users=[], enemies=[]):
         self.users = users
         self.enemies = enemies
-        self.active = False
+        self.status = DuelStatus.Preparing
         self.symbol = None
         
     def update(self, enemies):
@@ -37,7 +46,7 @@ class Duel:
     def start(self, user):
         text = user.duel_message(type="accept duel")
         self.users.append(user)
-        self.active = True
+        self.status = DuelStatus.Active
         print('Start duel: ' + str(user))
 
         return text
@@ -82,16 +91,18 @@ class Duel:
         text = None
         for usr in self.users:
             if usr.status == UserStatus.Winner:
-                self.active = False
+                self.statis = DuelStaus.Finished
                 return None
             if usr.status == UserStatus.Equiped:
                 return None
-        self.active = False
+        self.status = DuelStatus.Finished
         return 'Оба стрелка промахнулись. Дуэль окончена без жертв.'
  
     def leave_duel(self):
-        if self.active: return None
-        if not self.users: return None
+        if not self.status == DuelStatus.Preparing:
+            return None
+        if not self.users: 
+            return None
 
         text = self.users[0].duel_message(type="leave")
 

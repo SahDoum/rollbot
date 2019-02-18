@@ -15,7 +15,7 @@ def duel_chat_handler(m):
            DUELS[m.chat.id].duel.active
 
 
-# ---- DUEL WRAPPER ----
+# ---- DUEL WRAPPERS ----
 # called only if duel active
 
 def duel_stub(message):
@@ -25,8 +25,7 @@ def duel_stub(message):
 def duel_shoots(message):
     print('SHOOT')
     chat_duel = DUELS[message.chat.id]
-    chat_duel.shoot(message)
-    if not chat_duel.duel.active:
+    if chat_duel.shoot(message) == "Finished":
         print("duel end")
         print(DUELS)
         chat_duel.duel.update_score(message.chat.id)
