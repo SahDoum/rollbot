@@ -1,22 +1,24 @@
 from .duel_view import DuelView, DUELS
+from .duel import DuelStatus
 
 # ---- DUEL HANDLERS ----
 
 # handler for players shoots
 def duel_players_handler(m):
     return m.chat.id in DUELS and \
-           DUELS[m.chat.id].duel.active and \
+           DUELS[m.chat.id].duel.status == DuelStatus.Active and \
            DUELS[m.chat.id].duel.get_duel_user(m.from_user)
 
 
 # handler for other user messages
 def duel_chat_handler(m):
     return m.chat.id in DUELS and \
-           DUELS[m.chat.id].duel.active
+           DUELS[m.chat.id].duel.status == DuelStatus.Active
 
 
 # ---- DUEL WRAPPERS ----
 # called only if duel active
+
 
 def duel_stub(message):
     return
@@ -25,7 +27,8 @@ def duel_stub(message):
 def duel_shoots(message):
     print('SHOOT')
     chat_duel = DUELS[message.chat.id]
-    if chat_duel.shoot(message) == "Finished":
+    chat_duel.shoot(message)
+    if chat_duel.status == DuelStatus.Finished
         print("duel end")
         print(DUELS)
         chat_duel.duel.update_score(message.chat.id)
