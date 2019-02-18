@@ -3,6 +3,13 @@ from .user import User, UserStatus
 from enum import Enum
 
 
+DUEL_START_TEXT = 'На главной площади города сошлись заклятые враги {} и {}.\n' \
+           'Часы начинают отбивать удары. Скоро будет пролита кровь.' \
+           'Когда прозвучит последний удар, оба стреляют.\n' \
+           'С последним ударом вы увидите символ, которым надо выстрелить.\n' \
+           'У кого рука окажется быстрее, тот выиграет дуэль.'
+
+
 def enemies_from_message(msg):
     enemies = []
     for ent in msg.entities:
@@ -35,9 +42,9 @@ class Duel:
         self.status = DuelStatus.Preparing
         self.symbol = None
         
-    def __init__(self, users_=[], enemies_=[]):
-        self.users = users_
-        self.enemies = enemies_
+    def __init__(self, users, enemies):
+        self.users = users
+        self.enemies = enemies
         self.status = DuelStatus.Preparing
         self.symbol = None
         
@@ -80,7 +87,6 @@ class Duel:
              text = self.start_duel(user)
         # иначе, создадим новую дуэль
         else:
-            print("Extra case")
             self = Duel([user], new_enemies)
             text = user.duel_message(type="new duel")
         return text
@@ -121,6 +127,12 @@ class Duel:
         
 # ---- extra methods ----
 
+    def get_start_text():
+        return DUEL_START_TEXT.format(
+            self.users[0].link(), 
+            self.users[1].link()
+            )
+
     def update_score(self, chat_id):
         if all(user.status != UserStatus.Winner for user in self.users):
             for usr in self.users:
@@ -137,12 +149,6 @@ class Duel:
             else:
                 duel_usr.losses = duel_usr.losses + 1
             duel_usr.save()
-
-    def name(self, usr_num):
-        return self.users[usr_num].name()
-
-    def link(self, usr_num):
-        return self.users[usr_num].link()
 
     def get_duel_user(self, user):
         search = User(user)
