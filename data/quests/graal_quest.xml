@@ -101,7 +101,7 @@
 <btn key="open_west" req="!graal">Открыть дверь слева</btn>
 <btn key="open_east" opt="!ball_1 !ball_2 !ball_3 !ball_4" req="!graal">Открыть дверь справа</btn>
 <btn key="move_2" opt="!ball_1 ball_2" req="graal">Вернуться в коридор</btn>
-<btn key="die">Прыгнуть в обрыв</btn>
+<btn key="die_in_yama">Прыгнуть в обрыв</btn>
 </loc>
 
 <loc key="move_3" options="ball_2">
@@ -110,7 +110,7 @@
 <btn key="open_west" req="!graal">Открыть дверь слева</btn>
 <btn key="open_east" opt="!ball_1 !ball_2 !ball_3 !ball_4" req="!graal">Открыть дверь справа</btn>
 <btn key="move_2" opt="!ball_2 ball_3" req="graal">Вернуться в коридор</btn>
-<btn key="die">Прыгнуть в обрыв</btn>
+<btn key="die_in_yama">Прыгнуть в обрыв</btn>
 </loc>
 
 <loc key="move_3" options="ball_3">
