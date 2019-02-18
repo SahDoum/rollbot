@@ -35,7 +35,7 @@ class Duel:
         self.status = DuelStatus.Preparing
         self.symbol = None
         
-    def update(self, enemies):
+    def update_enemies(self, enemies):
         self.enemies += enemies
         if not enemies:
             text = self.users[0].duel_message(type="wait")
@@ -58,24 +58,25 @@ class Duel:
 
         print(self.enemies)
         text = None
-        # если не было вызовов
+        
+        # если не было вызовов, создадим вызов
         if not self.users:
+            print("first challenge by:", user.name())
             self.users.append(user)
             self.enemies += new_enemies
             text = user.duel_message(type="new duel")
-        # если пользователь снова вызывает дуэль
+        # если пользователь снова вызывает дуэль, обновим вызываемых
         elif user in self.users:
-            text = self.update(new_enemies)
-            # обновить дуэль
-        # если перекрестные вызовы
+            text = self.update_enemies(new_enemies)
+        # если перекрестные вызовы, начнем дуэль
         elif (not self.enemies or user in self.enemies) and \
                 (not new_enemies or self.users[0] in new_enemies):
              text = self.start(user)
-           # начать дуэль
+        # иначе, создадим новую дуэль
         else:
+            print("Extra case")
             self = Duel([user], new_enemies)
             text = user.duel_message(type="new duel")
-            # создать новую дуэль
         return text
 
     def shoot(self, msg):
