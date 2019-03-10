@@ -459,6 +459,30 @@ bot.message_handler(func=commands_handler(['/roll', '/r']))\
                    (roll_hack_decorator(200200555)(roll_message))
 
 
+@bot.message_handler(func=commands_handler(['/rollmode'], switchable=True))
+def rollmode_message(message):
+    keyboard = types.ReplyKeyboardMarkup(True, False, True)
+    keyboard.add(
+        types.KeyboardButton("d4"),
+        types.KeyboardButton("d6"),
+        types.KeyboardButton("d8"),
+        types.KeyboardButton("d10"),
+        types.KeyboardButton("d12"),
+        types.KeyboardButton("d20"),
+    )
+    bot.reply_to(message,
+                 "Бросайте кубы!",
+                 reply_markup=keyboard)
+
+
+@bot.message_handler(func=commands_handler(['/rolloff'], switchable=True))
+def rollmode_message(message):
+    keyboard = types.ReplyKeyboardRemove()
+    bot.reply_to(message,
+                 "Клавиатура убрана",
+                 reply_markup=keyboard)
+
+
 @bot.message_handler(func=commands_handler(['/add_hack']))
 @command_access_decorator([200200555])
 def hack_roll(message):
