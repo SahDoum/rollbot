@@ -461,7 +461,7 @@ bot.message_handler(func=commands_handler(['/roll', '/r']))\
 
 @bot.message_handler(func=commands_handler(['/rollmode'], switchable=True))
 def rollmode_message(message):
-    keyboard = types.ReplyKeyboardMarkup(True, False, True)
+    keyboard = types.ReplyKeyboardMarkup(True, False)
     keyboard.add(
         types.KeyboardButton("d4"),
         types.KeyboardButton("d6"),
