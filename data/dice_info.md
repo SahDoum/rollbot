@@ -21,4 +21,4 @@
 • 20d6s — сетап для Фиаско
 
 *Все возможности:*
-• `https://github.com/borntyping/python-dice`
+• https://github.com/borntyping/python-dice

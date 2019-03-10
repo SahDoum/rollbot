@@ -18,7 +18,7 @@ def roll_message(message):
             roll(arg[1], message)
     else:
         with open('data/dice_info.md', 'r') as info_file:
-            bot.reply_to(message, info_file.read(), parse_mode='Markdown')
+            bot.reply_to(message, info_file.read(), parse_mode='Markdown', disable_web_page_preview=True)
 
 
 # Handle '/rf'
