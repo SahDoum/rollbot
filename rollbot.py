@@ -309,7 +309,7 @@ def add_quest_dsc_to(msg, dsc):
             text=text,
             reply_markup=tmp_keyboard,
             parse_mode='Markdown'
-            )    
+            )
     except Exception as e:
         print("Failed to add description.")
         print("Messsage:\n{}\nDescription:\n{}\nException:\n{}".format(msg.text, text, e))
@@ -461,7 +461,7 @@ bot.message_handler(func=commands_handler(['/roll', '/r']))\
 
 @bot.message_handler(func=commands_handler(['/rollmode'], switchable=True))
 def rollmode_message(message):
-    keyboard = types.ReplyKeyboardMarkup(True, False)
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False, selective=True)
     keyboard.add(
         types.KeyboardButton("d4"),
         types.KeyboardButton("d6"),
@@ -477,7 +477,7 @@ def rollmode_message(message):
 
 @bot.message_handler(func=commands_handler(['/rolloff'], switchable=True))
 def rollmode_message(message):
-    keyboard = types.ReplyKeyboardRemove()
+    keyboard = types.ReplyKeyboardRemove(selective=True)
     bot.reply_to(message,
                  "Клавиатура убрана",
                  reply_markup=keyboard)
