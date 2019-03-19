@@ -69,7 +69,6 @@ def try_roll(message):
 
 
 def repeat_roll(message):
-    statistics.track_by_message(BOT_NAME, 'Roll repeat', message)
 
     chat_id = message.chat.id
     roll_id = int(message.text[7:].split('@')[0])
@@ -84,7 +83,6 @@ def repeat_roll(message):
 
 
 def roll(arg, message):
-    statistics.track_by_message(BOT_NAME, 'Roll', message)
 
     ongoing = True
 
@@ -97,6 +95,7 @@ def roll(arg, message):
     try:
         result = dice.roll(arg)
         repeat_command = add_repeat(arg, message.chat.id, message.message_id)
+        statistics.track_by_message(BOT_NAME, 'Roll', message)
         bot.reply_to(message, "Вы выкинули:\n" + str(result) + repeat_command)
     except TimeoutError:
         bot.reply_to(message, "Впредь без рекурсии, будьте аккуратнее.\n")
