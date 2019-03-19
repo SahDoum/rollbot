@@ -519,11 +519,6 @@ def new_chat_participant(message):
     bot.send_message(chat_id, 'Приветствую, путник!')
 
 
-@bot.callback_query_handler(func=lambda call: True)
-def test_callback(call):
-    print(str(call))
-
-
 # ---- POLLING ---- #
 
 

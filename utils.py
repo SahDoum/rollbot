@@ -1,9 +1,6 @@
-from __init__ import BOT_NAME, OFF_CHATS
+from __init__ import BOT_NAME, OFF_CHATS, statistics
 import re
 
-#import sys
-#sys.path.append("../statistics display")
-#import bot_statistics as statistics
 
 hack_dict = {}  # user_id: result
 
@@ -56,8 +53,8 @@ def commands_handler(cmnds, inline=False, switchable=False):
         else:
             result = any(cmnd in split_message or cmnd + BOT_NAME in split_message for cmnd in cmnds)
 
-        #if result:
-            #statistics.track_by_message(BOT_NAME, 'Command: ' + cmnds[0], msg)
+        if result:
+            statistics.track_by_message(BOT_NAME, 'Command: ' + cmnds[0], msg)
         return result
 
     return wrapped

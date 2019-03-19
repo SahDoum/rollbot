@@ -1,4 +1,4 @@
-from __init__ import bot
+from __init__ import bot, BOT_NAME, statistics
 import dice
 import signal
 
@@ -69,7 +69,8 @@ def try_roll(message):
 
 
 def repeat_roll(message):
-    print('repeat')
+    statistics.track_by_message(BOT_NAME, 'Roll repeat', message)
+
     chat_id = message.chat.id
     roll_id = int(message.text[7:].split('@')[0])
     print(roll_id)
@@ -82,7 +83,9 @@ def repeat_roll(message):
     roll(REPEAT_ROLLS[chat_id][roll_id], message)
 
 
-def roll(arg, reply_msg):
+def roll(arg, message):
+    statistics.track_by_message(BOT_NAME, 'Roll', message)
+
     ongoing = True
 
     def handler(signum, frame):
@@ -93,10 +96,10 @@ def roll(arg, reply_msg):
 
     try:
         result = dice.roll(arg)
-        repeat_command = add_repeat(arg, reply_msg.chat.id, reply_msg.message_id)
-        bot.reply_to(reply_msg, "Вы выкинули:\n" + str(result) + repeat_command)
+        repeat_command = add_repeat(arg, message.chat.id, message.message_id)
+        bot.reply_to(message, "Вы выкинули:\n" + str(result) + repeat_command)
     except TimeoutError:
-        bot.reply_to(reply_msg, "Впредь без рекурсии, будьте аккуратнее.\n")
+        bot.reply_to(message, "Впредь без рекурсии, будьте аккуратнее.\n")
     except Exception as e:
         # print('Dice error: ' + str(e))
         pass
