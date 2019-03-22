@@ -11,9 +11,8 @@ import dice
 from bs4 import BeautifulSoup
 
 from __init__ import bot, OFF_CHATS, ADMIN_IDS
-from utils import commands_handler, escape_markdown
+from utils import commands_handler, escape_markdown #, data_decorator
 from duel import duel_chat_handler, duel_players_handler, duel_challenge, duel_stub, duel_shoots
-from roll import roll_message, roll_fate, rollGURPS, try_roll, repeat_roll
 from utils import roll_hack_decorator, command_access_decorator, hack_dict
 import adventures.quest as quest
 from adventures.editor import Editor as FatalEditor, QuestEditor
@@ -215,7 +214,7 @@ def show_achievements(message):
 
     gurps = get_gurps(id)
     if gurps:
-        text += "\n*Ваша абилка:*{}".format(gurps)
+        text += "\n*Ваша абилка:*{}".format(gurps.split('\n', 1)[0])
 
     bot.reply_to(message, text, parse_mode='Markdown')
 
@@ -455,59 +454,9 @@ def get_gurps(id):
 
 
 # Handle '/roll' 'r'
-bot.message_handler(func=commands_handler(['/roll', '/r']))\
-                   (roll_hack_decorator(200200555)(roll_message))
-
-
-@bot.message_handler(func=commands_handler(['/rollmode'], switchable=True))
-def rollmode_message(message):
-    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False, selective=True)
-    keyboard.add(
-        types.KeyboardButton("d4"),
-        types.KeyboardButton("d6"),
-        types.KeyboardButton("d8"),
-        types.KeyboardButton("d10"),
-        types.KeyboardButton("d12"),
-        types.KeyboardButton("d20"),
-    )
-    bot.reply_to(message,
-                 "Бросайте кубы!",
-                 reply_markup=keyboard)
-
-
-@bot.message_handler(func=commands_handler(['/rolloff'], switchable=True))
-def rollmode_message(message):
-    keyboard = types.ReplyKeyboardRemove(selective=True)
-    bot.reply_to(message,
-                 "Клавиатура убрана",
-                 reply_markup=keyboard)
-
-
-@bot.message_handler(func=commands_handler(['/add_hack']))
-@command_access_decorator([200200555])
-def hack_roll(message):
-    cmd, result = message.text.split()
-    hack_dict[message.from_user.id] = result
-    bot.reply_to(message, str(hack_dict))
-
-
-# Handle '/rf'
-bot.message_handler(func=commands_handler(['/rf']))\
-                   (roll_fate)
-
-
-# Handle '/rg'
-bot.message_handler(func=commands_handler(['/rg']))\
-                   (rollGURPS)
-
-
-# Handle messages with dice notation
-bot.message_handler(func=lambda m: hasattr(m, 'text') and m.text is not None and m.text.startswith('/repeat'), content_types=['text'])\
-                   (repeat_roll)
-
-# Handle messages with dice notation
-bot.message_handler(content_types=["text"])\
-                   (try_roll)
+@bot.message_handler(func=commands_handler(['/roll', '/r']))
+def roll(message):
+    bot.reply_to(message, "Кубы теперь тут: @dice4bot")
 
 
 # ---- GREETINGS ----
