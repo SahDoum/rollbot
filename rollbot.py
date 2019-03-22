@@ -214,7 +214,7 @@ def show_achievements(message):
 
     gurps = get_gurps(id)
     if gurps:
-        text += "\n*Ваша абилка:*{}".format(gurps.split('\n', 1)[0])
+        text += "\n*Ваша абилка:*{}".format(gurps.strip().split('\n', 1)[0])
 
     bot.reply_to(message, text, parse_mode='Markdown')
 
