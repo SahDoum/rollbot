@@ -1,5 +1,26 @@
-from __init__ import BOT_NAME, OFF_CHATS, statistics
+from __init__ import BOT_NAME, OFF_CHATS, statistics, bot
 import re
+
+import filters
+
+
+class EveryData:
+    def __init__(self):
+        self._data = {}
+    def get(self, id):
+        if not id in seld._data:
+            self._data[id] = {}
+        return self._data[id]
+
+
+bot_data = EveryData()
+
+
+def data_decorator(function):
+    def wrapper(*args, **kwargs):
+        chat_data = bot_data[args[0].chat.id]
+        function(*args, **kwargs)
+    return wrapper
 
 
 hack_dict = {}  # user_id: result
@@ -58,6 +79,34 @@ def commands_handler(cmnds, inline=False, switchable=False):
         return result
 
     return wrapped
+
+
+def filter_decorator(function):
+    def wrapper(*args, **kwargs):
+        old_send_message = bot.send_message
+        old_reply_to = bot.reply_to
+        old_edit = bot.edit_message_text
+        filter = filters.get_filter()
+        def new_send_message(*_args, **_kwargs):
+            _args = list(_args)
+            _args[1] = filter(_args[1])
+            old_send_message(*_args, **_kwargs)
+        def new_reply_to(*_args, **_kwargs):
+            _args = list(_args)
+            _args[1] = filter(_args[1])
+            old_reply_to(*_args, **_kwargs)
+        def new_edit(*_args, **_kwargs):
+            _args = list(_args)
+            _args[1] = filter(_args[1])
+            old_edit(*_args, **_kwargs)
+        bot.send_message = new_send_message
+        bot.reply_to = new_reply_to
+        bot.edit_message_text = new_edit
+        function(*args, **kwargs)
+        bot.send_message = old_send_message
+        bot.reply_to = old_reply_to
+        bot.edit_message_text = old_edit
+    return wrapper
 
 
 def escape_markdown(text):
