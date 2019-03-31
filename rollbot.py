@@ -330,7 +330,7 @@ def add_quest_dsc_to(msg, dsc):
         )
 
 
-def cut_long_text(text, max_len=4250):
+def cut_long_text(text, max_len=4000):
     if len(text) > max_len:
         text = '…' + text[len(text) - max_len + 1:]
     return text

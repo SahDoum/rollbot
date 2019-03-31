@@ -96,8 +96,7 @@ def filter_decorator(function):
             _args[1] = filter(_args[1])
             old_reply_to(*_args, **_kwargs)
         def new_edit(*_args, **_kwargs):
-            _args = list(_args)
-            _args[1] = filter(_args[1])
+            _kwargs['text'] = filter(_kwargs['text'])
             old_edit(*_args, **_kwargs)
         bot.send_message = new_send_message
         bot.reply_to = new_reply_to
