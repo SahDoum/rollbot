@@ -19,6 +19,8 @@ from adventures.editor import Editor as FatalEditor, QuestEditor
 from models import DuelUser, Fatal, GURPS
 from achievements import tracker
 
+import filters
+
 text_messages = {
     'help':
         u'Во многой мудрости много печали; и кто умножает познания, умножает скорбь.\n'
@@ -61,7 +63,6 @@ text_messages = {
 
 # Handle '/me'
 @bot.message_handler(func=commands_handler(['/me']))
-@filter_decorator
 def me(message):
     chat_id = message.chat.id
     message_id = message.message_id
@@ -71,7 +72,7 @@ def me(message):
         bot.reply_to(message, text_messages['me_help'])
         return
 
-    your_message = message.text.split(maxsplit=1)[1]
+    your_message = filters.get_filter()(message.text.split(maxsplit=1)[1])
     if message.from_user.username is not None:
         usr_name = '@' + message.from_user.username
     else:
