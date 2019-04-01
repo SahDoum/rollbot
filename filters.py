@@ -1,4 +1,5 @@
 import random
+import re
 
 from zalgo_text import zalgo
 
@@ -13,7 +14,7 @@ def uppercase_filter(text):
 
 def anti_vowel_filter(text):
     vowels = ['а', 'е', 'ё', 'и', 'о', 'у', 'ы', 'э', 'ю', 'я', 'a', 'e', 'y', 'u', 'i', 'o']
-    return "".join([l for l in text if l not in vowels])
+    return "".join([l for l in text if l.lower() not in vowels])
 
 
 def revert_filter(text):
@@ -43,7 +44,11 @@ def garble_filter(sentence):
     return ' '.join(map(garble_word, words))
 
 
-FILTERS = [zalgo_filter, uppercase_filter, anti_vowel_filter, revert_filter, garble_filter]
+def tarabarsky_filter(text):
+    return re.sub(r'([аеёиоуыэюя])', r'\1с\1', text, flags=re.IGNORECASE)
+
+
+FILTERS = [zalgo_filter, uppercase_filter, anti_vowel_filter, revert_filter, garble_filter, tarabarsky_filter]
 
 
 def get_filter():

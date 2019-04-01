@@ -81,11 +81,16 @@ def commands_handler(cmnds, inline=False, switchable=False):
     return wrapped
 
 
+# ---------
+
+old_send_message = bot.send_message
+old_reply_to = bot.reply_to
+old_edit = bot.edit_message_text
+
+# ---------
+
 def filter_decorator(function):
     def wrapper(*args, **kwargs):
-        old_send_message = bot.send_message
-        old_reply_to = bot.reply_to
-        old_edit = bot.edit_message_text
         filter = filters.get_filter()
         def new_send_message(*_args, **_kwargs):
             _args = list(_args)
