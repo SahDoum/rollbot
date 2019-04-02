@@ -177,14 +177,12 @@ def duel_stats(message):
 
 # Handle '/start'
 @bot.message_handler(func=commands_handler(['/start']))
-@filter_decorator
 def send_welcome(message):
     bot.reply_to(message, text_messages['start'])
 
 
 # Handle '/help'
 @bot.message_handler(func=commands_handler(['/help']))
-@filter_decorator
 def help(message):
     bot.reply_to(message, text_messages['help'])
 
@@ -200,7 +198,6 @@ def send_welcome(message):
 
 # Handle '/achievements'
 @bot.message_handler(func=commands_handler(['/achievements']))
-@filter_decorator
 def show_achievements(message):
     id = message.from_user.id
     achievements = tracker.achievements_for_id(id, category="quest")
@@ -228,7 +225,6 @@ def show_achievements(message):
 
 # Handle '/fatal'
 @bot.message_handler(func=commands_handler(['/fatal'], inline=True, switchable=True))
-@filter_decorator
 def fatal_message(message):
     fatal_message = Fatal.get_fatal()
     bot.send_message(message.chat.id,
@@ -269,7 +265,6 @@ QUEST_CALLBAK_PARAM = 'q';
 
 # Handle '/quest'
 @bot.message_handler(func=commands_handler(['/quest'], switchable=True))
-@filter_decorator
 def quest_message(message):
     dsc = quest.create_description(param=QUEST_CALLBAK_PARAM)
     bot.send_message(message.chat.id,
@@ -288,7 +283,6 @@ def quest_callback(call):
 tmp_inline_button = types.InlineKeyboardButton(text='...', callback_data='...')
 
 
-@filter_decorator
 def add_quest_dsc_to(msg, dsc):
     text = escape_markdown(msg.text) + '\n\n' + dsc['text']
     max_quest_steps = 5
@@ -416,7 +410,6 @@ def quest_file(message, rewrite):
 
 # Handle '/gurps'
 @bot.message_handler(func=commands_handler(['/gurps', '/GURPS'], switchable=True))
-@filter_decorator
 def gurps(message):
     with open('data/gurps.xml', 'r') as gurps_file:
         soup = BeautifulSoup(gurps_file, 'lxml')
@@ -472,7 +465,6 @@ def roll(message):
 
 
 @bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
-@filter_decorator
 def new_chat_participant(message):
     chat_id = message.chat.id
     bot.send_message(chat_id, 'Приветствую, путник!')

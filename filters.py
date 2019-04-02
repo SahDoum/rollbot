@@ -48,7 +48,11 @@ def tarabarsky_filter(text):
     return re.sub(r'([аеёиоуыэюя])', r'\1с\1', text, flags=re.IGNORECASE)
 
 
-FILTERS = [zalgo_filter, uppercase_filter, anti_vowel_filter, revert_filter, garble_filter, tarabarsky_filter]
+def igor_filter(text):
+    return text.replace('с', 'ш').replace('х', 'ф')
+
+
+FILTERS = [zalgo_filter, uppercase_filter, anti_vowel_filter, revert_filter, garble_filter, tarabarsky_filter, igor_filter]
 
 
 def get_filter():
