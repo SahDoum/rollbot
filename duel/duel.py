@@ -41,7 +41,7 @@ class Duel:
         self.enemies = enemies
         self.status = DuelStatus.Preparing
         self.symbol = None
-        
+
 # ---- starting duel methods ----
 
     def update_enemies(self, enemies):
@@ -51,7 +51,7 @@ class Duel:
         else:
             text = self.users[0].duel_message(type="new enemies")
         return text
-        
+
     def start_duel(self, user):
         text = user.duel_message(type="accept duel")
         self.users.append(user)
@@ -65,7 +65,7 @@ class Duel:
 
         print("duel users:", self.users)
         text = None
-        
+
         # если не было вызовов, создадим вызов
         if not self.users:
             print("first challenge by:", user.name())
@@ -84,11 +84,11 @@ class Duel:
             self = Duel([user], new_enemies)
             text = user.duel_message(type="new duel")
         return text
-        
+
 # ---- shooting ----
 
     def shoot(self, msg):
-        if not self.symbol: 
+        if not self.symbol:
             return
 
         usr = self.get_duel_user(msg.from_user)
@@ -97,19 +97,23 @@ class Duel:
 
     def update_status(self):
         text = None
+        all_empty = True
         for usr in self.users:
             if usr.status == UserStatus.Winner:
                 self.status = DuelStatus.Finished
                 return None
             if usr.status == UserStatus.Equiped:
-                return None
-        self.status = DuelStatus.Finished
-        return 'Оба стрелка промахнулись. Дуэль окончена без жертв.'
- 
+                all_empty = False
+
+        if all_empty:
+            self.status = DuelStatus.Finished
+            return 'Оба стрелка промахнулись. Дуэль окончена без жертв.'
+        return None
+
     def leave_duel(self):
         if not self.status == DuelStatus.Preparing:
             return None
-        if not self.users: 
+        if not self.users:
             return None
 
         text = self.users[0].duel_message(type="leave")
@@ -118,12 +122,12 @@ class Duel:
         self.enemies = []
 
         return text
-        
+
 # ---- extra methods ----
 
     def get_start_text(self):
         return DUEL_START_TEXT.format(
-            self.users[0].link(), 
+            self.users[0].link(),
             self.users[1].link()
             )
 
